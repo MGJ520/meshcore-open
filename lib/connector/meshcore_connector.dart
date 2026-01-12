@@ -74,6 +74,7 @@ class MeshCoreConnector extends ChangeNotifier {
   StreamSubscription<List<int>>? _notifySubscription;
   Timer? _selfInfoRetryTimer;
   Timer? _reconnectTimer;
+  Timer? _batteryPollTimer;
   int _reconnectAttempts = 0;
 
   final StreamController<Uint8List> _receivedFramesController =
@@ -118,6 +119,7 @@ class MeshCoreConnector extends ChangeNotifier {
   List<Channel> _previousChannelsCache = [];
   static const int _maxChannelSyncRetries = 3;
   static const int _channelSyncTimeoutMs = 2000; // 2 second timeout per channel
+  static const Duration _batteryPollInterval = Duration(seconds: 30);
 
   // Services
   MessageRetryService? _retryService;
@@ -720,6 +722,7 @@ class MeshCoreConnector extends ChangeNotifier {
       await WakelockPlus.enable();
 
       await _requestDeviceInfo();
+      _startBatteryPolling();
       final gotSelfInfo = await _waitForSelfInfo(
         timeout: const Duration(seconds: 3),
       );
@@ -821,6 +824,7 @@ class MeshCoreConnector extends ChangeNotifier {
       _manualDisconnect = false;
     }
     _setState(MeshCoreConnectionState.disconnecting);
+    _stopBatteryPolling();
 
     // Disable wake lock when disconnecting
     await WakelockPlus.disable();
@@ -902,6 +906,22 @@ class MeshCoreConnector extends ChangeNotifier {
     if (_batteryRequested && !force) return;
     _batteryRequested = true;
     await sendFrame(buildGetBattAndStorageFrame());
+  }
+
+  void _startBatteryPolling() {
+    _batteryPollTimer?.cancel();
+    _batteryPollTimer = Timer.periodic(_batteryPollInterval, (timer) {
+      if (!isConnected) {
+        timer.cancel();
+        return;
+      }
+      unawaited(requestBatteryStatus(force: true));
+    });
+  }
+
+  void _stopBatteryPolling() {
+    _batteryPollTimer?.cancel();
+    _batteryPollTimer = null;
   }
 
   Future<void> refreshDeviceInfo() async {
@@ -1744,6 +1764,11 @@ class MeshCoreConnector extends ChangeNotifier {
     // [7-10] = storage_total_kb (uint32 LE)
     if (frame.length >= 3) {
       _batteryMillivolts = readUint16LE(frame, 1);
+      final volts = (_batteryMillivolts! / 1000.0).toStringAsFixed(2);
+      _appDebugLogService?.info(
+        'Pulled battery: $volts V (${_batteryMillivolts} mV)',
+        tag: 'Battery',
+      );
       notifyListeners();
     }
   }
@@ -2908,6 +2933,7 @@ class MeshCoreConnector extends ChangeNotifier {
   void _handleDisconnection() {
     // Disable wake lock when connection is lost
     WakelockPlus.disable();
+    _stopBatteryPolling();
 
     for (final entry in _pendingRepeaterAcks.values) {
       entry.timeout?.cancel();
@@ -2948,6 +2974,7 @@ class MeshCoreConnector extends ChangeNotifier {
     _connectionSubscription?.cancel();
     _notifySubscription?.cancel();
     _reconnectTimer?.cancel();
+    _batteryPollTimer?.cancel();
     _receivedFramesController.close();
 
     // Flush pending unread writes before disposal
