@@ -46,9 +46,9 @@ class _RepeaterSettingsScreenState extends State<RepeaterSettingsScreen> {
   // Radio settings
   final TextEditingController _freqController = TextEditingController();
   final TextEditingController _txPowerController = TextEditingController();
-  int _bandwidth = 125000;
-  int _spreadingFactor = 9;
-  int _codingRate = 7;
+  int? _bandwidth;
+  int? _spreadingFactor;
+  int? _codingRate;
 
   // Location settings
   final TextEditingController _latController = TextEditingController();
@@ -56,7 +56,7 @@ class _RepeaterSettingsScreenState extends State<RepeaterSettingsScreen> {
 
   // Feature toggles
   bool _repeatEnabled = true;
-  bool _allowReadOnly = false;
+  bool _allowReadOnly = true;
   bool _privacyMode = false;
 
   // Advertisement settings
@@ -177,8 +177,8 @@ class _RepeaterSettingsScreenState extends State<RepeaterSettingsScreen> {
           if (bw != null) {
             _bandwidth = (bw * 1000).toInt();
             appLog.info('Bandwidth Hz: $_bandwidth', tag: 'RadioSettings');
-            if (!_bandwidthOptions.contains(_bandwidth)) {
-              _bandwidthOptions.add(_bandwidth);
+            if (_bandwidth != null && !_bandwidthOptions.contains(_bandwidth)) {
+              _bandwidthOptions.add(_bandwidth!);
               _bandwidthOptions.sort();
             }
           }
@@ -544,9 +544,16 @@ class _RepeaterSettingsScreenState extends State<RepeaterSettingsScreen> {
       }
 
       // Radio parameters
-      final freqMHz = double.tryParse(_freqController.text) ?? 915.0;
-      final bwKHz = _bandwidth / 1000;
-      commands.add('set radio ${freqMHz.toStringAsFixed(1)} $bwKHz $_spreadingFactor $_codingRate');
+      if (_freqController.text.isNotEmpty &&
+          _bandwidth != null &&
+          _spreadingFactor != null &&
+          _codingRate != null) {
+        final freqMHz = double.tryParse(_freqController.text);
+        if (freqMHz != null) {
+          final bwKHz = _bandwidth! / 1000;
+          commands.add('set radio ${freqMHz.toStringAsFixed(1)} $bwKHz $_spreadingFactor $_codingRate');
+        }
+      }
 
       // Location
       if (_latController.text.isNotEmpty) {
@@ -888,7 +895,7 @@ class _RepeaterSettingsScreenState extends State<RepeaterSettingsScreen> {
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<int>(
-              initialValue: _bandwidth,
+              value: _bandwidth,
               decoration: InputDecoration(
                 labelText: l10n.repeater_bandwidth,
                 border: const OutlineInputBorder(),
@@ -910,7 +917,7 @@ class _RepeaterSettingsScreenState extends State<RepeaterSettingsScreen> {
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<int>(
-              initialValue: _spreadingFactor,
+              value: _spreadingFactor,
               decoration: InputDecoration(
                 labelText: l10n.repeater_spreadingFactor,
                 border: const OutlineInputBorder(),
@@ -932,7 +939,7 @@ class _RepeaterSettingsScreenState extends State<RepeaterSettingsScreen> {
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<int>(
-              initialValue: _codingRate,
+              value: _codingRate,
               decoration: InputDecoration(
                 labelText: l10n.repeater_codingRate,
                 border: const OutlineInputBorder(),
