@@ -1624,6 +1624,12 @@ class AppLocalizationsSk extends AppLocalizations {
   String get repeater_cliSubtitle => 'Pošlite príkazy opakovaču';
 
   @override
+  String get repeater_neighbours => 'Súsezný';
+
+  @override
+  String get repeater_neighboursSubtitle => 'Zobraziť susedné body bez skokov.';
+
+  @override
   String get repeater_settings => 'Nastavenia';
 
   @override
@@ -2298,6 +2304,34 @@ class AppLocalizationsSk extends AppLocalizations {
   @override
   String telemetry_temperatureValue(String celsius, String fahrenheit) {
     return '$celsius°C / $fahrenheit°F';
+  }
+
+  @override
+  String get neighbors_receivedData => 'Obdielo dáta suseda';
+
+  @override
+  String get neighbors_requestTimedOut => 'Súďia žiadajú o časové ukončenie.';
+
+  @override
+  String neighbors_errorLoading(String error) {
+    return 'Chyba pri načítaní susedov: $error';
+  }
+
+  @override
+  String get neighbors_repeatersNeighbours => 'Opakovadlá Súsezná';
+
+  @override
+  String get neighbors_noData =>
+      'Nie je dostupná žiadna informácia o susedoch.';
+
+  @override
+  String neighbors_unknownContact(String pubkey) {
+    return 'Neznáma $pubkey';
+  }
+
+  @override
+  String neighbors_heardAgo(String time) {
+    return 'Počuli sme to: $time dozadu';
   }
 
   @override

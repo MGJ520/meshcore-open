@@ -1553,6 +1553,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get repeater_cliSubtitle => '发送命令到重复器';
 
   @override
+  String get repeater_neighbours => '邻居';
+
+  @override
+  String get repeater_neighboursSubtitle => '查看零跳邻居。';
+
+  @override
   String get repeater_settings => '设置';
 
   @override
@@ -2180,6 +2186,33 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String telemetry_temperatureValue(String celsius, String fahrenheit) {
     return '$celsius°C / $fahrenheit°F';
+  }
+
+  @override
+  String get neighbors_receivedData => '收到邻居数据';
+
+  @override
+  String get neighbors_requestTimedOut => '邻居请求超时处理。';
+
+  @override
+  String neighbors_errorLoading(String error) {
+    return '加载邻居时出错：$error';
+  }
+
+  @override
+  String get neighbors_repeatersNeighbours => '重复器邻居';
+
+  @override
+  String get neighbors_noData => '没有可用的邻居数据。';
+
+  @override
+  String neighbors_unknownContact(String pubkey) {
+    return '未知$pubkey';
+  }
+
+  @override
+  String neighbors_heardAgo(String time) {
+    return '听到的时间：$time前';
   }
 
   @override

@@ -1337,6 +1337,20 @@
   "listFilter_roomServers": "Servidores de sala",
   "listFilter_unreadOnly": "Apenas não lido",
   "listFilter_newGroup": "Novo grupo",
+  "@neighbors_errorLoading": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "repeater_neighbours": "Vizinhos",
+  "neighbors_receivedData": "Dados dos Vizinhos Recebidos",
+  "repeater_neighboursSubtitle": "Visualizar vizinhos de salto zero.",
+  "neighbors_requestTimedOut": "Vizinhos solicitam tempo limite esgotado.",
+  "neighbors_errorLoading": "Erro ao carregar vizinhos: {error}",
+  "neighbors_repeatersNeighbours": "Repetidores Vizinhos",
+  "neighbors_noData": "Não estão disponíveis dados de vizinhos.",
   "channels_createPrivateChannelDesc": "Protegido com uma chave secreta.",
   "channels_joinPrivateChannelDesc": "Inserir uma chave secreta manualmente.",
   "channels_createPrivateChannel": "Criar um Canal Privado",
@@ -1349,6 +1363,22 @@
   "channels_scanQrCodeComingSoon": "Em breve",
   "channels_enterHashtag": "Insira hashtag",
   "channels_hashtagHint": "ex. #equipe",
+  "@neighbors_unknownContact": {
+    "placeholders": {
+      "pubkey": {
+        "type": "String"
+      }
+    }
+  },
+  "@neighbors_heardAgo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neighbors_heardAgo": "Ouvido: {time} atrás",
+  "neighbors_unknownContact": "{pubkey} Desconhecido",
   "settings_locationGPSEnable": "Ativar GPS",
   "settings_locationGPSEnableSubtitle": "Habilita a atualização automática da localização via GPS.",
   "settings_locationIntervalInvalid": "O intervalo deve ser de pelo menos 60 segundos e inferior a 86400 segundos.",

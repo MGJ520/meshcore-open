@@ -1337,6 +1337,20 @@
   "listFilter_roomServers": "Server della stanza",
   "listFilter_unreadOnly": "Solo non letto",
   "listFilter_newGroup": "Nuovo gruppo",
+  "@neighbors_errorLoading": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "repeater_neighbours": "Vicini",
+  "repeater_neighboursSubtitle": "Visualizza vicini di salto pari a zero.",
+  "neighbors_receivedData": "Ricevute dati vicini",
+  "neighbors_requestTimedOut": "I vicini richiedono un timeout.",
+  "neighbors_errorLoading": "Errore nel caricamento dei vicini: {error}",
+  "neighbors_repeatersNeighbours": "Ripetitori Vicini",
+  "neighbors_noData": "Nessun dato sugli vicini disponibile.",
   "channels_createPrivateChannel": "Crea un Canale Privato",
   "channels_createPrivateChannelDesc": "Protetta con una chiave segreta.",
   "channels_joinPrivateChannel": "Unisciti a un Canale Privato",
@@ -1349,6 +1363,22 @@
   "channels_scanQrCodeComingSoon": "Arriverà presto",
   "channels_enterHashtag": "Inserisci hashtag",
   "channels_hashtagHint": "es. #team",
+  "@neighbors_unknownContact": {
+    "placeholders": {
+      "pubkey": {
+        "type": "String"
+      }
+    }
+  },
+  "@neighbors_heardAgo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neighbors_heardAgo": "Sentito: {time} fa",
+  "neighbors_unknownContact": "Chiave pubblica sconosciuta {pubkey}",
   "settings_locationGPSEnable": "Abilita GPS",
   "settings_locationGPSEnableSubtitle": "Abilita l'aggiornamento automatico della posizione tramite GPS.",
   "settings_locationIntervalSec": "Intervallo GPS (Secondi)",

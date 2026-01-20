@@ -1337,6 +1337,20 @@
   "listFilter_roomServers": "房间服务器",
   "listFilter_unreadOnly": "未读消息",
   "listFilter_newGroup": "新组",
+  "@neighbors_errorLoading": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "repeater_neighboursSubtitle": "查看零跳邻居。",
+  "repeater_neighbours": "邻居",
+  "neighbors_receivedData": "收到邻居数据",
+  "neighbors_requestTimedOut": "邻居请求超时处理。",
+  "neighbors_errorLoading": "加载邻居时出错：{error}",
+  "neighbors_repeatersNeighbours": "重复器邻居",
+  "neighbors_noData": "没有可用的邻居数据。",
   "channels_joinPrivateChannel": "加入私密频道",
   "channels_createPrivateChannelDesc": "使用密钥保护。",
   "channels_joinPrivateChannelDesc": "手动输入密钥。",
@@ -1349,6 +1363,22 @@
   "channels_scanQrCodeComingSoon": "即将到来",
   "channels_enterHashtag": "输入标签",
   "channels_hashtagHint": "例如 #团队",
+  "@neighbors_unknownContact": {
+    "placeholders": {
+      "pubkey": {
+        "type": "String"
+      }
+    }
+  },
+  "@neighbors_heardAgo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neighbors_heardAgo": "听到的时间：{time}前",
+  "neighbors_unknownContact": "未知{pubkey}",
   "settings_locationGPSEnable": "启用GPS",
   "settings_locationGPSEnableSubtitle": "启用GPS自动更新位置。",
   "settings_locationIntervalSec": "GPS 间隔（秒）",

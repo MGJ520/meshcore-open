@@ -1631,6 +1631,13 @@ class AppLocalizationsBg extends AppLocalizations {
   String get repeater_cliSubtitle => 'Изпрати команди към ретранслатора';
 
   @override
+  String get repeater_neighbours => 'Съседи';
+
+  @override
+  String get repeater_neighboursSubtitle =>
+      'Преглед на съседни възли с нулев скок.';
+
+  @override
   String get repeater_settings => 'Настройки';
 
   @override
@@ -2313,6 +2320,33 @@ class AppLocalizationsBg extends AppLocalizations {
   @override
   String telemetry_temperatureValue(String celsius, String fahrenheit) {
     return '$celsius°C / $fahrenheit°F';
+  }
+
+  @override
+  String get neighbors_receivedData => 'Получени данни за съседи';
+
+  @override
+  String get neighbors_requestTimedOut => 'Съседите поискат изтичане на време.';
+
+  @override
+  String neighbors_errorLoading(String error) {
+    return 'Грешка при зареждане на съседи: $error';
+  }
+
+  @override
+  String get neighbors_repeatersNeighbours => 'Повторители Съседи';
+
+  @override
+  String get neighbors_noData => 'Няма налични данни за съседи.';
+
+  @override
+  String neighbors_unknownContact(String pubkey) {
+    return 'Неизвестна $pubkey';
+  }
+
+  @override
+  String neighbors_heardAgo(String time) {
+    return 'Слушано преди $time.';
   }
 
   @override

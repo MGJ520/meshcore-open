@@ -1337,6 +1337,20 @@
   "listFilter_roomServers": "Rumservrar",
   "listFilter_unreadOnly": "Endast oinlästa",
   "listFilter_newGroup": "Ny grupp",
+  "@neighbors_errorLoading": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "repeater_neighbours": "Grannar",
+  "repeater_neighboursSubtitle": "Visa noll hoppgrannar.",
+  "neighbors_receivedData": "Mottagna grannars data",
+  "neighbors_requestTimedOut": "Grannar begär tidsinställd utskick.",
+  "neighbors_errorLoading": "Fel vid inläsning av grannar: {error}",
+  "neighbors_repeatersNeighbours": "Upprepar grannar",
+  "neighbors_noData": "Inga grannuppgifter finns tillgängliga.",
   "channels_createPrivateChannel": "Skapa en privat kanal",
   "channels_joinPrivateChannel": "Gå med i en Privat Kanal",
   "channels_joinPrivateChannelDesc": "Ange en hemlig nyckel manuellt.",
@@ -1349,6 +1363,22 @@
   "channels_scanQrCodeComingSoon": "Kommer snart",
   "channels_enterHashtag": "Ange hashtag",
   "channels_hashtagHint": "t.ex. #team",
+  "@neighbors_unknownContact": {
+    "placeholders": {
+      "pubkey": {
+        "type": "String"
+      }
+    }
+  },
+  "@neighbors_heardAgo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neighbors_heardAgo": "Hördes: {time} sedan",
+  "neighbors_unknownContact": "Okänd {pubkey}",
   "settings_locationGPSEnable": "Aktivera GPS",
   "settings_locationGPSEnableSubtitle": "Aktivera automatiska uppdateringar av platsen med hjälp av GPS.",
   "settings_locationIntervalSec": "Interval för GPS (Sekunder)",

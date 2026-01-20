@@ -1337,6 +1337,20 @@
   "listFilter_roomServers": "Serwery pokoju",
   "listFilter_unreadOnly": "Tylko nieprzeczytane",
   "listFilter_newGroup": "Nowa grupa",
+  "@neighbors_errorLoading": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "repeater_neighbours": "Sąsiedzi",
+  "repeater_neighboursSubtitle": "Wyświetl sąsiedztwo zerowych hopów.",
+  "neighbors_receivedData": "Otrzymano dane sąsiedztwa",
+  "neighbors_requestTimedOut": "Sąsiedzi proszą o wyłączenie timingu.",
+  "neighbors_errorLoading": "Błąd podczas ładowania sąsiadów: {error}",
+  "neighbors_repeatersNeighbours": "Powtarzacze Sąsiedzi",
+  "neighbors_noData": "Brak danych dotyczących sąsiadów.",
   "channels_joinPrivateChannelDesc": "Ręcznie wprowadź klucz tajny.",
   "channels_createPrivateChannel": "Utwórz Prywatny Kanał",
   "channels_createPrivateChannelDesc": "Zabezpieczone kluczem szyfrowym.",
@@ -1349,6 +1363,22 @@
   "channels_scanQrCodeComingSoon": "Wkrótce",
   "channels_enterHashtag": "Wprowadź hashtag",
   "channels_hashtagHint": "np. #zespół",
+  "@neighbors_unknownContact": {
+    "placeholders": {
+      "pubkey": {
+        "type": "String"
+      }
+    }
+  },
+  "@neighbors_heardAgo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neighbors_heardAgo": "Usłyszano: {time} temu",
+  "neighbors_unknownContact": "Nieznana {pubkey}",
   "settings_locationGPSEnable": "Włącz GPS",
   "settings_locationGPSEnableSubtitle": "Włącza automatyczne aktualizowanie pozycji za pomocą GPS.",
   "settings_locationIntervalSec": "Interwał dla GPS (Sekundy)",

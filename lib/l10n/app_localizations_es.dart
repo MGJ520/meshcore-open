@@ -1629,6 +1629,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get repeater_cliSubtitle => 'Enviar comandos al repetidor';
 
   @override
+  String get repeater_neighbours => 'Vecinos';
+
+  @override
+  String get repeater_neighboursSubtitle => 'Ver vecinos de salto cero.';
+
+  @override
   String get repeater_settings => 'Configuración';
 
   @override
@@ -2310,6 +2316,34 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String telemetry_temperatureValue(String celsius, String fahrenheit) {
     return '$celsius°C / $fahrenheit°F';
+  }
+
+  @override
+  String get neighbors_receivedData => 'Recibidas Datos de Vecinos';
+
+  @override
+  String get neighbors_requestTimedOut =>
+      'Los vecinos solicitan que se desconecte.';
+
+  @override
+  String neighbors_errorLoading(String error) {
+    return 'Error al cargar vecinos: $error';
+  }
+
+  @override
+  String get neighbors_repeatersNeighbours => 'Repetidores Vecinos';
+
+  @override
+  String get neighbors_noData => 'No hay datos de vecinos disponibles.';
+
+  @override
+  String neighbors_unknownContact(String pubkey) {
+    return 'Clave pública desconocida $pubkey';
+  }
+
+  @override
+  String neighbors_heardAgo(String time) {
+    return 'Escuchado: $time hace atrás';
   }
 
   @override

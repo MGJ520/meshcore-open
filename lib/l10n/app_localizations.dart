@@ -2945,6 +2945,18 @@ abstract class AppLocalizations {
   /// **'Send commands to the repeater'**
   String get repeater_cliSubtitle;
 
+  /// No description provided for @repeater_neighbours.
+  ///
+  /// In en, this message translates to:
+  /// **'Neighbors'**
+  String get repeater_neighbours;
+
+  /// No description provided for @repeater_neighboursSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View zero hop neighbors.'**
+  String get repeater_neighboursSubtitle;
+
   /// No description provided for @repeater_settings.
   ///
   /// In en, this message translates to:
@@ -4083,6 +4095,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{celsius}°C / {fahrenheit}°F'**
   String telemetry_temperatureValue(String celsius, String fahrenheit);
+
+  /// No description provided for @neighbors_receivedData.
+  ///
+  /// In en, this message translates to:
+  /// **'Received Neighbours Data'**
+  String get neighbors_receivedData;
+
+  /// No description provided for @neighbors_requestTimedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Neighbours request timed out.'**
+  String get neighbors_requestTimedOut;
+
+  /// No description provided for @neighbors_errorLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading neighbors: {error}'**
+  String neighbors_errorLoading(String error);
+
+  /// No description provided for @neighbors_repeatersNeighbours.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeaters Neighbours'**
+  String get neighbors_repeatersNeighbours;
+
+  /// No description provided for @neighbors_noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No neighbours data available.'**
+  String get neighbors_noData;
+
+  /// No description provided for @neighbors_unknownContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown {pubkey}'**
+  String neighbors_unknownContact(String pubkey);
+
+  /// No description provided for @neighbors_heardAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'Heard: {time} ago'**
+  String neighbors_heardAgo(String time);
 
   /// No description provided for @channelPath_title.
   ///

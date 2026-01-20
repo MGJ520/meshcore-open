@@ -1337,6 +1337,20 @@
   "listFilter_roomServers": "Smeti za prostore",
   "listFilter_unreadOnly": "Nezbrani samo",
   "listFilter_newGroup": "Nova skupina",
+  "@neighbors_errorLoading": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "repeater_neighboursSubtitle": "Pogledati nič sosednjih hopjev.",
+  "repeater_neighbours": "Sosedi",
+  "neighbors_receivedData": "Prejeto podatke o sosedih",
+  "neighbors_requestTimedOut": "Sosedi zahtevajo izklop po dogovoru.",
+  "neighbors_errorLoading": "Napaka pri obnašanju sosedov: {error}",
+  "neighbors_repeatersNeighbours": "Ponovitve Sosedi",
+  "neighbors_noData": "Niso na voljo podatki o sosedih.",
   "channels_joinPrivateChannel": "Pridružite se zasebni skupini",
   "channels_createPrivateChannelDesc": "Varno zaklenjeno s skrivnim ključem.",
   "channels_joinPrivateChannelDesc": "Ročno vnesite zaporni ključ.",
@@ -1349,6 +1363,22 @@
   "channels_scanQrCodeComingSoon": "Prihajajoča",
   "channels_enterHashtag": "Vnesite hashtag",
   "channels_hashtagHint": "npr. #ekipa",
+  "@neighbors_unknownContact": {
+    "placeholders": {
+      "pubkey": {
+        "type": "String"
+      }
+    }
+  },
+  "@neighbors_heardAgo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neighbors_unknownContact": "Nepoznano {pubkey}",
+  "neighbors_heardAgo": "Udeleženec je prejel sporočilo {time} nazaj.",
   "settings_locationGPSEnable": "Omogoči GPS",
   "settings_locationGPSEnableSubtitle": "Omogoči samodejno posodabljanje lokacije z GPS-jem.",
   "settings_locationIntervalSec": "Interval za GPS (Sekunde)",

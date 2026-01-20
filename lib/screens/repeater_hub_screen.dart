@@ -6,6 +6,7 @@ import 'repeater_status_screen.dart';
 import 'repeater_cli_screen.dart';
 import 'repeater_settings_screen.dart';
 import 'telemetry_screen.dart';
+import 'neighbours_screen.dart';
 
 class RepeaterHubScreen extends StatelessWidget {
   final Contact repeater;
@@ -169,13 +170,33 @@ class RepeaterHubScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 12),
+            // Neighbors button
+            _buildManagementCard(
+              context,
+              icon: Icons.group,
+              title: l10n.repeater_neighbours,
+              subtitle: l10n.repeater_neighboursSubtitle,
+              color: Colors.orange,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NeighboursScreen(
+                      repeater: repeater,
+                      password: password,
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 12),
             // Settings button
             _buildManagementCard(
               context,
               icon: Icons.settings,
               title: l10n.repeater_settings,
               subtitle: l10n.repeater_settingsSubtitle,
-              color: Colors.orange,
+              color: Colors.deepOrange,
               onTap: () {
                 Navigator.push(
                   context,

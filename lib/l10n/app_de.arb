@@ -1337,6 +1337,20 @@
   "listFilter_roomServers": "Raumserver",
   "listFilter_unreadOnly": "Nur nicht gelesen",
   "listFilter_newGroup": "Neue Gruppe",
+  "@neighbors_errorLoading": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "repeater_neighbours": "Nachbarn",
+  "repeater_neighboursSubtitle": "Anzahl der Hop-Nachbarn anzeigen.",
+  "neighbors_receivedData": "Empfangene Nachbarendaten",
+  "neighbors_requestTimedOut": "Nachbarn melden zeitweise Ausfall.",
+  "neighbors_errorLoading": "Fehler beim Laden der Nachbarn: {error}",
+  "neighbors_repeatersNeighbours": "Wiederholer Nachbarn",
+  "neighbors_noData": "Keine Nachbardaten verfügbar.",
   "channels_joinPrivateChannel": "Treten Sie einem privaten Kanal bei",
   "channels_joinPrivateChannelDesc": "Manuelle Eingabe eines geheimen Schlüssels.",
   "channels_createPrivateChannel": "Erstelle einen privaten Kanal",
@@ -1348,5 +1362,27 @@
   "channels_scanQrCode": "Scannen Sie einen QR-Code",
   "channels_scanQrCodeComingSoon": "Bald verfügbar",
   "channels_enterHashtag": "Gib Hashtag ein",
-  "channels_hashtagHint": "z.B. #team"
+  "channels_hashtagHint": "z.B. #team",
+  "@neighbors_unknownContact": {
+    "placeholders": {
+      "pubkey": {
+        "type": "String"
+      }
+    }
+  },
+  "@neighbors_heardAgo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "neighbors_heardAgo": "Hörte: {time} vor her.",
+  "neighbors_unknownContact": "Unbekannte {pubkey}",
+  "settings_locationGPSEnable": "GPS aktivieren",
+  "settings_locationGPSEnableSubtitle": "Aktiviert GPS zur automatischen Aktualisierung des Standorts.",
+  "settings_locationIntervalSec": "Intervall für GPS (Sekunden)",
+  "settings_locationIntervalInvalid": "Das Intervall muss mindestens 60 Sekunden und weniger als 86400 Sekunden betragen.",
+  "contacts_manageRoom": "Raum-Server verwalten",
+  "room_management": "Raum-Server-Verwaltung"
 }
