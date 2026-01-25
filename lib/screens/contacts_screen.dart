@@ -54,14 +54,11 @@ class _ContactsScreenState extends State<ContactsScreen>
   final ContactGroupStore _groupStore = ContactGroupStore();
   List<ContactGroup> _groups = [];
   Timer? _searchDebounce;
-  StreamSubscription<Uint8List>? _frameSubscription;
-  Uint8List _tagData = Uint8List(4);
   
   @override
   void initState() {
     super.initState();
     _loadGroups();
-    _setupFrameListener();
   }
 
   @override
@@ -69,44 +66,6 @@ class _ContactsScreenState extends State<ContactsScreen>
     _searchDebounce?.cancel();
     _searchController.dispose();
     super.dispose();
-  }
-
-  void _setupFrameListener() {
-    final connector = Provider.of<MeshCoreConnector>(context, listen: false);
-
-    // Listen for incoming text messages from the repeater
-    _frameSubscription = connector.receivedFrames.listen((frame) {
-      if (frame.isEmpty) return;
-
-      if (frame[0] == respCodeSent) {
-        _tagData = frame.sublist(2, 6);
-        print("Stored tag data: $_tagData");
-      }
-
-      // Check if it's a binary response
-      if (frame[0] == pushCodeTraceData && listEquals(frame.sublist(4, 8), _tagData)) {
-        if (!mounted) return;
-        _handleTraceResponse(frame);
-      }
-    });
-  }
-
-  Future<void> _handleTraceResponse(Uint8List frame)async {
-    final buffer = BufferReader(frame);
-    buffer.skipBytes(2); // Skip push code and reserved byte
-    int pathLength = buffer.readUInt8();
-    buffer.skipBytes(5); // Skip Flag byte and tag data
-    buffer.skipBytes(4); // Skip auth code
-    Uint8List pathData = buffer.readBytes(pathLength);
-    Uint8List snrData = buffer.readRemainingBytes();
-    print("Received path data length: $pathLength, SNR data length: ${snrData.length}");
-    showDialog(
-      context: context,
-      builder: (context) => PathTraceDialog(
-        pathData: pathData,
-        snrData: snrData,
-      ),
-    );
   }
 
   Future<void> _loadGroups() async {
@@ -799,16 +758,14 @@ class _ContactsScreenState extends State<ContactsScreen>
             if (isRepeater) ...[
               ListTile(
                 leading: const Icon(Icons.radar, color: Colors.green),
-                title: Text("Ping"),
-                onTap: () async {
-                        Navigator.pop(sheetContext);
-                        final frame = buildTraceReq(
-                          DateTime.now().millisecondsSinceEpoch ~/ 1000,
-                          0,
-                          0,
-                          payload: Uint8List.fromList([0x85,0x91,0x07,0x91,0x85]) //contact.publicKey.sublist(0,1),
-                        );
-                        await connector.sendFrame(frame);
+                title: contact.pathLength > 0 ? Text(context.l10n.contacts_pathTrace) : Text(context.l10n.contacts_ping),
+                onTap: () {
+                  showDialog(context: context, builder: (context) {
+                    return PathTraceDialog(
+                      title: contact.pathLength > 0 ? context.l10n.contacts_repeaterPathTrace : context.l10n.contacts_repeaterPing,
+                      path: contact.traceRouteBytes ?? Uint8List(0),
+                    );
+                  });
                 }
               ),
               ListTile(
@@ -822,15 +779,14 @@ class _ContactsScreenState extends State<ContactsScreen>
             ]else if (isRoom) ...[
               ListTile(
                 leading: const Icon(Icons.radar, color: Colors.green),
-                title: Text("Ping"),
-                onTap: () async {
-                        final frame = buildTraceReq(
-                          DateTime.now().millisecondsSinceEpoch ~/ 1000,
-                          0,
-                          0,
-                          payload: contact.publicKey.sublist(0,1),
-                        );
-                        await connector.sendFrame(frame);
+                title: contact.pathLength > 0 ? Text(context.l10n.contacts_pathTrace) : Text(context.l10n.contacts_ping),
+                onTap: () {
+                  showDialog(context: context, builder: (context) {
+                    return PathTraceDialog(
+                      title: contact.pathLength > 0 ? context.l10n.contacts_roomPathTrace : context.l10n.contacts_roomPing,
+                      path: contact.traceRouteBytes ?? Uint8List(0),
+                    );
+                  });
                 }
               ),
               ListTile(
@@ -849,7 +805,20 @@ class _ContactsScreenState extends State<ContactsScreen>
                   _showRoomLogin(context, contact, RoomLoginDestination.management);
                 },
               ),
-            ] else
+            ] else ...[
+              if(contact.pathLength > 0)
+              ListTile(
+                leading: const Icon(Icons.radar, color: Colors.green),
+                title: Text(context.l10n.contacts_chatTraceRoute),
+                onTap: () {
+                  showDialog(context: context, builder: (context) {
+                    return PathTraceDialog(
+                      title: context.l10n.contacts_pathTraceTo(contact.name),
+                      path: contact.traceRouteBytes ?? Uint8List(0),
+                    );
+                  });
+                }
+              ),
               ListTile(
                 leading: const Icon(Icons.chat),
                 title: Text(context.l10n.contacts_openChat),
@@ -869,6 +838,7 @@ class _ContactsScreenState extends State<ContactsScreen>
                 _confirmDelete(context, connector, contact);
               },
             ),
+            ],
           ],
         ),
       ),
@@ -923,8 +893,6 @@ class _ContactTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shotPublicKey =
-        "<${contact.publicKeyHex.substring(0, 8)}...${contact.publicKeyHex.substring(contact.publicKeyHex.length - 8)}>";
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: _getTypeColor(contact.type),
@@ -932,7 +900,7 @@ class _ContactTile extends StatelessWidget {
       ),
       title: Text(contact.name),
       subtitle: Text(
-        '${contact.typeLabel} • ${contact.pathLabel} $shotPublicKey',
+        '${contact.typeLabel} • ${contact.pathLabel} ${contact.shortPubKeyHex}',
       ),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
