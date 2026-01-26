@@ -73,7 +73,7 @@ class RepeaterHubScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '$repeater.shortPubKeyHex',
+                      repeater.shortPubKeyHex,
                       style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                     ),
                     const SizedBox(height: 8),
