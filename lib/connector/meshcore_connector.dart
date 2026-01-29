@@ -67,9 +67,9 @@ class MeshCoreConnector extends ChangeNotifier {
   final Map<int, List<ChannelMessage>> _channelMessages = {};
   final Set<String> _loadedConversationKeys = {};
   final Map<int, Set<String>> _processedChannelReactions =
-      {}; // channelIndex -> Set of "reactionKey_emoji"
+      {}; // channelIndex -> Set of "targetHash_emoji"
   final Map<String, Set<String>> _processedContactReactions =
-      {}; // contactPubKeyHex -> Set of "reactionKey_emoji"
+      {}; // contactPubKeyHex -> Set of "targetHash_emoji"
 
   StreamSubscription<List<ScanResult>>? _scanSubscription;
   StreamSubscription<BluetoothConnectionState>? _connectionSubscription;
@@ -1288,15 +1288,9 @@ class MeshCoreConnector extends ChangeNotifier {
     if (reactionInfo != null) {
       // Check if we've already processed this reaction
       _processedChannelReactions.putIfAbsent(channel.index, () => {});
-      final reactionKey = reactionInfo.reactionKey;
-      final reactionIdentifier = reactionKey != null
-          ? '${reactionKey}_${reactionInfo.emoji}'
-          : null;
+      final reactionIdentifier = '${reactionInfo.targetHash}_${reactionInfo.emoji}';
 
-      if (reactionIdentifier != null &&
-          _processedChannelReactions[channel.index]!.contains(
-            reactionIdentifier,
-          )) {
+      if (_processedChannelReactions[channel.index]!.contains(reactionIdentifier)) {
         // Already processed, don't process again
         return;
       }
@@ -1310,9 +1304,7 @@ class MeshCoreConnector extends ChangeNotifier {
       await _channelMessageStore.saveChannelMessages(channel.index, messages);
 
       // Mark this reaction as processed
-      if (reactionIdentifier != null) {
-        _processedChannelReactions[channel.index]!.add(reactionIdentifier);
-      }
+      _processedChannelReactions[channel.index]!.add(reactionIdentifier);
 
       notifyListeners();
 
@@ -2688,26 +2680,20 @@ class MeshCoreConnector extends ChangeNotifier {
     // Parse reaction info
     final reactionInfo = Message.parseReaction(message.text);
     if (reactionInfo != null) {
-      // Check if we've already processed this exact reaction using lightweight key
+      // Check if we've already processed this exact reaction
       _processedContactReactions.putIfAbsent(pubKeyHex, () => {});
-      final reactionKey = reactionInfo.reactionKey;
-      final reactionIdentifier = reactionKey != null
-          ? '${reactionKey}_${reactionInfo.emoji}'
-          : null;
+      final reactionIdentifier = '${reactionInfo.targetHash}_${reactionInfo.emoji}';
 
       final isDuplicate =
-          reactionIdentifier != null &&
           _processedContactReactions[pubKeyHex]!.contains(reactionIdentifier);
 
       if (!isDuplicate) {
         // New reaction - process it
-        _processContactReaction(messages, reactionInfo);
+        _processContactReaction(messages, reactionInfo, pubKeyHex);
         _messageStore.saveMessages(pubKeyHex, messages);
 
         // Mark as processed
-        if (reactionIdentifier != null) {
-          _processedContactReactions[pubKeyHex]!.add(reactionIdentifier);
-        }
+        _processedContactReactions[pubKeyHex]!.add(reactionIdentifier);
 
         notifyListeners();
       }
@@ -2722,15 +2708,51 @@ class MeshCoreConnector extends ChangeNotifier {
   void _processContactReaction(
     List<Message> messages,
     ReactionInfo reactionInfo,
+    String contactPubKeyHex,
   ) {
-    // Find target message by messageId
-    for (int i = 0; i < messages.length; i++) {
-      if (messages[i].messageId == reactionInfo.targetMessageId) {
-        final currentReactions = Map<String, int>.from(messages[i].reactions);
+    // Find target message by computing hash and comparing
+    final targetHash = reactionInfo.targetHash;
+    final contact = _contacts.cast<Contact?>().firstWhere(
+      (c) => c?.publicKeyHex == contactPubKeyHex,
+      orElse: () => null,
+    );
+    final isRoomServer = contact?.type == advTypeRoom;
+
+    for (int i = messages.length - 1; i >= 0; i--) {
+      final msg = messages[i];
+      
+      // For 1:1 chats: contact reacts to my outgoing messages only
+      // For room servers: any message can be reacted to (multi-user)
+      if (!isRoomServer && !msg.isOutgoing) continue;
+      
+      final timestampSecs = msg.timestamp.millisecondsSinceEpoch ~/ 1000;
+      
+      // For room servers, include sender name (resolve from fourByteRoomContactKey)
+      // For 1:1 chats, sender is implicit (null)
+      String? senderName;
+      if (isRoomServer && !msg.isOutgoing) {
+        // Resolve sender from the message's fourByteRoomContactKey
+        final senderContact = _contacts.cast<Contact?>().firstWhere(
+          (c) => c != null && _matchesPrefix(c.publicKey, msg.fourByteRoomContactKey),
+          orElse: () => null,
+        );
+        senderName = senderContact?.name;
+      } else if (isRoomServer && msg.isOutgoing) {
+        senderName = selfName;
+      }
+      // For 1:1, senderName stays null
+      
+      final msgHash = ReactionHelper.computeReactionHash(
+        timestampSecs,
+        senderName,
+        msg.text,
+      );
+      if (msgHash == targetHash) {
+        final currentReactions = Map<String, int>.from(msg.reactions);
         currentReactions[reactionInfo.emoji] =
             (currentReactions[reactionInfo.emoji] ?? 0) + 1;
 
-        messages[i] = messages[i].copyWith(reactions: currentReactions);
+        messages[i] = msg.copyWith(reactions: currentReactions);
         break;
       }
     }
@@ -2881,18 +2903,12 @@ class MeshCoreConnector extends ChangeNotifier {
     // Parse reaction info
     final reactionInfo = ChannelMessage.parseReaction(message.text);
     if (reactionInfo != null) {
-      // Check if we've already processed this exact reaction using lightweight key
+      // Check if we've already processed this exact reaction
       _processedChannelReactions.putIfAbsent(channelIndex, () => {});
-      final reactionKey = reactionInfo.reactionKey;
-      final reactionIdentifier = reactionKey != null
-          ? '${reactionKey}_${reactionInfo.emoji}'
-          : null;
+      final reactionIdentifier = '${reactionInfo.targetHash}_${reactionInfo.emoji}';
 
       final isDuplicate =
-          reactionIdentifier != null &&
-          _processedChannelReactions[channelIndex]!.contains(
-            reactionIdentifier,
-          );
+          _processedChannelReactions[channelIndex]!.contains(reactionIdentifier);
 
       if (!isDuplicate) {
         // New reaction - process it
@@ -2901,9 +2917,7 @@ class MeshCoreConnector extends ChangeNotifier {
         _channelMessageStore.saveChannelMessages(channelIndex, messages);
 
         // Mark as processed
-        if (reactionIdentifier != null) {
-          _processedChannelReactions[channelIndex]!.add(reactionIdentifier);
-        }
+        _processedChannelReactions[channelIndex]!.add(reactionIdentifier);
       }
       return false; // Don't add reaction as a visible message
     }
@@ -2999,14 +3013,22 @@ class MeshCoreConnector extends ChangeNotifier {
     List<ChannelMessage> messages,
     ReactionInfo reactionInfo,
   ) {
-    // Find target message by messageId
-    for (int i = 0; i < messages.length; i++) {
-      if (messages[i].messageId == reactionInfo.targetMessageId) {
-        final currentReactions = Map<String, int>.from(messages[i].reactions);
+    // Find target message by computing hash and comparing
+    final targetHash = reactionInfo.targetHash;
+    for (int i = messages.length - 1; i >= 0; i--) {
+      final msg = messages[i];
+      final timestampSecs = msg.timestamp.millisecondsSinceEpoch ~/ 1000;
+      final msgHash = ReactionHelper.computeReactionHash(
+        timestampSecs,
+        msg.senderName,
+        msg.text,
+      );
+      if (msgHash == targetHash) {
+        final currentReactions = Map<String, int>.from(msg.reactions);
         currentReactions[reactionInfo.emoji] =
             (currentReactions[reactionInfo.emoji] ?? 0) + 1;
 
-        messages[i] = messages[i].copyWith(reactions: currentReactions);
+        messages[i] = msg.copyWith(reactions: currentReactions);
         notifyListeners();
         break;
       }

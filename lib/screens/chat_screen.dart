@@ -11,6 +11,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../connector/meshcore_connector.dart';
 import '../connector/meshcore_protocol.dart';
+import '../helpers/reaction_helper.dart';
 import '../helpers/chat_scroll_controller.dart';
 import '../helpers/link_handler.dart';
 import '../helpers/utf8_length_limiter.dart';
@@ -850,14 +851,16 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ListTile(
-              leading: const Icon(Icons.add_reaction_outlined),
-              title: Text(context.l10n.chat_addReaction),
-              onTap: () {
-                Navigator.pop(sheetContext);
-                _showEmojiPicker(message);
-              },
-            ),
+            // Can't react to your own messages
+            if (!message.isOutgoing)
+              ListTile(
+                leading: const Icon(Icons.add_reaction_outlined),
+                title: Text(context.l10n.chat_addReaction),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  _showEmojiPicker(message, contact);
+                },
+              ),
             ListTile(
               leading: const Icon(Icons.copy),
               title: Text(context.l10n.common_copy),
@@ -931,25 +934,29 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _showEmojiPicker(Message message) {
+  void _showEmojiPicker(Message message, Contact senderContact) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (context) => EmojiPicker(
         onEmojiSelected: (emoji) {
-          _sendReaction(message, emoji);
+          _sendReaction(message, senderContact, emoji);
         },
       ),
     );
   }
 
-  void _sendReaction(Message message, String emoji) {
+  void _sendReaction(Message message, Contact senderContact, String emoji) {
     final connector = context.read<MeshCoreConnector>();
-    // Send reaction with messageId if available, otherwise use lightweight format
-    // Parser will extract reactionKey (timestamp_senderPrefix) for deduplication
-    final messageId = message.messageId ??
-        '${message.timestamp.millisecondsSinceEpoch}_${message.senderKeyHex.substring(0, 8)}';
-    final reactionText = 'r:$messageId:$emoji';
+    final emojiIndex = ReactionHelper.emojiToIndex(emoji);
+    if (emojiIndex == null) return; // Unknown emoji, skip
+    final timestampSecs = message.timestamp.millisecondsSinceEpoch ~/ 1000;
+    
+    // For room servers, include sender name (like channels) since multiple users
+    // For 1:1 chats, sender is implicit (null)
+    final senderName = widget.contact.type == advTypeRoom ? senderContact.name : null;
+    final hash = ReactionHelper.computeReactionHash(timestampSecs, senderName, message.text);
+    final reactionText = 'r:$hash:$emojiIndex';
     connector.sendMessage(widget.contact, reactionText);
   }
 }

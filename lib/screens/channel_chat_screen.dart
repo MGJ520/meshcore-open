@@ -11,6 +11,7 @@ import '../connector/meshcore_connector.dart';
 import '../helpers/chat_scroll_controller.dart';
 import '../connector/meshcore_protocol.dart';
 import '../helpers/link_handler.dart';
+import '../helpers/reaction_helper.dart';
 import '../helpers/utf8_length_limiter.dart';
 import '../l10n/l10n.dart';
 import '../models/channel.dart';
@@ -877,14 +878,16 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                 _setReplyingTo(message);
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.add_reaction_outlined),
-              title: Text(context.l10n.chat_addReaction),
-              onTap: () {
-                Navigator.pop(sheetContext);
-                _showEmojiPicker(message);
-              },
-            ),
+            // Can't react to your own messages
+            if (!message.isOutgoing)
+              ListTile(
+                leading: const Icon(Icons.add_reaction_outlined),
+                title: Text(context.l10n.chat_addReaction),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  _showEmojiPicker(message);
+                },
+              ),
             ListTile(
               leading: const Icon(Icons.copy),
               title: Text(context.l10n.common_copy),
@@ -926,9 +929,11 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
 
   void _sendReaction(ChannelMessage message, String emoji) {
     final connector = context.read<MeshCoreConnector>();
-    // Send reaction with full messageId to find target, but parser will extract
-    // lightweight reactionKey (timestamp_senderPrefix) for deduplication
-    final reactionText = 'r:${message.messageId}:$emoji';
+    final emojiIndex = ReactionHelper.emojiToIndex(emoji);
+    if (emojiIndex == null) return; // Unknown emoji, skip
+    final timestampSecs = message.timestamp.millisecondsSinceEpoch ~/ 1000;
+    final hash = ReactionHelper.computeReactionHash(timestampSecs, message.senderName, message.text);
+    final reactionText = 'r:$hash:$emojiIndex';
     connector.sendChannelMessage(widget.channel, reactionText);
   }
 
