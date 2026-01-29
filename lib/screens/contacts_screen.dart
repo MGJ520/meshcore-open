@@ -315,6 +315,14 @@ class _ContactsScreenState extends State<ContactsScreen>
       return matchesContactQuery(contact, _searchQuery);
     }).toList();
 
+    // Filter out own node from the list
+    if (connector.selfPublicKey != null) {
+      final selfPubKeyHex = pubKeyToHex(connector.selfPublicKey!);
+      filtered = filtered.where((contact) {
+        return contact.publicKeyHex != selfPubKeyHex;
+      }).toList();
+    }
+
     if (_typeFilter != ContactTypeFilter.all) {
       filtered = filtered.where(_matchesTypeFilter).toList();
     }
@@ -901,21 +909,30 @@ class _ContactTile extends StatelessWidget {
       subtitle: Text(
         '${contact.typeLabel} • ${contact.pathLabel} ${contact.shortPubKeyHex}',
       ),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          if (unreadCount > 0) ...[
-            UnreadBadge(count: unreadCount),
-            const SizedBox(height: 4),
-          ],
-          Text(
-            _formatLastSeen(context, lastSeen),
-            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+      // Clamp text scaling in trailing section to prevent overflow while
+      // maintaining accessibility. Primary content (title/subtitle) scales normally.
+      trailing: MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaler: TextScaler.linear(
+            MediaQuery.textScalerOf(context).scale(1.0).clamp(1.0, 1.3),
           ),
-          if (contact.hasLocation)
-            Icon(Icons.location_on, size: 14, color: Colors.grey[400]),
-        ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            if (unreadCount > 0) ...[
+              UnreadBadge(count: unreadCount),
+              const SizedBox(height: 4),
+            ],
+            Text(
+              _formatLastSeen(context, lastSeen),
+              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            ),
+            if (contact.hasLocation)
+              Icon(Icons.location_on, size: 14, color: Colors.grey[400]),
+          ],
+        ),
       ),
       onTap: onTap,
       onLongPress: onLongPress,

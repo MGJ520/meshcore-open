@@ -204,18 +204,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settings_locationInvalid => 'Latitude ou longitude invalide.';
 
   @override
-  String get settings_locationGPSEnable => 'Habilita GPS';
+  String get settings_locationGPSEnable => 'Activer le GPS';
 
   @override
   String get settings_locationGPSEnableSubtitle =>
-      'Habilita la actualización automática de la ubicación mediante GPS.';
+      'Activer la mise à jour automatique de la position via GPS';
 
   @override
-  String get settings_locationIntervalSec => 'Intervalo pour GPS (Segundos)';
+  String get settings_locationIntervalSec =>
+      'Intervalle de mise-à-jour du GPS (Secondes)';
 
   @override
   String get settings_locationIntervalInvalid =>
-      'El intervalo debe ser de al menos 60 segundos y menor que 86400 segundos.';
+      'L\'intervalle doit être compris entre 60 et 86400 secondes.';
 
   @override
   String get settings_latitude => 'Latitude';
@@ -272,7 +273,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Recharger la liste des contacts depuis l\'appareil';
 
   @override
-  String get settings_rebootDevice => 'Réinitialiser l\'appareil';
+  String get settings_rebootDevice => 'Redémarrer l\'appareil';
 
   @override
   String get settings_rebootDeviceSubtitle => 'Redémarrer l\'appareil MeshCore';
@@ -667,7 +668,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get contacts_manageRepeater => 'Gérer le répétiteur';
 
   @override
-  String get contacts_manageRoom => 'Gestionar Servidor de Habitación';
+  String get contacts_manageRoom => 'Gérer le Room Server';
 
   @override
   String get contacts_roomLogin => 'Connexion Salle';
@@ -687,7 +688,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get contacts_newGroup => 'Nouvelle Groupe';
+  String get contacts_newGroup => 'Nouveau Groupe';
 
   @override
   String get contacts_groupName => 'Nom du groupe';
@@ -711,27 +712,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get contacts_noMembers => 'Aucun membre';
 
   @override
-  String get contacts_lastSeenNow => 'Dernière fois vu maintenant';
+  String get contacts_lastSeenNow => 'Vu maintenant';
 
   @override
   String contacts_lastSeenMinsAgo(int minutes) {
-    return 'Dernière fois vu il y a $minutes minutes.';
+    return 'Vu il y a $minutes minutes';
   }
 
   @override
-  String get contacts_lastSeenHourAgo => 'Dernière fois vu il y a 1 heure.';
+  String get contacts_lastSeenHourAgo => 'Vu il y a 1 heure';
 
   @override
   String contacts_lastSeenHoursAgo(int hours) {
-    return 'Dernière fois vu il y a $hours heures.';
+    return 'Vu il y a $hours heures';
   }
 
   @override
-  String get contacts_lastSeenDayAgo => 'Dernière fois vu il y a 1 jour';
+  String get contacts_lastSeenDayAgo => 'Vu il y a 1 jour';
 
   @override
   String contacts_lastSeenDaysAgo(int days) {
-    return 'Dernière activité il y a $days jours';
+    return 'Vu il y a $days jours';
   }
 
   @override
@@ -845,7 +846,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get channels_sortAZ => 'A à Z';
 
   @override
-  String get channels_sortLatestMessages => 'Dernières messages';
+  String get channels_sortLatestMessages => 'Derniers messages';
 
   @override
   String get channels_sortUnread => 'Non lu';
@@ -888,7 +889,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get channels_enterHashtag => 'Entrez le hashtag';
 
   @override
-  String get channels_hashtagHint => 'ex. #équipe';
+  String get channels_hashtagHint => 'ex. #equipe';
 
   @override
   String get chat_noMessages => 'Aucun message pour le moment.';
@@ -936,7 +937,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String chat_retryCount(int current, int max) {
-    return 'Réessayer $current/$max';
+    return 'Essai $current/$max';
   }
 
   @override
@@ -1389,7 +1390,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String mapCache_cachedTilesWithFailed(int downloaded, int failed) {
-    return 'Tiles mis en cache ($downloaded) ($failed ratés)';
+    return 'Tuiles mis en cache ($downloaded) ($failed ratés)';
   }
 
   @override
@@ -1443,11 +1444,11 @@ class AppLocalizationsFr extends AppLocalizations {
     String east,
     String west,
   ) {
-    return 'N $north, S $south, E $east, W $west';
+    return 'N $north, S $south, E $east, O $west';
   }
 
   @override
-  String get time_justNow => 'Il y a tout juste maintenant';
+  String get time_justNow => 'Maintenant';
 
   @override
   String time_minutesAgo(int minutes) {
@@ -1743,7 +1744,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get repeater_received => 'Reçu';
 
   @override
-  String get repeater_duplicates => 'Dupliques';
+  String get repeater_duplicates => 'Doublons';
 
   @override
   String repeater_daysHoursMinsSecs(
@@ -1891,7 +1892,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Intervalle d\'annonces cryptées';
 
   @override
-  String get repeater_dangerZone => 'Zone d\'alerte';
+  String get repeater_dangerZone => 'Zone dangereuse';
 
   @override
   String get repeater_rebootRepeater => 'Redémarrer Répéteur';
@@ -2088,7 +2089,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repeater_cliHelpSetAllowReadOnly =>
-      '(Serveur de pièce) Si \"activé\", alors un mot de passe vide permettra la connexion, mais ne permettra pas de publier dans la pièce. (lecture seule uniquement)';
+      '(Room server) Si \"activé\", alors un mot de passe vide permettra la connexion, mais ne permettra pas de publier dans la pièce. (lecture seule uniquement)';
 
   @override
   String get repeater_cliHelpSetFloodMax =>
@@ -2632,7 +2633,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get community_addHashtagChannelDesc =>
-      'Ajouter un canal hachage pour cette communauté';
+      'Ajouter un canal hashtag pour cette communauté';
 
   @override
   String get community_selectCommunity => 'Sélectionner Communauté';
@@ -2663,7 +2664,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get listFilter_sortBy => 'Trier par';
 
   @override
-  String get listFilter_latestMessages => 'Dernières messages';
+  String get listFilter_latestMessages => 'Derniers messages';
 
   @override
   String get listFilter_heardRecently => 'Écoute récemment';
@@ -2684,11 +2685,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get listFilter_repeaters => 'Répéteurs';
 
   @override
-  String get listFilter_roomServers => 'Serveurs de pièce';
+  String get listFilter_roomServers => 'Room servers';
 
   @override
   String get listFilter_unreadOnly => 'Messages non lus seulement';
 
   @override
-  String get listFilter_newGroup => 'Nouvelle groupe';
+  String get listFilter_newGroup => 'Nouveau groupe';
 }

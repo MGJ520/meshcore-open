@@ -11,6 +11,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../connector/meshcore_connector.dart';
 import '../connector/meshcore_protocol.dart';
+import '../helpers/chat_scroll_controller.dart';
 import '../helpers/link_handler.dart';
 import '../helpers/utf8_length_limiter.dart';
 import '../models/channel_message.dart';
@@ -22,6 +23,7 @@ import 'map_screen.dart';
 import '../utils/emoji_utils.dart';
 import '../widgets/emoji_picker.dart';
 import '../widgets/gif_message.dart';
+import '../widgets/jump_to_bottom_button.dart';
 import '../widgets/gif_picker.dart';
 import '../widgets/path_selection_dialog.dart';
 import '../utils/app_logger.dart';
@@ -38,25 +40,44 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final _textController = TextEditingController();
-  final _scrollController = ScrollController();
+  final _scrollController = ChatScrollController();
+  final _textFieldFocusNode = FocusNode();
+  bool _isLoadingOlder = false;
 
   @override
   void initState() {
     super.initState();
+    _textFieldFocusNode.addListener(_onTextFieldFocusChange);
+    _scrollController.onScrollNearTop = _loadOlderMessages;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       context.read<MeshCoreConnector>().setActiveContact(widget.contact.publicKeyHex);
-
-      // Scroll to bottom when opening chat use SchedulerBinding for next frame
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-      }
     });
+  }
+
+  void _onTextFieldFocusChange() {
+    if (_textFieldFocusNode.hasFocus && mounted) {
+      _scrollController.handleKeyboardOpen();
+    }
+  }
+
+  Future<void> _loadOlderMessages() async {
+    if (_isLoadingOlder) return;
+    setState(() => _isLoadingOlder = true);
+
+    final connector = context.read<MeshCoreConnector>();
+    await connector.loadOlderMessages(widget.contact.publicKeyHex);
+
+    if (mounted) {
+      setState(() => _isLoadingOlder = false);
+    }
   }
 
   @override
   void dispose() {
     context.read<MeshCoreConnector>().setActiveContact(null);
+    _textFieldFocusNode.removeListener(_onTextFieldFocusChange);
+    _textFieldFocusNode.dispose();
     _textController.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -169,9 +190,16 @@ class _ChatScreenState extends State<ChatScreen> {
           return Column(
             children: [
               Expanded(
-                child: messages.isEmpty
-                    ? _buildEmptyState()
-                    : _buildMessageList(messages, connector),
+                child: Stack(
+                  children: [
+                    messages.isEmpty
+                        ? _buildEmptyState()
+                        : _buildMessageList(messages, connector),
+                    JumpToBottomButton(
+                      scrollController: _scrollController,
+                    ),
+                  ],
+                ),
               ),
               _buildInputBar(connector),
             ],
@@ -203,13 +231,37 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget _buildMessageList(List<Message> messages, MeshCoreConnector connector) {
+    // Reverse messages so newest appear at bottom with reverse: true
+    final reversedMessages = messages.reversed.toList();
+    final itemCount = reversedMessages.length + (_isLoadingOlder ? 1 : 0);
+
+    // Auto-scroll to bottom if user is already at bottom
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.scrollToBottomIfAtBottom();
+    });
+
     return ListView.builder(
+      reverse: true, // List grows from bottom up
       controller: _scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-      itemCount: messages.length,
+      itemCount: itemCount,
       itemBuilder: (context, index) {
+        // Loading indicator now appears at end (bottom) of reversed list
+        if (_isLoadingOlder && index == itemCount - 1) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ),
+          );
+        }
+        final messageIndex = index;
         Contact contact = widget.contact;
-        final message = messages[index];
+        final message = reversedMessages[messageIndex];
         String fourByteHex = '';
         if (widget.contact.type == advTypeRoom) {
           contact = _resolveContactFrom4Bytes(
@@ -258,13 +310,15 @@ class _ChatScreenState extends State<ChatScreen> {
                     return Row(
                       children: [
                         Expanded(
-                          child: GifMessage(
-                            url: 'https://media.giphy.com/media/$gifId/giphy.gif',
-                            backgroundColor: colorScheme.surfaceContainerHighest,
-                            fallbackTextColor:
-                                colorScheme.onSurface.withValues(alpha: 0.6),
-                            width: 160,
-                            height: 110,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: GifMessage(
+                              url: 'https://media.giphy.com/media/$gifId/giphy.gif',
+                              backgroundColor: colorScheme.surfaceContainerHighest,
+                              fallbackTextColor:
+                                  colorScheme.onSurface.withValues(alpha: 0.6),
+                              maxSize: 160,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -278,6 +332,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
                   return TextField(
                     controller: _textController,
+                    focusNode: _textFieldFocusNode,
                     inputFormatters: [
                       Utf8LengthLimitingTextInputFormatter(maxBytes),
                     ],
@@ -339,16 +394,6 @@ class _ChatScreenState extends State<ChatScreen> {
       text,
     );
     _textController.clear();
-
-    Future.delayed(const Duration(milliseconds: 100), () {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeOut,
-        );
-      }
-    });
   }
 
 
@@ -960,7 +1005,9 @@ class _MessageBubble extends StatelessWidget {
                 ],
                 Flexible(
                   child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: gifId != null
+                    ? const EdgeInsets.all(4)
+                    : const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.65,
                 ),
@@ -972,23 +1019,31 @@ class _MessageBubble extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (!isOutgoing) ...[
-                      Text(
-                        senderName,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: colorScheme.primary,
+                      Padding(
+                        padding: gifId != null
+                            ? const EdgeInsets.only(left: 8, top: 4, bottom: 4)
+                            : EdgeInsets.zero,
+                        child: Text(
+                          senderName,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.primary,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      if (gifId == null) const SizedBox(height: 4),
                     ],
                     if (poi != null)
                       _buildPoiMessage(context, poi, textColor, metaColor)
                     else if (gifId != null)
-                      GifMessage(
-                        url: 'https://media.giphy.com/media/$gifId/giphy.gif',
-                        backgroundColor: bubbleColor,
-                        fallbackTextColor: textColor.withValues(alpha: 0.7),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: GifMessage(
+                          url: 'https://media.giphy.com/media/$gifId/giphy.gif',
+                          backgroundColor: Colors.transparent,
+                          fallbackTextColor: textColor.withValues(alpha: 0.7),
+                        ),
                       )
                     else
                       Linkify(
@@ -1009,48 +1064,58 @@ class _MessageBubble extends StatelessWidget {
                       ),
                     if (isOutgoing && message.retryCount > 0) ...[
                       const SizedBox(height: 4),
-                      Text(
-                        context.l10n.chat_retryCount(message.retryCount, 4),
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: metaColor,
-                          fontWeight: FontWeight.w500,
+                      Padding(
+                        padding: gifId != null
+                            ? const EdgeInsets.symmetric(horizontal: 8)
+                            : EdgeInsets.zero,
+                        child: Text(
+                          context.l10n.chat_retryCount(message.retryCount, 4),
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: metaColor,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
                     const SizedBox(height: 4),
-                    Wrap(
-                      spacing: 4,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text(
-                          _formatTime(message.timestamp),
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: metaColor,
-                          ),
-                        ),
-                        if (isOutgoing) ...[
-                          const SizedBox(width: 4),
-                          _buildStatusIcon(metaColor),
-                        ],
-                        if (message.tripTimeMs != null &&
-                            message.status == MessageStatus.delivered) ...[
-                          const SizedBox(width: 4),
-                          Icon(
-                            Icons.speed,
-                            size: 10,
-                            color: isOutgoing ? metaColor : Colors.green[700],
-                          ),
+                    Padding(
+                      padding: gifId != null
+                          ? const EdgeInsets.only(left: 8, right: 8, bottom: 4)
+                          : EdgeInsets.zero,
+                      child: Wrap(
+                        spacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
                           Text(
-                            '${(message.tripTimeMs! / 1000).toStringAsFixed(1)}s',
+                            _formatTime(message.timestamp),
                             style: TextStyle(
-                              fontSize: 9,
-                              color: isOutgoing ? metaColor : Colors.green[700],
+                              fontSize: 10,
+                              color: metaColor,
                             ),
                           ),
+                          if (isOutgoing) ...[
+                            const SizedBox(width: 4),
+                            _buildStatusIcon(metaColor),
+                          ],
+                          if (message.tripTimeMs != null &&
+                              message.status == MessageStatus.delivered) ...[
+                            const SizedBox(width: 4),
+                            Icon(
+                              Icons.speed,
+                              size: 10,
+                              color: isOutgoing ? metaColor : Colors.green[700],
+                            ),
+                            Text(
+                              '${(message.tripTimeMs! / 1000).toStringAsFixed(1)}s',
+                              style: TextStyle(
+                                fontSize: 9,
+                                color: isOutgoing ? metaColor : Colors.green[700],
+                              ),
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
                   ],
                 ),

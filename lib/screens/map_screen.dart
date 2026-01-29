@@ -354,6 +354,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () => _showFilterDialog(context, settingsService),
+              tooltip: context.l10n.map_filterNodes,
               child: const Icon(Icons.filter_list),
             ),
           ),

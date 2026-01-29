@@ -8,6 +8,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
 import '../connector/meshcore_connector.dart';
+import '../helpers/chat_scroll_controller.dart';
 import '../connector/meshcore_protocol.dart';
 import '../helpers/link_handler.dart';
 import '../helpers/utf8_length_limiter.dart';
@@ -17,6 +18,7 @@ import '../models/channel_message.dart';
 import '../utils/emoji_utils.dart';
 import '../widgets/emoji_picker.dart';
 import '../widgets/gif_message.dart';
+import '../widgets/jump_to_bottom_button.dart';
 import '../widgets/gif_picker.dart';
 import 'channel_message_path_screen.dart';
 import 'map_screen.dart';
@@ -35,40 +37,49 @@ class ChannelChatScreen extends StatefulWidget {
 
 class _ChannelChatScreenState extends State<ChannelChatScreen> {
   final TextEditingController _textController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
+  final ChatScrollController _scrollController = ChatScrollController();
+  final FocusNode _textFieldFocusNode = FocusNode();
   ChannelMessage? _replyingToMessage;
   final Map<String, GlobalKey> _messageKeys = {};
+  bool _isLoadingOlder = false;
 
   @override
   void initState() {
     super.initState();
+    _textFieldFocusNode.addListener(_onTextFieldFocusChange);
+    _scrollController.onScrollNearTop = _loadOlderMessages;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       context.read<MeshCoreConnector>().setActiveChannel(widget.channel.index);
-
-      // Scroll to bottom when opening channel chat - use SchedulerBinding for next frame
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-      }
     });
+  }
+
+  void _onTextFieldFocusChange() {
+    if (_textFieldFocusNode.hasFocus && mounted) {
+      _scrollController.handleKeyboardOpen();
+    }
+  }
+
+  Future<void> _loadOlderMessages() async {
+    if (_isLoadingOlder) return;
+    setState(() => _isLoadingOlder = true);
+
+    final connector = context.read<MeshCoreConnector>();
+    await connector.loadOlderChannelMessages(widget.channel.index);
+
+    if (mounted) {
+      setState(() => _isLoadingOlder = false);
+    }
   }
 
   @override
   void dispose() {
     context.read<MeshCoreConnector>().setActiveChannel(null);
+    _textFieldFocusNode.removeListener(_onTextFieldFocusChange);
+    _textFieldFocusNode.dispose();
     _textController.dispose();
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _scrollToBottom() {
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    }
   }
 
   void _setReplyingTo(ChannelMessage message) {
@@ -155,10 +166,6 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                 builder: (context, connector, child) {
                   final messages = connector.getChannelMessages(widget.channel);
 
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    _scrollToBottom();
-                  });
-
                   if (messages.isEmpty) {
                     return Center(
                       child: Column(
@@ -192,20 +199,51 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                     );
                   }
 
-                  return ListView.builder(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.all(8),
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) {
-                      final message = messages[index];
-                      if (!_messageKeys.containsKey(message.messageId)) {
-                        _messageKeys[message.messageId] = GlobalKey();
-                      }
-                      return Container(
-                        key: _messageKeys[message.messageId]!,
-                        child: _buildMessageBubble(message),
-                      );
-                    },
+                  // Reverse messages so newest appear at bottom with reverse: true
+                  final reversedMessages = messages.reversed.toList();
+                  final itemCount = reversedMessages.length + (_isLoadingOlder ? 1 : 0);
+
+                  // Auto-scroll to bottom if user is already at bottom
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _scrollController.scrollToBottomIfAtBottom();
+                  });
+
+                  return Stack(
+                    children: [
+                      ListView.builder(
+                        reverse: true, // List grows from bottom up
+                        controller: _scrollController,
+                        padding: const EdgeInsets.all(8),
+                        itemCount: itemCount,
+                        itemBuilder: (context, index) {
+                          // Loading indicator now appears at end (bottom) of reversed list
+                          if (_isLoadingOlder && index == itemCount - 1) {
+                            return const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                              child: Center(
+                                child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                ),
+                              ),
+                            );
+                          }
+                          final messageIndex = index;
+                          final message = reversedMessages[messageIndex];
+                          if (!_messageKeys.containsKey(message.messageId)) {
+                            _messageKeys[message.messageId] = GlobalKey();
+                          }
+                          return Container(
+                            key: _messageKeys[message.messageId]!,
+                            child: _buildMessageBubble(message),
+                          );
+                        },
+                      ),
+                      JumpToBottomButton(
+                        scrollController: _scrollController,
+                      ),
+                    ],
                   );
                 },
               ),
@@ -243,7 +281,9 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                   onTap: () => _showMessagePathInfo(message),
                   onLongPress: () => _showMessageActions(message),
                   child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: gifId != null
+                    ? const EdgeInsets.all(4)
+                    : const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.65,
                 ),
@@ -257,15 +297,20 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (!isOutgoing) ...[
-                      Text(
-                        message.senderName,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
+                      Padding(
+                        padding: gifId != null
+                            ? const EdgeInsets.only(left: 8, top: 4, bottom: 4)
+                            : EdgeInsets.zero,
+                        child: Text(
+                          message.senderName,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      if (gifId == null) const SizedBox(height: 4),
                     ],
                     if (message.replyToMessageId != null) ...[
                       _buildReplyPreview(message),
@@ -274,12 +319,15 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                     if (poi != null)
                       _buildPoiMessage(context, poi, isOutgoing)
                     else if (gifId != null)
-                      GifMessage(
-                        url: 'https://media.giphy.com/media/$gifId/giphy.gif',
-                        backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                        fallbackTextColor: isOutgoing
-                            ? Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7)
-                            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: GifMessage(
+                          url: 'https://media.giphy.com/media/$gifId/giphy.gif',
+                          backgroundColor: Colors.transparent,
+                          fallbackTextColor: isOutgoing
+                              ? Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7)
+                              : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                        ),
                       )
                     else
                       Linkify(
@@ -299,46 +347,56 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                       ),
                     if (displayPath.isNotEmpty) ...[
                       const SizedBox(height: 4),
-                      Text(
-                        'via ${_formatPathPrefixes(displayPath)}',
-                        style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                      Padding(
+                        padding: gifId != null
+                            ? const EdgeInsets.symmetric(horizontal: 8)
+                            : EdgeInsets.zero,
+                        child: Text(
+                          'via ${_formatPathPrefixes(displayPath)}',
+                          style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                        ),
                       ),
                     ],
                     const SizedBox(height: 4),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          _formatTime(message.timestamp),
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        if (message.repeatCount > 0) ...[
-                          const SizedBox(width: 6),
-                          Icon(Icons.repeat, size: 12, color: Colors.grey[600]),
-                          const SizedBox(width: 2),
+                    Padding(
+                      padding: gifId != null
+                          ? const EdgeInsets.only(left: 8, right: 8, bottom: 4)
+                          : EdgeInsets.zero,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
                           Text(
-                            '${message.repeatCount}',
-                            style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                            _formatTime(message.timestamp),
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Colors.grey[600],
+                            ),
                           ),
+                          if (message.repeatCount > 0) ...[
+                            const SizedBox(width: 6),
+                            Icon(Icons.repeat, size: 12, color: Colors.grey[600]),
+                            const SizedBox(width: 2),
+                            Text(
+                              '${message.repeatCount}',
+                              style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                            ),
+                          ],
+                          if (isOutgoing) ...[
+                            const SizedBox(width: 4),
+                            Icon(
+                              message.status == ChannelMessageStatus.sent
+                                  ? Icons.check
+                                  : message.status == ChannelMessageStatus.pending
+                                      ? Icons.schedule
+                                      : Icons.error_outline,
+                              size: 14,
+                              color: message.status == ChannelMessageStatus.failed
+                                  ? Colors.red
+                                  : Colors.grey[600],
+                            ),
+                          ],
                         ],
-                        if (isOutgoing) ...[
-                          const SizedBox(width: 4),
-                          Icon(
-                            message.status == ChannelMessageStatus.sent
-                                ? Icons.check
-                                : message.status == ChannelMessageStatus.pending
-                                    ? Icons.schedule
-                                    : Icons.error_outline,
-                            size: 14,
-                            color: message.status == ChannelMessageStatus.failed
-                                ? Colors.red
-                                : Colors.grey[600],
-                          ),
-                        ],
-                      ],
+                      ),
                     ),
                   ],
                 ),
@@ -377,8 +435,7 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
           url: 'https://media.giphy.com/media/$gifId/giphy.gif',
           backgroundColor: colorScheme.surfaceContainerHighest,
           fallbackTextColor: previewTextColor,
-          width: 120,
-          height: 80,
+          maxSize: 80,
         ),
       );
     } else if (poi != null) {
@@ -703,14 +760,16 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                   return Row(
                     children: [
                       Expanded(
-                        child: GifMessage(
-                          url: 'https://media.giphy.com/media/$gifId/giphy.gif',
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surfaceContainerHighest,
-                          fallbackTextColor:
-                              Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
-                          width: 160,
-                          height: 110,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: GifMessage(
+                            url: 'https://media.giphy.com/media/$gifId/giphy.gif',
+                            backgroundColor:
+                                Theme.of(context).colorScheme.surfaceContainerHighest,
+                            fallbackTextColor:
+                                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                            maxSize: 160,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -724,6 +783,7 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
 
                 return TextField(
                   controller: _textController,
+                  focusNode: _textFieldFocusNode,
                   inputFormatters: [
                     Utf8LengthLimitingTextInputFormatter(maxBytes),
                   ],

@@ -104,7 +104,7 @@
   "settings_timeSynchronized": "Synchronisation temporelle",
   "settings_refreshContacts": "Rafraîchir les Contacts",
   "settings_refreshContactsSubtitle": "Recharger la liste des contacts depuis l'appareil",
-  "settings_rebootDevice": "Réinitialiser l'appareil",
+  "settings_rebootDevice": "Redémarrer l'appareil",
   "settings_rebootDeviceSubtitle": "Redémarrer l'appareil MeshCore",
   "settings_rebootDeviceConfirm": "Êtes-vous sûr de vouloir redémarrer l'appareil ? Vous serez déconnecté.",
   "settings_debug": "Déboguer",
@@ -279,7 +279,7 @@
       }
     }
   },
-  "contacts_newGroup": "Nouvelle Groupe",
+  "contacts_newGroup": "Nouveau Groupe",
   "contacts_groupName": "Nom du groupe",
   "contacts_groupNameRequired": "Le nom du groupe est obligatoire.",
   "contacts_groupAlreadyExists": "Le groupe \"{name}\" existe déjà.",
@@ -293,8 +293,8 @@
   "contacts_filterContacts": "Filtrer les contacts...",
   "contacts_noContactsMatchFilter": "Aucun contact ne correspond à votre filtre.",
   "contacts_noMembers": "Aucun membre",
-  "contacts_lastSeenNow": "Dernière fois vu maintenant",
-  "contacts_lastSeenMinsAgo": "Dernière fois vu il y a {minutes} minutes.",
+  "contacts_lastSeenNow": "Vu maintenant",
+  "contacts_lastSeenMinsAgo": "Vu il y a {minutes} minutes",
   "@contacts_lastSeenMinsAgo": {
     "placeholders": {
       "minutes": {
@@ -302,8 +302,8 @@
       }
     }
   },
-  "contacts_lastSeenHourAgo": "Dernière fois vu il y a 1 heure.",
-  "contacts_lastSeenHoursAgo": "Dernière fois vu il y a {hours} heures.",
+  "contacts_lastSeenHourAgo": "Vu il y a 1 heure",
+  "contacts_lastSeenHoursAgo": "Vu il y a {hours} heures",
   "@contacts_lastSeenHoursAgo": {
     "placeholders": {
       "hours": {
@@ -311,8 +311,8 @@
       }
     }
   },
-  "contacts_lastSeenDayAgo": "Dernière fois vu il y a 1 jour",
-  "contacts_lastSeenDaysAgo": "Dernière activité il y a {days} jours",
+  "contacts_lastSeenDayAgo": "Vu il y a 1 jour",
+  "contacts_lastSeenDaysAgo": "Vu il y a {days} jours",
   "@contacts_lastSeenDaysAgo": {
     "placeholders": {
       "days": {
@@ -394,7 +394,7 @@
   "channels_sortBy": "Trier par",
   "channels_sortManual": "Manuel",
   "channels_sortAZ": "A à Z",
-  "channels_sortLatestMessages": "Dernières messages",
+  "channels_sortLatestMessages": "Derniers messages",
   "channels_sortUnread": "Non lu",
   "chat_noMessages": "Aucun message pour le moment.",
   "chat_sendMessageToStart": "Envoyer un message pour commencer",
@@ -436,7 +436,7 @@
   "chat_messageCopied": "Message copié",
   "chat_messageDeleted": "Message supprimé",
   "chat_retryingMessage": "Tentative de récupération.",
-  "chat_retryCount": "Réessayer {current}/{max}",
+  "chat_retryCount": "Essai {current}/{max}",
   "@chat_retryCount": {
     "placeholders": {
       "current": {
@@ -699,7 +699,7 @@
       }
     }
   },
-  "mapCache_cachedTilesWithFailed": "Tiles mis en cache ({downloaded}) ({failed} ratés)",
+  "mapCache_cachedTilesWithFailed": "Tuiles mis en cache ({downloaded}) ({failed} ratés)",
   "@mapCache_cachedTilesWithFailed": {
     "placeholders": {
       "downloaded": {
@@ -746,7 +746,7 @@
       }
     }
   },
-  "mapCache_boundsLabel": "N {north}, S {south}, E {east}, W {west}",
+  "mapCache_boundsLabel": "N {north}, S {south}, E {east}, O {west}",
   "@mapCache_boundsLabel": {
     "placeholders": {
       "north": {
@@ -763,7 +763,7 @@
       }
     }
   },
-  "time_justNow": "Il y a tout juste maintenant",
+  "time_justNow": "Maintenant",
   "time_minutesAgo": "{minutes} minutes auparavant",
   "@time_minutesAgo": {
     "placeholders": {
@@ -911,7 +911,7 @@
   "repeater_packetStatistics": "Statistiques des paquets",
   "repeater_sent": "Envoyé",
   "repeater_received": "Reçu",
-  "repeater_duplicates": "Dupliques",
+  "repeater_duplicates": "Doublons",
   "repeater_daysHoursMinsSecs": "{days} jours {hours}h {minutes}m {seconds}s",
   "@repeater_daysHoursMinsSecs": {
     "placeholders": {
@@ -1024,7 +1024,7 @@
     }
   },
   "repeater_encryptedAdvertInterval": "Intervalle d'annonces cryptées",
-  "repeater_dangerZone": "Zone d'alerte",
+  "repeater_dangerZone": "Zone dangereuse",
   "repeater_rebootRepeater": "Redémarrer Répéteur",
   "repeater_rebootRepeaterSubtitle": "Réinitialiser l'appareil répétiteur",
   "repeater_rebootRepeaterConfirm": "Êtes-vous sûr de vouloir redémarrer ce répétiteur ?",
@@ -1120,7 +1120,7 @@
   "repeater_cliHelpSetAf": "Définit le facteur de temps d'air.",
   "repeater_cliHelpSetTx": "Définit la puissance de transmission LoRa en dBm (réinitialisation requise pour appliquer).",
   "repeater_cliHelpSetRepeat": "Active ou désactive le rôle du répétiteur pour ce nœud.",
-  "repeater_cliHelpSetAllowReadOnly": "(Serveur de pièce) Si \"activé\", alors un mot de passe vide permettra la connexion, mais ne permettra pas de publier dans la pièce. (lecture seule uniquement)",
+  "repeater_cliHelpSetAllowReadOnly": "(Room server) Si \"activé\", alors un mot de passe vide permettra la connexion, mais ne permettra pas de publier dans la pièce. (lecture seule uniquement)",
   "repeater_cliHelpSetFloodMax": "Définit le nombre maximal de sauts pour les paquets de balayage entrants (si >= max, le paquet n'est pas acheminé).",
   "repeater_cliHelpSetIntThresh": "Définit le seuil d'interférence (en dB). La valeur par défaut est de 14. Définir sur 0 désactive la détection des interférences de canal.",
   "repeater_cliHelpSetAgcResetInterval": "Définit l'intervalle pour réinitialiser le contrôleur de gain automatique. Mettez à 0 pour désactiver.",
@@ -1339,16 +1339,16 @@
   "channelPath_unknownRepeater": "Répéteur Inconnu",
   "listFilter_tooltip": "Filtrer et trier",
   "listFilter_sortBy": "Trier par",
-  "listFilter_latestMessages": "Dernières messages",
+  "listFilter_latestMessages": "Derniers messages",
   "listFilter_heardRecently": "Écoute récemment",
   "listFilter_az": "A à Z",
   "listFilter_filters": "Filtres",
   "listFilter_all": "Tout",
   "listFilter_users": "Utilisateurs",
   "listFilter_repeaters": "Répéteurs",
-  "listFilter_roomServers": "Serveurs de pièce",
+  "listFilter_roomServers": "Room servers",
   "listFilter_unreadOnly": "Messages non lus seulement",
-  "listFilter_newGroup": "Nouvelle groupe",
+  "listFilter_newGroup": "Nouveau groupe",
   "@neighbors_errorLoading": {
     "placeholders": {
       "error": {
@@ -1374,7 +1374,7 @@
   "channels_scanQrCode": "Scanner un code QR",
   "channels_scanQrCodeComingSoon": "Bientôt disponible",
   "channels_enterHashtag": "Entrez le hashtag",
-  "channels_hashtagHint": "ex. #équipe",
+  "channels_hashtagHint": "ex. #equipe",
   "@neighbors_unknownContact": {
     "placeholders": {
       "pubkey": {
@@ -1391,11 +1391,11 @@
   },
   "neighbors_unknownContact": "Clé publique inconnue {pubkey}",
   "neighbors_heardAgo": "Écouté : {time} auparavant",
-  "settings_locationGPSEnable": "Habilita GPS",
-  "settings_locationGPSEnableSubtitle": "Habilita la actualización automática de la ubicación mediante GPS.",
-  "settings_locationIntervalSec": "Intervalo pour GPS (Segundos)",
-  "settings_locationIntervalInvalid": "El intervalo debe ser de al menos 60 segundos y menor que 86400 segundos.",
-  "contacts_manageRoom": "Gestionar Servidor de Habitación",
+  "settings_locationGPSEnable": "Activer le GPS",
+  "settings_locationGPSEnableSubtitle": "Activer la mise à jour automatique de la position via GPS",
+  "settings_locationIntervalSec": "Intervalle de mise-à-jour du GPS (Secondes)",
+  "settings_locationIntervalInvalid": "L'intervalle doit être compris entre 60 et 86400 secondes.",
+  "contacts_manageRoom": "Gérer le Room Server",
   "room_management": "Administración del Servidor de Habitación",
   "@community_joinConfirmation": {
     "placeholders": {
@@ -1492,7 +1492,7 @@
   },
   "community_deleted": "Communauté \"{name}\" quittée",
   "community_addHashtagChannel": "Ajouter un Hashtag Communauté",
-  "community_addHashtagChannelDesc": "Ajouter un canal hachage pour cette communauté",
+  "community_addHashtagChannelDesc": "Ajouter un canal hashtag pour cette communauté",
   "community_selectCommunity": "Sélectionner Communauté",
   "community_regularHashtag": "Hashtag régulier",
   "community_regularHashtagDesc": "Hashtag public (tout le monde peut rejoindre)",

@@ -146,6 +146,7 @@ class MeshCoreConnector extends ChangeNotifier {
   final Set<String> _knownContactKeys = {};
   final Map<String, int> _contactLastReadMs = {};
   final Map<int, int> _channelLastReadMs = {};
+  bool _unreadStateLoaded = false;
   final Map<String, _RepeaterAckContext> _pendingRepeaterAcks = {};
   String? _activeContactKey;
   int? _activeChannelIndex;
@@ -317,6 +318,7 @@ class MeshCoreConnector extends ChangeNotifier {
   }
 
   int getUnreadCountForContactKey(String contactKeyHex) {
+    if (!_unreadStateLoaded) return 0;
     if (!_shouldTrackUnreadForContactKey(contactKeyHex)) return 0;
     final messages = _conversations[contactKeyHex];
     if (messages == null || messages.isEmpty) return 0;
@@ -336,6 +338,7 @@ class MeshCoreConnector extends ChangeNotifier {
   }
 
   int getUnreadCountForChannelIndex(int channelIndex) {
+    if (!_unreadStateLoaded) return 0;
     final messages = _channelMessages[channelIndex];
     if (messages == null || messages.isEmpty) return 0;
     final lastReadMs = _channelLastReadMs[channelIndex] ?? 0;
@@ -350,6 +353,7 @@ class MeshCoreConnector extends ChangeNotifier {
   }
 
   int getTotalUnreadCount() {
+    if (!_unreadStateLoaded) return 0;
     var total = 0;
     // Count unread contact messages
     for (final contact in _contacts) {
@@ -381,6 +385,7 @@ class MeshCoreConnector extends ChangeNotifier {
     _channelLastReadMs
       ..clear()
       ..addAll(await _unreadStore.loadChannelLastRead());
+    _unreadStateLoaded = true;
     notifyListeners();
   }
 
@@ -619,6 +624,32 @@ class MeshCoreConnector extends ChangeNotifier {
 
     _scanResults.clear();
     _setState(MeshCoreConnectionState.scanning);
+
+    // Ensure any previous scan is fully stopped
+    await FlutterBluePlus.stopScan();
+    await _scanSubscription?.cancel();
+
+    // On iOS/macOS, wait for Bluetooth to be powered on before scanning
+    if (defaultTargetPlatform == TargetPlatform.iOS ||
+        defaultTargetPlatform == TargetPlatform.macOS) {
+      // Wait for adapter state to be powered on
+      final adapterState = await FlutterBluePlus.adapterState.first;
+      if (adapterState != BluetoothAdapterState.on) {
+        // Wait for the adapter to turn on, with timeout
+        await FlutterBluePlus.adapterState
+            .firstWhere((state) => state == BluetoothAdapterState.on)
+            .timeout(
+              const Duration(seconds: 5),
+              onTimeout: () {
+                _setState(MeshCoreConnectionState.disconnected);
+                throw Exception('Bluetooth adapter not available');
+              },
+            );
+      }
+
+      // Add a small delay to allow BLE stack to fully initialize
+      await Future.delayed(const Duration(milliseconds: 300));
+    }
 
     _scanSubscription = FlutterBluePlus.scanResults.listen((results) {
       _scanResults.clear();
@@ -928,7 +959,12 @@ class MeshCoreConnector extends ChangeNotifier {
     if (!isConnected) return;
     if (_batteryRequested && !force) return;
     _batteryRequested = true;
-    await sendFrame(buildGetBattAndStorageFrame());
+    try {
+      await sendFrame(buildGetBattAndStorageFrame());
+    } catch (e) {
+      // Connection likely lost - trigger disconnection handling
+      _handleDisconnection();
+    }
   }
 
   void _startBatteryPolling() {

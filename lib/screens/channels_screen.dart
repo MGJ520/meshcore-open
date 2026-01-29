@@ -312,6 +312,7 @@ class _ChannelsScreenState extends State<ChannelsScreen>
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _showAddChannelDialog(context),
+          tooltip: context.l10n.channels_addChannel,
           child: const Icon(Icons.add),
         ),
         bottomNavigationBar: SafeArea(
