@@ -121,24 +121,44 @@ class _ChannelsScreenState extends State<ChannelsScreen>
           centerTitle: true,
           automaticallyImplyLeading: false,
           actions: [
-            if (_communities.isNotEmpty)
-              IconButton(
-                icon: const Icon(Icons.groups),
-                tooltip: context.l10n.community_manageCommunities,
-                onPressed: () => _showManageCommunitiesDialog(context),
-              ),
-            IconButton(
-              icon: const Icon(Icons.bluetooth_disabled),
-              tooltip: context.l10n.common_disconnect,
-              onPressed: () => _disconnect(context),
-            ),
-            IconButton(
-              icon: const Icon(Icons.tune),
-              tooltip: context.l10n.common_settings,
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
-              ),
+            PopupMenuButton(
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Row(
+                    children: [
+                      const Icon(Icons.logout, color: Colors.red),
+                      const SizedBox(width: 8),
+                      Text(context.l10n.common_disconnect),
+                    ],
+                  ),
+                  onTap: () => _disconnect(context),
+                ),
+                if (_communities.isNotEmpty)
+                  PopupMenuItem(
+                    child: Row(
+                      children: [
+                        const Icon(Icons.groups),
+                        const SizedBox(width: 8),
+                        Text(context.l10n.community_manageCommunities),
+                      ],
+                    ),
+                    onTap: () => _showManageCommunitiesDialog(context),
+                  ),
+                PopupMenuItem(
+                  child: Row(
+                    children: [
+                      const Icon(Icons.settings),
+                      const SizedBox(width: 8),
+                      Text(context.l10n.settings_title),
+                    ],
+                  ),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                  ),
+                ),
+              ],
+              icon: const Icon(Icons.more_vert),
             ),
           ],
         ),
