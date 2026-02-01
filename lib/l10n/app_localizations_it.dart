@@ -447,10 +447,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Russo';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Ucraino';
 
   @override
   String get appSettings_notifications => 'Notifiche';
@@ -2721,4 +2721,52 @@ class AppLocalizationsIt extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Traccia percorso verso $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'La clipboard è vuota.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Dati di contatto non validi';
+
+  @override
+  String get contacts_contactImported => 'Il contatto è stato importato.';
+
+  @override
+  String get contacts_contactImportFailed =>
+      'Contatto non importato con successo.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Annuncio Zero Hop';
+
+  @override
+  String get contacts_floodAdvert => 'Annuncio alluvionale';
+
+  @override
+  String get contacts_copyAdvertToClipboard => 'Copia Annuncio negli Appunti';
+
+  @override
+  String get contacts_addContactFromClipboard =>
+      'Aggiungere contatto dalla clipboard';
+
+  @override
+  String get contacts_ShareContact => 'Copia contatto negli Appunti';
+
+  @override
+  String get contacts_ShareContactZeroHop =>
+      'Condividi contatto tramite annuncio';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent =>
+      'Inviato contatto tramite annuncio.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Invio del contatto non riuscito.';
+
+  @override
+  String get contacts_contactAdvertCopied => 'Annuncio copiato negli Appunti.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Copia dell\'annuncio nella Clipboard non riuscita.';
 }

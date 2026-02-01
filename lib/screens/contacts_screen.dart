@@ -34,6 +34,12 @@ enum RoomLoginDestination {
   management,
 }
 
+enum ContactOperationType {
+  import,
+  export,
+  zeroHopShare,
+}
+
 class ContactsScreen extends StatefulWidget {
   final bool hideBackButton;
 
@@ -54,9 +60,7 @@ class _ContactsScreenState extends State<ContactsScreen>
   List<ContactGroup> _groups = [];
   Timer? _searchDebounce;
 
-  bool _imported = false;
-  bool _zeroHopContact = false;
-  bool _copyedContact = false;
+  final Set<ContactOperationType> _pendingOperations = {};
 
   StreamSubscription<Uint8List>? _frameSubscription;
 
@@ -97,57 +101,67 @@ class _ContactsScreenState extends State<ContactsScreen>
 
       if (code == respCodeExportContact) {
         final advertPacket = frameBuffer.readRemainingBytes();
+        // Validate packet has expected minimum size (98+ bytes per protocol)
+        if (advertPacket.length < 98) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(context.l10n.contacts_invalidAdvertFormat)),
+            );
+          }
+          _pendingOperations.remove(ContactOperationType.export);
+          return;
+        }
         final hexString = pubKeyToHex(advertPacket);
         Clipboard.setData(ClipboardData(text: "meshcore://$hexString"));
       }
 
       if(code == respCodeOk) {
         // Show a snackbar indicating success
-        if(_imported && mounted){
+        if(!mounted) return;
+
+        if(_pendingOperations.contains(ContactOperationType.import)){
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.contacts_contactImported)),
           );
         }
 
-        if(_zeroHopContact && mounted) {
+        if(_pendingOperations.contains(ContactOperationType.zeroHopShare)) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.contacts_zeroHopContactAdvertSent)),
           );
         }
 
-        if(_copyedContact && mounted) {
+        if(_pendingOperations.contains(ContactOperationType.export)) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.contacts_contactAdvertCopied)),
           );
         }
-        
-        _copyedContact = false;
-        _zeroHopContact = false;
-        _imported = false;
+
+        _pendingOperations.clear();
       }
 
       if(code == respCodeErr) {
         // Show a snackbar indicating failure
-        if(_imported && mounted){
+        if(!mounted) return;
+
+        if(_pendingOperations.contains(ContactOperationType.import)){
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.contacts_contactImportFailed)),
           );
         }
 
-        if(_zeroHopContact && mounted) {
+        if(_pendingOperations.contains(ContactOperationType.zeroHopShare)) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.contacts_zeroHopContactAdvertFailed)),
           );
         }
-        if(_copyedContact && mounted) {
+        if(_pendingOperations.contains(ContactOperationType.export)) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(context.l10n.contacts_contactAdvertCopyFailed)),
           );
         }
 
-        _copyedContact = false;
-        _imported = false;
-        _zeroHopContact = false;
+        _pendingOperations.clear();
       }
 
     });
@@ -156,15 +170,14 @@ class _ContactsScreenState extends State<ContactsScreen>
   Future<void> _contactExport(Uint8List pubKey) async {
     final connector = Provider.of<MeshCoreConnector>(context, listen: false);
     final exportContactFrame = buildExportContactFrame(pubKey);
-    _copyedContact = true;
+    _pendingOperations.add(ContactOperationType.export);
     await connector.sendFrame(exportContactFrame);
-    return;
   }
 
   Future<void> _contactZeroHop(Uint8List pubKey) async {
     final connector = Provider.of<MeshCoreConnector>(context, listen: false);
     final exportContactZeroHopFrame = buildZeroHopContact(pubKey);
-    _zeroHopContact = true;
+    _pendingOperations.add(ContactOperationType.zeroHopShare);
     await connector.sendFrame(exportContactZeroHopFrame);
   }
 
@@ -191,8 +204,8 @@ class _ContactsScreenState extends State<ContactsScreen>
     final hexString = text.substring('meshcore://'.length);
     try {
       final importContactFrame = buildImportContactFrame(hexString);
+      _pendingOperations.add(ContactOperationType.import);
       await connector.sendFrame(importContactFrame);
-      _imported = true;
     } catch (e) {
       if(mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

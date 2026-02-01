@@ -449,10 +449,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Russo';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Ucraniano';
 
   @override
   String get appSettings_notifications => 'Notificações';
@@ -2721,4 +2721,51 @@ class AppLocalizationsPt extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Rastrear rota para $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Área de Transferência Está Vazia.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Dados de Contato Inválidos';
+
+  @override
+  String get contacts_contactImported => 'Contato foi importado.';
+
+  @override
+  String get contacts_contactImportFailed => 'Contato falhou ao ser importado.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Anúncio Zero Hop';
+
+  @override
+  String get contacts_floodAdvert => 'Anúncio de Inundação';
+
+  @override
+  String get contacts_copyAdvertToClipboard =>
+      'Copiar Anúncio para Área de Transferência';
+
+  @override
+  String get contacts_addContactFromClipboard =>
+      'Adicionar Contato da Área de Transferência';
+
+  @override
+  String get contacts_ShareContact =>
+      'Copiar contato para Área de Transferência';
+
+  @override
+  String get contacts_ShareContactZeroHop => 'Compartilhar contato por anúncio';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent => 'Enviou contato por anúncio.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed => 'Falha ao enviar contato.';
+
+  @override
+  String get contacts_contactAdvertCopied =>
+      'Anúncio copiado para a Área de Transferência.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Cópia do anúncio para a Área de Transferência falhou.';
 }

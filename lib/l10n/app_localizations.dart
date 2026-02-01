@@ -4771,6 +4771,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Trace route to {name}'**
   String contacts_pathTraceTo(String name);
+
+  /// No description provided for @contacts_clipboardEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Clipboard is empty.'**
+  String get contacts_clipboardEmpty;
+
+  /// No description provided for @contacts_invalidAdvertFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid contact data'**
+  String get contacts_invalidAdvertFormat;
+
+  /// No description provided for @contacts_contactImported.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact has been imported.'**
+  String get contacts_contactImported;
+
+  /// No description provided for @contacts_contactImportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to import contact.'**
+  String get contacts_contactImportFailed;
+
+  /// No description provided for @contacts_zeroHopAdvert.
+  ///
+  /// In en, this message translates to:
+  /// **'Zero Hop Advert'**
+  String get contacts_zeroHopAdvert;
+
+  /// No description provided for @contacts_floodAdvert.
+  ///
+  /// In en, this message translates to:
+  /// **'Flood Advert'**
+  String get contacts_floodAdvert;
+
+  /// No description provided for @contacts_copyAdvertToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Advert to Clipboard'**
+  String get contacts_copyAdvertToClipboard;
+
+  /// No description provided for @contacts_addContactFromClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Contact from Clipboard'**
+  String get contacts_addContactFromClipboard;
+
+  /// No description provided for @contacts_ShareContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy contact to Clipboard'**
+  String get contacts_ShareContact;
+
+  /// No description provided for @contacts_ShareContactZeroHop.
+  ///
+  /// In en, this message translates to:
+  /// **'Share contact by advert'**
+  String get contacts_ShareContactZeroHop;
+
+  /// No description provided for @contacts_zeroHopContactAdvertSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent contact by advert.'**
+  String get contacts_zeroHopContactAdvertSent;
+
+  /// No description provided for @contacts_zeroHopContactAdvertFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send contact.'**
+  String get contacts_zeroHopContactAdvertFailed;
+
+  /// No description provided for @contacts_contactAdvertCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Advert copied to Clipboard.'**
+  String get contacts_contactAdvertCopied;
+
+  /// No description provided for @contacts_contactAdvertCopyFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Copying advert to Clipboard failed.'**
+  String get contacts_contactAdvertCopyFailed;
 }
 
 class _AppLocalizationsDelegate

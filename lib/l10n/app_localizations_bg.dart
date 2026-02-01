@@ -451,10 +451,10 @@ class AppLocalizationsBg extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Руски';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Украински';
 
   @override
   String get appSettings_notifications => 'Уведомления';
@@ -2720,4 +2720,50 @@ class AppLocalizationsBg extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Проследи маршрут към $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Клипборда е празна.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Невалидни данни за контакт';
+
+  @override
+  String get contacts_contactImported => 'Контактът е импортиран.';
+
+  @override
+  String get contacts_contactImportFailed =>
+      'Контактът не е успешно импортиран.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Реклама без скок';
+
+  @override
+  String get contacts_floodAdvert => 'Потопна реклама';
+
+  @override
+  String get contacts_copyAdvertToClipboard => 'Копирай обявата в клипборда';
+
+  @override
+  String get contacts_addContactFromClipboard => 'Добави контакт от клипборда';
+
+  @override
+  String get contacts_ShareContact => 'Копирай контакт в клипборда';
+
+  @override
+  String get contacts_ShareContactZeroHop => 'Сподели контакт чрез обява';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent => 'Изпратен контакт по обява.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Неуспешно изпращане на контакт.';
+
+  @override
+  String get contacts_contactAdvertCopied =>
+      'Рекламата е копирана в клипборда.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Копирането на обявата в клипборда не успя.';
 }

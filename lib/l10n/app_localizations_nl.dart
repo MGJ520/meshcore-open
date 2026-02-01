@@ -445,10 +445,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Russisch';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Oekraïens';
 
   @override
   String get appSettings_notifications => 'Notificaties';
@@ -2710,4 +2710,52 @@ class AppLocalizationsNl extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Trace route to $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Knipbord is leeg.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Ongeldige contactgegevens';
+
+  @override
+  String get contacts_contactImported => 'Contact is geïmporteerd.';
+
+  @override
+  String get contacts_contactImportFailed =>
+      'Contact kon niet geïmporteerd worden.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Zero Hop Reclame';
+
+  @override
+  String get contacts_floodAdvert => 'Overstromingsadvertentie';
+
+  @override
+  String get contacts_copyAdvertToClipboard => 'Advert naar klembord kopiëren';
+
+  @override
+  String get contacts_addContactFromClipboard =>
+      'Contact uit klembord toevoegen';
+
+  @override
+  String get contacts_ShareContact => 'Kontakt naar Klembord kopiëren';
+
+  @override
+  String get contacts_ShareContactZeroHop => 'Contact delen via advertentie';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent =>
+      'Contact verzonden via advertentie';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Mislukt om contact te verzenden';
+
+  @override
+  String get contacts_contactAdvertCopied =>
+      'Reclame gekopieerd naar Klembord.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Kopiëren van advertentie naar Clipboard is mislukt.';
 }

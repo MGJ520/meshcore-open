@@ -1316,7 +1316,6 @@
   "pathTrace_failed": "Path trace failed.",
   "pathTrace_notAvailable": "Path trace not available.",
   "pathTrace_refreshTooltip": "Refresh Path Trace.",
-  
   "contacts_pathTrace": "Path Trace",
   "contacts_ping": "Ping",
   "contacts_repeaterPathTrace": "Path trace to repeater",
@@ -1331,10 +1330,10 @@
     }
   },
 
-  "contacts_clipboardEmpty": "Clipboard Is Empty.",
-  "contacts_invalidAdvertFormat": "Invalid Contact Data",
-  "contacts_contactImported": "Contact has been Imported.",
-  "contacts_contactImportFailed": "Contact Failed to Imported.",
+  "contacts_clipboardEmpty": "Clipboard is empty.",
+  "contacts_invalidAdvertFormat": "Invalid contact data",
+  "contacts_contactImported": "Contact has been imported.",
+  "contacts_contactImportFailed": "Failed to import contact.",
   "contacts_zeroHopAdvert":"Zero Hop Advert",
   "contacts_floodAdvert":"Flood Advert",
   "contacts_copyAdvertToClipboard":"Copy Advert to Clipboard",

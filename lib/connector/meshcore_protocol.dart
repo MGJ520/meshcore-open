@@ -104,9 +104,18 @@ class BufferWriter {
   }
 
   void writeHex(String hex) {
+    // Validate hex string length is even and not empty
+    if (hex.isEmpty || hex.length % 2 != 0) {
+      throw FormatException('Invalid hex string length: ${hex.length}');
+    }
     List<int> result = [];
     for (int i = 0; i < hex.length ~/ 2; i++) {
-      result.add(int.parse(hex.substring(i * 2, i * 2 + 2), radix: 16));
+      final hexByte = hex.substring(i * 2, i * 2 + 2);
+      final byte = int.tryParse(hexByte, radix: 16);
+      if (byte == null) {
+        throw FormatException('Invalid hex characters at position $i: $hexByte');
+      }
+      result.add(byte);
     }
     writeBytes(Uint8List.fromList(result));
   }

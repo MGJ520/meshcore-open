@@ -447,7 +447,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Російська';
 
   @override
   String get appSettings_languageUk => 'Українська';
@@ -2730,4 +2730,53 @@ class AppLocalizationsUk extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Відстежити маршрут до $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Буфер обміну порожній';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Недійсні контактні дані';
+
+  @override
+  String get contacts_contactImported => 'Контакт було імпортовано.';
+
+  @override
+  String get contacts_contactImportFailed => 'Контакт не вдалося імпортувати';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Реклама без перехоплення';
+
+  @override
+  String get contacts_floodAdvert => 'Залив реклами';
+
+  @override
+  String get contacts_copyAdvertToClipboard =>
+      'Копіювати оголошення в буфер обміну';
+
+  @override
+  String get contacts_addContactFromClipboard =>
+      'Додати контакт з буфера обміну';
+
+  @override
+  String get contacts_ShareContact => 'Копіювати контакт у буфер обміну';
+
+  @override
+  String get contacts_ShareContactZeroHop =>
+      'Поділитися контактом за оголошенням';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent =>
+      'Відправлено контакт за оголошенням';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Не вдалося надіслати контакт.';
+
+  @override
+  String get contacts_contactAdvertCopied =>
+      'Рекламу скопійовано до буфера обміну.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Копіювання оголошення в буфер обміну завершилося невдало';
 }

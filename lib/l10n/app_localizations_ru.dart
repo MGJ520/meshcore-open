@@ -2723,4 +2723,54 @@ class AppLocalizationsRu extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Показать маршрут к $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Буфер обмена пуст.';
+
+  @override
+  String get contacts_invalidAdvertFormat =>
+      'Недействительные контактные данные';
+
+  @override
+  String get contacts_contactImported => 'Контакт был импортирован';
+
+  @override
+  String get contacts_contactImportFailed => 'Контакт не удалось импортировать';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Реклама Zero Hop';
+
+  @override
+  String get contacts_floodAdvert => 'Рекламный поток';
+
+  @override
+  String get contacts_copyAdvertToClipboard =>
+      'Копировать рекламу в буфер обмена';
+
+  @override
+  String get contacts_addContactFromClipboard =>
+      'Добавить контакт из буфера обмена';
+
+  @override
+  String get contacts_ShareContact => 'Копировать контакт в буфер обмена';
+
+  @override
+  String get contacts_ShareContactZeroHop =>
+      'Поделиться контактом по объявлению';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent =>
+      'Отправлено сообщение по объявлению.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Не удалось отправить контакт.';
+
+  @override
+  String get contacts_contactAdvertCopied =>
+      'Реклама скопирована в буфер обмена.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Копирование рекламы в буфер обмена не удалось.';
 }

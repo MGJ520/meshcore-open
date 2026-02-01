@@ -448,10 +448,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Ruso';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Ucraniano';
 
   @override
   String get appSettings_notifications => 'Notificaciones';
@@ -2720,4 +2720,50 @@ class AppLocalizationsEs extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Rastrear ruta a $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'El portapapeles está vacío.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Datos de contacto no válidos';
+
+  @override
+  String get contacts_contactImported => 'El contacto ha sido importado.';
+
+  @override
+  String get contacts_contactImportFailed =>
+      'Contacto no se importó correctamente.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Anuncio de Zero Hop';
+
+  @override
+  String get contacts_floodAdvert => 'Anuncio de inundación';
+
+  @override
+  String get contacts_copyAdvertToClipboard => 'Copiar anuncio al portapapeles';
+
+  @override
+  String get contacts_addContactFromClipboard =>
+      'Agregar contacto desde el portapapeles';
+
+  @override
+  String get contacts_ShareContact => 'Copiar contacto al Portapapeles';
+
+  @override
+  String get contacts_ShareContactZeroHop => 'Compartir contacto por anuncio';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent => 'Envió contacto por anuncio.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'No se pudo enviar el contacto.';
+
+  @override
+  String get contacts_contactAdvertCopied => 'Anuncio copiado al Portapapeles.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Copiar anuncio al Portapapeles ha fallado.';
 }
