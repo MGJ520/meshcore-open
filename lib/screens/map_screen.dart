@@ -245,20 +245,33 @@ class _MapScreenState extends State<MapScreen> {
               centerTitle: true,
               automaticallyImplyLeading: false,
               actions: [
-                IconButton(
-                  icon: const Icon(Icons.bluetooth_disabled),
-                  tooltip: context.l10n.common_disconnect,
-                  onPressed: () => _disconnect(context, connector),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.tune),
-                  tooltip: context.l10n.common_settings,
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SettingsScreen(),
+                PopupMenuButton(
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.logout, color: Colors.red),
+                          const SizedBox(width: 8),
+                          Text(context.l10n.common_disconnect),
+                        ],
+                      ),
+                      onTap: () => _disconnect(context, connector),
                     ),
-                  ),
+                    PopupMenuItem(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.settings),
+                          const SizedBox(width: 8),
+                          Text(context.l10n.settings_title),
+                        ],
+                      ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                      ),
+                    ),
+                  ],
+                  icon: const Icon(Icons.more_vert),
                 ),
               ],
             ),

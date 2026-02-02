@@ -445,10 +445,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Russisch';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Ukrainisch';
 
   @override
   String get appSettings_notifications => 'Benachrichtigungen';
@@ -2724,4 +2724,53 @@ class AppLocalizationsDe extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Route nach $name verfolgen';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Die Zwischenablage ist leer.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Ungültige Kontaktdaten';
+
+  @override
+  String get contacts_contactImported => 'Kontakt wurde importiert.';
+
+  @override
+  String get contacts_contactImportFailed =>
+      'Kontakt konnte nicht importiert werden';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Zero-Hop-Anzeige';
+
+  @override
+  String get contacts_floodAdvert => 'Überflutungsanzeige';
+
+  @override
+  String get contacts_copyAdvertToClipboard =>
+      'Werbung in die Zwischenablage kopieren';
+
+  @override
+  String get contacts_addContactFromClipboard =>
+      'Kontakt aus Zwischenablage hinzufügen';
+
+  @override
+  String get contacts_ShareContact => 'Kontakt in die Zwischenablage kopieren';
+
+  @override
+  String get contacts_ShareContactZeroHop => 'Kontakt über Anzeige teilen';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent =>
+      'Kontakt über Anzeige gesendet';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Kontakt konnte nicht gesendet werden.';
+
+  @override
+  String get contacts_contactAdvertCopied =>
+      'Anzeige in die Zwischenablage kopiert.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Kopieren des Werbeinhalts in die Zwischenablage fehlgeschlagen.';
 }

@@ -793,5 +793,20 @@
   "contacts_roomPathTrace": "Трассировка пути к серверу комнаты",
   "contacts_roomPing": "Пинговать сервер комнаты",
   "contacts_chatTraceRoute": "Трассировка маршрута",
-  "contacts_pathTraceTo": "Показать маршрут к {name}"
+  "contacts_pathTraceTo": "Показать маршрут к {name}",
+  "contacts_contactImported": "Контакт был импортирован",
+  "contacts_contactImportFailed": "Контакт не удалось импортировать",
+  "contacts_invalidAdvertFormat": "Недействительные контактные данные",
+  "contacts_zeroHopAdvert": "Реклама Zero Hop",
+  "appSettings_languageUk": "Українська",
+  "contacts_floodAdvert": "Рекламный поток",
+  "contacts_clipboardEmpty": "Буфер обмена пуст.",
+  "contacts_copyAdvertToClipboard": "Копировать рекламу в буфер обмена",
+  "contacts_ShareContact": "Копировать контакт в буфер обмена",
+  "contacts_zeroHopContactAdvertFailed": "Не удалось отправить контакт.",
+  "contacts_contactAdvertCopied": "Реклама скопирована в буфер обмена.",
+  "contacts_contactAdvertCopyFailed": "Копирование рекламы в буфер обмена не удалось.",
+  "contacts_addContactFromClipboard": "Добавить контакт из буфера обмена",
+  "contacts_ShareContactZeroHop": "Поделиться контактом по объявлению",
+  "contacts_zeroHopContactAdvertSent": "Отправлено сообщение по объявлению."
 }

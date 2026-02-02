@@ -444,10 +444,10 @@ class AppLocalizationsSl extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Ruščina';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Ukrajinsko';
 
   @override
   String get appSettings_notifications => 'Obvestila';
@@ -2709,4 +2709,49 @@ class AppLocalizationsSl extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Trace route to $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Odložišče je prazno.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Neveljavni kontaktne podatke';
+
+  @override
+  String get contacts_contactImported => 'Kontakt je bil uvožen.';
+
+  @override
+  String get contacts_contactImportFailed => 'Kontakt ni bil uspešno uvožen.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Reklama brez posrednikov';
+
+  @override
+  String get contacts_floodAdvert => 'Poplavna oglás';
+
+  @override
+  String get contacts_copyAdvertToClipboard => 'Kopiraj oglas v odložišče';
+
+  @override
+  String get contacts_addContactFromClipboard => 'Dodaj stik iz odložišča';
+
+  @override
+  String get contacts_ShareContact => 'Kopiraj stik v Odložišče';
+
+  @override
+  String get contacts_ShareContactZeroHop => 'Deliti kontakt prek oglasa';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent => 'Poslano po oglasu.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Pošiljanje kontakta ni uspelo.';
+
+  @override
+  String get contacts_contactAdvertCopied =>
+      'Oglas je bil kopiran v odložišče.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Kopiranje oglasa v odložišče je spodletelo.';
 }

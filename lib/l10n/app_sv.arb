@@ -1552,5 +1552,21 @@
   "contacts_roomPathTrace": "Vägspårning till rumserver",
   "contacts_roomPing": "Ping rumsserver",
   "contacts_chatTraceRoute": "Spåra rutt",
-  "contacts_pathTraceTo": "Spåra rutt till {name}"
+  "contacts_pathTraceTo": "Spåra rutt till {name}",
+  "contacts_clipboardEmpty": "Urklipp är tomt.",
+  "appSettings_languageRu": "Ryska",
+  "contacts_contactImportFailed": "Kontakt kunde inte importeras.",
+  "contacts_zeroHopAdvert": "Reklam med nollhopp",
+  "contacts_floodAdvert": "Översvämningsannons",
+  "contacts_copyAdvertToClipboard": "Kopiera annons till urklipp",
+  "contacts_invalidAdvertFormat": "Ogiltiga kontaktuppgifter",
+  "appSettings_languageUk": "Ukrainska",
+  "contacts_addContactFromClipboard": "Lägg till kontakt från urklipp",
+  "contacts_contactImported": "Kontakt har importerats.",
+  "contacts_zeroHopContactAdvertSent": "Skickat kontakt via annons.",
+  "contacts_contactAdvertCopied": "Annons kopierad till Urklipp.",
+  "contacts_contactAdvertCopyFailed": "Kopiering av annons till Urklipp misslyckades.",
+  "contacts_ShareContact": "Kopiera kontakt till Urklipp",
+  "contacts_zeroHopContactAdvertFailed": "Misslyckades med att skicka kontakt.",
+  "contacts_ShareContactZeroHop": "Dela kontakt via annons"
 }

@@ -1552,5 +1552,21 @@
   "contacts_chatTraceRoute": "Трасиране на път",
   "contacts_roomPathTrace": "Трасиране на път до съ",
   "contacts_roomPing": "Ping на сървъра на стаята",
-  "contacts_pathTraceTo": "Проследи маршрут към {name}"
+  "contacts_pathTraceTo": "Проследи маршрут към {name}",
+  "appSettings_languageUk": "Украински",
+  "contacts_clipboardEmpty": "Клипборда е празна.",
+  "contacts_invalidAdvertFormat": "Невалидни данни за контакт",
+  "appSettings_languageRu": "Руски",
+  "contacts_contactImported": "Контактът е импортиран.",
+  "contacts_zeroHopAdvert": "Реклама без скок",
+  "contacts_contactImportFailed": "Контактът не е успешно импортиран.",
+  "contacts_floodAdvert": "Потопна реклама",
+  "contacts_addContactFromClipboard": "Добави контакт от клипборда",
+  "contacts_copyAdvertToClipboard": "Копирай обявата в клипборда",
+  "contacts_ShareContact": "Копирай контакт в клипборда",
+  "contacts_ShareContactZeroHop": "Сподели контакт чрез обява",
+  "contacts_contactAdvertCopied": "Рекламата е копирана в клипборда.",
+  "contacts_zeroHopContactAdvertFailed": "Неуспешно изпращане на контакт.",
+  "contacts_zeroHopContactAdvertSent": "Изпратен контакт по обява.",
+  "contacts_contactAdvertCopyFailed": "Копирането на обявата в клипборда не успя."
 }

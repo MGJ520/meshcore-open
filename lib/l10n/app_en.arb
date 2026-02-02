@@ -1328,6 +1328,20 @@
     "placeholders": {
       "name": {"type": "String"}
     }
-  }
+  },
 
+  "contacts_clipboardEmpty": "Clipboard is empty.",
+  "contacts_invalidAdvertFormat": "Invalid contact data",
+  "contacts_contactImported": "Contact has been imported.",
+  "contacts_contactImportFailed": "Failed to import contact.",
+  "contacts_zeroHopAdvert":"Zero Hop Advert",
+  "contacts_floodAdvert":"Flood Advert",
+  "contacts_copyAdvertToClipboard":"Copy Advert to Clipboard",
+  "contacts_addContactFromClipboard":"Add Contact from Clipboard",
+  "contacts_ShareContact": "Copy contact to Clipboard",
+  "contacts_ShareContactZeroHop": "Share contact by advert",
+  "contacts_zeroHopContactAdvertSent": "Sent contact by advert.",
+  "contacts_zeroHopContactAdvertFailed": "Failed to send contact.",
+  "contacts_contactAdvertCopied": "Advert copied to Clipboard.",
+  "contacts_contactAdvertCopyFailed": "Copying advert to Clipboard failed."
 }

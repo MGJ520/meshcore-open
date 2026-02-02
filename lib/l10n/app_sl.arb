@@ -1552,5 +1552,21 @@
   "contacts_roomPathTrace": "Sledenje poti do strežnika sobe",
   "contacts_roomPing": "Ping strežnik sobe",
   "contacts_chatTraceRoute": "Slediti poti žarkov",
-  "contacts_pathTraceTo": "Trace route to {name}"
+  "contacts_pathTraceTo": "Trace route to {name}",
+  "appSettings_languageRu": "Ruščina",
+  "appSettings_languageUk": "Ukrajinsko",
+  "contacts_contactImported": "Kontakt je bil uvožen.",
+  "contacts_contactImportFailed": "Kontakt ni bil uspešno uvožen.",
+  "contacts_zeroHopAdvert": "Reklama brez posrednikov",
+  "contacts_floodAdvert": "Poplavna oglás",
+  "contacts_invalidAdvertFormat": "Neveljavni kontaktne podatke",
+  "contacts_clipboardEmpty": "Odložišče je prazno.",
+  "contacts_copyAdvertToClipboard": "Kopiraj oglas v odložišče",
+  "contacts_addContactFromClipboard": "Dodaj stik iz odložišča",
+  "contacts_zeroHopContactAdvertSent": "Poslano po oglasu.",
+  "contacts_zeroHopContactAdvertFailed": "Pošiljanje kontakta ni uspelo.",
+  "contacts_contactAdvertCopied": "Oglas je bil kopiran v odložišče.",
+  "contacts_contactAdvertCopyFailed": "Kopiranje oglasa v odložišče je spodletelo.",
+  "contacts_ShareContactZeroHop": "Deliti kontakt prek oglasa",
+  "contacts_ShareContact": "Kopiraj stik v Odložišče"
 }

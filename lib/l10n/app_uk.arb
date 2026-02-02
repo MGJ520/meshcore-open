@@ -1553,5 +1553,20 @@
   "contacts_roomPathTrace": "Трасування шляху до серверу кімнати",
   "contacts_roomPing": "Пінг сервера кімнати",
   "contacts_chatTraceRoute": "Трасування шляху",
-  "contacts_pathTraceTo": "Відстежити маршрут до {name}"
+  "contacts_pathTraceTo": "Відстежити маршрут до {name}",
+  "contacts_invalidAdvertFormat": "Недійсні контактні дані",
+  "contacts_contactImported": "Контакт було імпортовано.",
+  "contacts_contactImportFailed": "Контакт не вдалося імпортувати",
+  "contacts_zeroHopAdvert": "Реклама без перехоплення",
+  "contacts_floodAdvert": "Залив реклами",
+  "contacts_copyAdvertToClipboard": "Копіювати оголошення в буфер обміну",
+  "contacts_clipboardEmpty": "Буфер обміну порожній",
+  "appSettings_languageRu": "Російська",
+  "contacts_ShareContact": "Копіювати контакт у буфер обміну",
+  "contacts_zeroHopContactAdvertFailed": "Не вдалося надіслати контакт.",
+  "contacts_contactAdvertCopied": "Рекламу скопійовано до буфера обміну.",
+  "contacts_contactAdvertCopyFailed": "Копіювання оголошення в буфер обміну завершилося невдало",
+  "contacts_zeroHopContactAdvertSent": "Відправлено контакт за оголошенням",
+  "contacts_addContactFromClipboard": "Додати контакт з буфера обміну",
+  "contacts_ShareContactZeroHop": "Поділитися контактом за оголошенням"
 }

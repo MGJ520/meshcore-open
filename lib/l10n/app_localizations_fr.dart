@@ -449,10 +449,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Russe';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Ukrainien';
 
   @override
   String get appSettings_notifications => 'Notifications';
@@ -2737,4 +2737,54 @@ class AppLocalizationsFr extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Tracer l\'itinéraire vers $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Le presse-papiers est vide.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Données de contact non valides';
+
+  @override
+  String get contacts_contactImported => 'Le contact a été importé.';
+
+  @override
+  String get contacts_contactImportFailed =>
+      'Échec de l\'importation du contact.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Annonce Zero Hop';
+
+  @override
+  String get contacts_floodAdvert => 'Annonce de crue';
+
+  @override
+  String get contacts_copyAdvertToClipboard =>
+      'Copier l\'annonce dans le presse-papiers';
+
+  @override
+  String get contacts_addContactFromClipboard =>
+      'Ajouter un contact depuis le presse-papiers';
+
+  @override
+  String get contacts_ShareContact =>
+      'Copier le contact dans le presse-papiers';
+
+  @override
+  String get contacts_ShareContactZeroHop => 'Partager un contact par annonce';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent =>
+      'Envoyer un contact par annonce.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Échec de l\'envoi du contact.';
+
+  @override
+  String get contacts_contactAdvertCopied =>
+      'Annonce copiée dans le presse-papiers.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'La copie de l\'annonce vers le presse-papiers a échoué.';
 }

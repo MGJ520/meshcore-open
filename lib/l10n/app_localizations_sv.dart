@@ -442,10 +442,10 @@ class AppLocalizationsSv extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Ryska';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Ukrainska';
 
   @override
   String get appSettings_notifications => 'Meddelanden';
@@ -2694,4 +2694,49 @@ class AppLocalizationsSv extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Spåra rutt till $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Urklipp är tomt.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Ogiltiga kontaktuppgifter';
+
+  @override
+  String get contacts_contactImported => 'Kontakt har importerats.';
+
+  @override
+  String get contacts_contactImportFailed => 'Kontakt kunde inte importeras.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Reklam med nollhopp';
+
+  @override
+  String get contacts_floodAdvert => 'Översvämningsannons';
+
+  @override
+  String get contacts_copyAdvertToClipboard => 'Kopiera annons till urklipp';
+
+  @override
+  String get contacts_addContactFromClipboard =>
+      'Lägg till kontakt från urklipp';
+
+  @override
+  String get contacts_ShareContact => 'Kopiera kontakt till Urklipp';
+
+  @override
+  String get contacts_ShareContactZeroHop => 'Dela kontakt via annons';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent => 'Skickat kontakt via annons.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Misslyckades med att skicka kontakt.';
+
+  @override
+  String get contacts_contactAdvertCopied => 'Annons kopierad till Urklipp.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Kopiering av annons till Urklipp misslyckades.';
 }

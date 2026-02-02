@@ -1552,5 +1552,21 @@
   "contacts_roomPathTrace": "Traçar caminho para o servidor da sala",
   "contacts_roomPing": "Pingar servidor da sala",
   "contacts_chatTraceRoute": "Rastrear rota do caminho",
-  "contacts_pathTraceTo": "Rastrear rota para {name}"
+  "contacts_pathTraceTo": "Rastrear rota para {name}",
+  "contacts_invalidAdvertFormat": "Dados de Contato Inválidos",
+  "contacts_clipboardEmpty": "Área de Transferência Está Vazia.",
+  "appSettings_languageUk": "Ucraniano",
+  "contacts_contactImported": "Contato foi importado.",
+  "contacts_zeroHopAdvert": "Anúncio Zero Hop",
+  "contacts_copyAdvertToClipboard": "Copiar Anúncio para Área de Transferência",
+  "contacts_addContactFromClipboard": "Adicionar Contato da Área de Transferência",
+  "appSettings_languageRu": "Russo",
+  "contacts_ShareContact": "Copiar contato para Área de Transferência",
+  "contacts_contactImportFailed": "Contato falhou ao ser importado.",
+  "contacts_zeroHopContactAdvertSent": "Enviou contato por anúncio.",
+  "contacts_contactAdvertCopied": "Anúncio copiado para a Área de Transferência.",
+  "contacts_floodAdvert": "Anúncio de Inundação",
+  "contacts_contactAdvertCopyFailed": "Cópia do anúncio para a Área de Transferência falhou.",
+  "contacts_ShareContactZeroHop": "Compartilhar contato por anúncio",
+  "contacts_zeroHopContactAdvertFailed": "Falha ao enviar contato."
 }

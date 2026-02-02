@@ -1552,5 +1552,21 @@
   "contacts_chatTraceRoute": "Tracer le chemin",
   "contacts_pathTraceTo": "Tracer l'itinéraire vers {name}",
   "contacts_ping": "Ping",
-  "contacts_roomPing": "Pinguer le serveur de la salle"
+  "contacts_roomPing": "Pinguer le serveur de la salle",
+  "contacts_invalidAdvertFormat": "Données de contact non valides",
+  "appSettings_languageUk": "Ukrainien",
+  "appSettings_languageRu": "Russe",
+  "contacts_clipboardEmpty": "Le presse-papiers est vide.",
+  "contacts_contactImported": "Le contact a été importé.",
+  "contacts_floodAdvert": "Annonce de crue",
+  "contacts_contactImportFailed": "Échec de l'importation du contact.",
+  "contacts_zeroHopAdvert": "Annonce Zero Hop",
+  "contacts_copyAdvertToClipboard": "Copier l'annonce dans le presse-papiers",
+  "contacts_addContactFromClipboard": "Ajouter un contact depuis le presse-papiers",
+  "contacts_ShareContact": "Copier le contact dans le presse-papiers",
+  "contacts_ShareContactZeroHop": "Partager un contact par annonce",
+  "contacts_contactAdvertCopied": "Annonce copiée dans le presse-papiers.",
+  "contacts_contactAdvertCopyFailed": "La copie de l'annonce vers le presse-papiers a échoué.",
+  "contacts_zeroHopContactAdvertSent": "Envoyer un contact par annonce.",
+  "contacts_zeroHopContactAdvertFailed": "Échec de l'envoi du contact."
 }

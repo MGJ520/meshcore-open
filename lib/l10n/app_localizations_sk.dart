@@ -445,10 +445,10 @@ class AppLocalizationsSk extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Ruština';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Ukrajinská';
 
   @override
   String get appSettings_notifications => 'Upozornenia';
@@ -2706,4 +2706,50 @@ class AppLocalizationsSk extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Sledovať trasu k $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Schránka je prázdna.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Neplatné kontaktné údaje';
+
+  @override
+  String get contacts_contactImported => 'Kontakt bol importovaný.';
+
+  @override
+  String get contacts_contactImportFailed =>
+      'Kontakt sa nepodarilo importovať.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Inzerát Zero Hop';
+
+  @override
+  String get contacts_floodAdvert => 'Inzerát povodní';
+
+  @override
+  String get contacts_copyAdvertToClipboard => 'Kopírovať reklamu do schránky';
+
+  @override
+  String get contacts_addContactFromClipboard => 'Pridať kontakt z schránky';
+
+  @override
+  String get contacts_ShareContact => 'Kopírovať kontakt do schránky';
+
+  @override
+  String get contacts_ShareContactZeroHop => 'Zdieľať kontakt cez inzerát';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent => 'Poslal kontakt cez inzerát.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Zlyhalo odoslanie kontaktu.';
+
+  @override
+  String get contacts_contactAdvertCopied =>
+      'Inzerát bol skopírovaný do schránky.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Kopírovanie inzerátu do schránky zlyhalo.';
 }

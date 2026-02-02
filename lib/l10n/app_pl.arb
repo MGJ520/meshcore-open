@@ -1552,5 +1552,21 @@
   "pathTrace_refreshTooltip": "Odśwież ścieżkę.",
   "contacts_repeaterPing": "Repeater pingowy",
   "contacts_pathTraceTo": "Śledź trasę do {name}",
-  "contacts_chatTraceRoute": "Śledź trasę promienia"
+  "contacts_chatTraceRoute": "Śledź trasę promienia",
+  "appSettings_languageRu": "Rosyjski",
+  "appSettings_languageUk": "Ukraińska",
+  "contacts_contactImportFailed": "Kontakt nie został zaimportowany.",
+  "contacts_zeroHopAdvert": "Reklama Zero Hop",
+  "contacts_floodAdvert": "Reklama powodziowa",
+  "contacts_copyAdvertToClipboard": "Kopiuj ogłoszenie do schowka",
+  "contacts_clipboardEmpty": "Schowek jest pusty.",
+  "contacts_invalidAdvertFormat": "Nieprawidłowe dane kontaktowe",
+  "contacts_addContactFromClipboard": "Dodaj kontakt z schowka",
+  "contacts_contactImported": "Kontakt został zaimportowany.",
+  "contacts_zeroHopContactAdvertSent": "Wysłano kontakt przez ogłoszenie.",
+  "contacts_contactAdvertCopied": "Reklama skopiowana do schowka.",
+  "contacts_contactAdvertCopyFailed": "Kopiowanie ogłoszenia do schowka nie powiodło się.",
+  "contacts_ShareContactZeroHop": "Udostępnij kontakt przez ogłoszenie",
+  "contacts_ShareContact": "Kopiuj kontakt do schowka",
+  "contacts_zeroHopContactAdvertFailed": "Nie udało się wysłać kontaktu."
 }

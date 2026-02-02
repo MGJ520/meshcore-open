@@ -2680,4 +2680,47 @@ class AppLocalizationsEn extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Trace route to $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Clipboard is empty.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Invalid contact data';
+
+  @override
+  String get contacts_contactImported => 'Contact has been imported.';
+
+  @override
+  String get contacts_contactImportFailed => 'Failed to import contact.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Zero Hop Advert';
+
+  @override
+  String get contacts_floodAdvert => 'Flood Advert';
+
+  @override
+  String get contacts_copyAdvertToClipboard => 'Copy Advert to Clipboard';
+
+  @override
+  String get contacts_addContactFromClipboard => 'Add Contact from Clipboard';
+
+  @override
+  String get contacts_ShareContact => 'Copy contact to Clipboard';
+
+  @override
+  String get contacts_ShareContactZeroHop => 'Share contact by advert';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent => 'Sent contact by advert.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed => 'Failed to send contact.';
+
+  @override
+  String get contacts_contactAdvertCopied => 'Advert copied to Clipboard.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Copying advert to Clipboard failed.';
 }

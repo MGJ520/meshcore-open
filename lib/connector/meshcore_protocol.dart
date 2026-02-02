@@ -102,6 +102,23 @@ class BufferWriter {
     }
     writeBytes(bytes);
   }
+
+  void writeHex(String hex) {
+    // Validate hex string length is even and not empty
+    if (hex.isEmpty || hex.length % 2 != 0) {
+      throw FormatException('Invalid hex string length: ${hex.length}');
+    }
+    List<int> result = [];
+    for (int i = 0; i < hex.length ~/ 2; i++) {
+      final hexByte = hex.substring(i * 2, i * 2 + 2);
+      final byte = int.tryParse(hexByte, radix: 16);
+      if (byte == null) {
+        throw FormatException('Invalid hex characters at position $i: $hexByte');
+      }
+      result.add(byte);
+    }
+    writeBytes(Uint8List.fromList(result));
+  }
 }
 
 // Command codes (to device)
@@ -164,6 +181,7 @@ const int respCodeContactMsgRecv = 7;
 const int respCodeChannelMsgRecv = 8;
 const int respCodeCurrTime = 9;
 const int respCodeNoMoreMessages = 10;
+const int respCodeExportContact = 11;
 const int respCodeBattAndStorage = 12;
 const int respCodeDeviceInfo = 13;
 const int respCodeContactMsgRecvV3 = 16;
@@ -727,5 +745,32 @@ Uint8List buildTraceReq(int tag, int auth, int flag, {Uint8List? payload})
   if (payload != null && payload.isNotEmpty) {
     writer.writeBytes(payload);
   }
+  return writer.toBytes();
+}
+
+// Build a export contact frame
+// [cmd][pub_key x32 / if empty exports your contact info]
+Uint8List buildExportContactFrame(Uint8List pubKey) {
+  final writer = BufferWriter();
+  writer.writeByte(cmdExportContact);
+  writer.writeBytes(pubKey);
+  return writer.toBytes();
+}
+
+// Build a import contact frame
+// [cmd][contact_frame x98+]
+Uint8List buildImportContactFrame(String contactFrame) {
+  final writer = BufferWriter();
+  writer.writeByte(cmdImportContact);
+  writer.writeHex(contactFrame);
+  return writer.toBytes();
+}
+
+// Build a export contact frame
+// [cmd][pub_key x32]
+Uint8List buildZeroHopContact(Uint8List pubKey) {
+  final writer = BufferWriter();
+  writer.writeByte(cmdShareContact);
+  writer.writeBytes(pubKey);
   return writer.toBytes();
 }

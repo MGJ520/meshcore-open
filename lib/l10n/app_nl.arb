@@ -1552,5 +1552,21 @@
   "contacts_roomPathTrace": "Padtrace naar room server",
   "contacts_roomPing": "Ping kamer server",
   "contacts_chatTraceRoute": "Route traceren",
-  "contacts_pathTraceTo": "Trace route to {name}"
+  "contacts_pathTraceTo": "Trace route to {name}",
+  "appSettings_languageUk": "Oekraïens",
+  "contacts_invalidAdvertFormat": "Ongeldige contactgegevens",
+  "contacts_contactImportFailed": "Contact kon niet geïmporteerd worden.",
+  "contacts_zeroHopAdvert": "Zero Hop Reclame",
+  "contacts_floodAdvert": "Overstromingsadvertentie",
+  "contacts_copyAdvertToClipboard": "Advert naar klembord kopiëren",
+  "appSettings_languageRu": "Russisch",
+  "contacts_clipboardEmpty": "Knipbord is leeg.",
+  "contacts_addContactFromClipboard": "Contact uit klembord toevoegen",
+  "contacts_contactImported": "Contact is geïmporteerd.",
+  "contacts_zeroHopContactAdvertSent": "Contact verzonden via advertentie",
+  "contacts_contactAdvertCopied": "Reclame gekopieerd naar Klembord.",
+  "contacts_contactAdvertCopyFailed": "Kopiëren van advertentie naar Clipboard is mislukt.",
+  "contacts_ShareContact": "Kontakt naar Klembord kopiëren",
+  "contacts_ShareContactZeroHop": "Contact delen via advertentie",
+  "contacts_zeroHopContactAdvertFailed": "Mislukt om contact te verzenden"
 }

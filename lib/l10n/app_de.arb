@@ -1552,5 +1552,21 @@
   "contacts_roomPathTrace": "Pfadverfolgung zum Raumserver",
   "contacts_roomPing": "Raumserver anpingen",
   "contacts_pathTraceTo": "Route nach {name} verfolgen",
-  "contacts_chatTraceRoute": "Pfadverfolgungsroute"
+  "contacts_chatTraceRoute": "Pfadverfolgungsroute",
+  "appSettings_languageRu": "Russisch",
+  "contacts_invalidAdvertFormat": "Ungültige Kontaktdaten",
+  "contacts_clipboardEmpty": "Die Zwischenablage ist leer.",
+  "appSettings_languageUk": "Ukrainisch",
+  "contacts_contactImported": "Kontakt wurde importiert.",
+  "contacts_contactImportFailed": "Kontakt konnte nicht importiert werden",
+  "contacts_zeroHopAdvert": "Zero-Hop-Anzeige",
+  "contacts_floodAdvert": "Überflutungsanzeige",
+  "contacts_addContactFromClipboard": "Kontakt aus Zwischenablage hinzufügen",
+  "contacts_ShareContactZeroHop": "Kontakt über Anzeige teilen",
+  "contacts_copyAdvertToClipboard": "Werbung in die Zwischenablage kopieren",
+  "contacts_ShareContact": "Kontakt in die Zwischenablage kopieren",
+  "contacts_zeroHopContactAdvertFailed": "Kontakt konnte nicht gesendet werden.",
+  "contacts_zeroHopContactAdvertSent": "Kontakt über Anzeige gesendet",
+  "contacts_contactAdvertCopied": "Anzeige in die Zwischenablage kopiert.",
+  "contacts_contactAdvertCopyFailed": "Kopieren des Werbeinhalts in die Zwischenablage fehlgeschlagen."
 }

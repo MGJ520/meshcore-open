@@ -449,10 +449,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get appSettings_languageBg => 'Български';
 
   @override
-  String get appSettings_languageRu => 'Русский';
+  String get appSettings_languageRu => 'Rosyjski';
 
   @override
-  String get appSettings_languageUk => 'Українська';
+  String get appSettings_languageUk => 'Ukraińska';
 
   @override
   String get appSettings_notifications => 'Powiadomienia';
@@ -2719,4 +2719,51 @@ class AppLocalizationsPl extends AppLocalizations {
   String contacts_pathTraceTo(String name) {
     return 'Śledź trasę do $name';
   }
+
+  @override
+  String get contacts_clipboardEmpty => 'Schowek jest pusty.';
+
+  @override
+  String get contacts_invalidAdvertFormat => 'Nieprawidłowe dane kontaktowe';
+
+  @override
+  String get contacts_contactImported => 'Kontakt został zaimportowany.';
+
+  @override
+  String get contacts_contactImportFailed =>
+      'Kontakt nie został zaimportowany.';
+
+  @override
+  String get contacts_zeroHopAdvert => 'Reklama Zero Hop';
+
+  @override
+  String get contacts_floodAdvert => 'Reklama powodziowa';
+
+  @override
+  String get contacts_copyAdvertToClipboard => 'Kopiuj ogłoszenie do schowka';
+
+  @override
+  String get contacts_addContactFromClipboard => 'Dodaj kontakt z schowka';
+
+  @override
+  String get contacts_ShareContact => 'Kopiuj kontakt do schowka';
+
+  @override
+  String get contacts_ShareContactZeroHop =>
+      'Udostępnij kontakt przez ogłoszenie';
+
+  @override
+  String get contacts_zeroHopContactAdvertSent =>
+      'Wysłano kontakt przez ogłoszenie.';
+
+  @override
+  String get contacts_zeroHopContactAdvertFailed =>
+      'Nie udało się wysłać kontaktu.';
+
+  @override
+  String get contacts_contactAdvertCopied => 'Reklama skopiowana do schowka.';
+
+  @override
+  String get contacts_contactAdvertCopyFailed =>
+      'Kopiowanie ogłoszenia do schowka nie powiodło się.';
 }

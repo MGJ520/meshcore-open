@@ -1552,5 +1552,21 @@
   "contacts_roomPing": "Pingar servidor de sala",
   "contacts_roomPathTrace": "Rastreo de ruta al servidor de la habitación",
   "contacts_pathTraceTo": "Rastrear ruta a {name}",
-  "contacts_chatTraceRoute": "Ruta de trazado"
+  "contacts_chatTraceRoute": "Ruta de trazado",
+  "appSettings_languageUk": "Ucraniano",
+  "contacts_clipboardEmpty": "El portapapeles está vacío.",
+  "appSettings_languageRu": "Ruso",
+  "contacts_invalidAdvertFormat": "Datos de contacto no válidos",
+  "contacts_floodAdvert": "Anuncio de inundación",
+  "contacts_contactImported": "El contacto ha sido importado.",
+  "contacts_contactImportFailed": "Contacto no se importó correctamente.",
+  "contacts_zeroHopAdvert": "Anuncio de Zero Hop",
+  "contacts_ShareContactZeroHop": "Compartir contacto por anuncio",
+  "contacts_ShareContact": "Copiar contacto al Portapapeles",
+  "contacts_copyAdvertToClipboard": "Copiar anuncio al portapapeles",
+  "contacts_addContactFromClipboard": "Agregar contacto desde el portapapeles",
+  "contacts_zeroHopContactAdvertFailed": "No se pudo enviar el contacto.",
+  "contacts_zeroHopContactAdvertSent": "Envió contacto por anuncio.",
+  "contacts_contactAdvertCopied": "Anuncio copiado al Portapapeles.",
+  "contacts_contactAdvertCopyFailed": "Copiar anuncio al Portapapeles ha fallado."
 }
