@@ -394,14 +394,14 @@ class _MapScreenState extends State<MapScreen> {
 
       final marker = Marker(
         point: LatLng(contact.latitude!, contact.longitude!),
-        width: 80,
-        height: 80,
+        width: 60,
+        height: 60,
         child: GestureDetector(
           onTap: () => _showNodeInfo(context, contact),
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: _getNodeColor(contact.type),
                   shape: BoxShape.circle,
@@ -417,7 +417,7 @@ class _MapScreenState extends State<MapScreen> {
                 child: Icon(
                   _getNodeIcon(contact.type),
                   color: Colors.white,
-                  size: 24,
+                  size: 20,
                 ),
               ),
             ],
