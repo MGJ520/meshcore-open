@@ -54,50 +54,50 @@ class GpxExport {
   }
 
   void addRepeaters() {
-    final contacts = _connector.contacts;
-    final repeaters = contacts
+    final contacts = _connector.contacts
         .where((c) => c.type == advTypeRepeater || c.type == advTypeRoom)
         .toList();
-    for (var repeater in repeaters) {
-      if (repeater.latitude == null || repeater.longitude == null) {
+    for (var contact in contacts) {
+      if (contact.latitude == null || contact.longitude == null) {
         continue;
       }
       _addContact(
-        repeater.name,
-        repeater.latitude ?? 0.0,
-        repeater.longitude ?? 0.0,
-        "Type: ${repeater.typeLabel}\nPublic Key: ${repeater.publicKeyHex}",
+        contact.name,
+        contact.latitude!,
+        contact.longitude!,
+        "Type: ${contact.typeLabel}\nPublic Key: ${contact.publicKeyHex}",
       );
     }
   }
 
   void addContacts() {
-    final contacts = _connector.contacts;
-    final repeaters = contacts.where((c) => c.type == advTypeChat).toList();
-    for (var repeater in repeaters) {
-      if (repeater.latitude == null || repeater.longitude == null) {
+    final contacts = _connector.contacts
+        .where((c) => c.type == advTypeChat)
+        .toList();
+    for (var contact in contacts) {
+      if (contact.latitude == null || contact.longitude == null) {
         continue;
       }
       _addContact(
-        repeater.name,
-        repeater.latitude ?? 0.0,
-        repeater.longitude ?? 0.0,
-        "Type: ${repeater.typeLabel}\nPublic Key: ${repeater.publicKeyHex}",
+        contact.name,
+        contact.latitude!,
+        contact.longitude!,
+        "Type: ${contact.typeLabel}\nPublic Key: ${contact.publicKeyHex}",
       );
     }
   }
 
   void addAll() {
     final contacts = _connector.contacts;
-    for (var repeater in contacts.toList()) {
-      if (repeater.latitude == null || repeater.longitude == null) {
+    for (var contact in contacts.toList()) {
+      if (contact.latitude == null || contact.longitude == null) {
         continue;
       }
       _addContact(
-        repeater.name,
-        repeater.latitude ?? 0.0,
-        repeater.longitude ?? 0.0,
-        "Type: ${repeater.typeLabel}\nPublic Key: ${repeater.publicKeyHex}",
+        contact.name,
+        contact.latitude ?? 0.0,
+        contact.longitude ?? 0.0,
+        "Type: ${contact.typeLabel}\nPublic Key: ${contact.publicKeyHex}",
       );
     }
   }
@@ -149,23 +149,17 @@ class GpxExport {
           .split('T')
           .join('_');
 
-      // ignore: unnecessary_string_escapes
       final path = '${dir.path}/$filename$timestamp.gpx';
 
       final file = File(path);
       await file.writeAsString(xml);
 
-      // 3. Modern share call (2025+ style)
       final result = await SharePlus.instance.share(
-        ShareParams(
-          text: shareText,
-          subject: subject,
-          files: [XFile(path)],
-          // Optional: sharePositionOrigin: ... (if you want iPad popover positioning)
-        ),
+        ShareParams(text: shareText, subject: subject, files: [XFile(path)]),
       );
 
-      // 4. Handle result
+      await file.delete();
+
       switch (result.status) {
         case ShareResultStatus.success:
           debugPrint('Share successful – user completed the action.');
@@ -177,12 +171,8 @@ class GpxExport {
           debugPrint('Sharing is not available on this platform / context.');
           return gpxExportNotAvailable;
       }
-
-      // Optional cleanup (uncomment if you don't want to keep the file)
-      // await file.delete();
     } catch (e, stack) {
       debugPrint('Export or share failed: $e\n$stack');
-      // → here you could show a SnackBar / AlertDialog in real UI code
     }
     return gpxExportFailed;
   }
