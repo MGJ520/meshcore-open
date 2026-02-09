@@ -3,6 +3,7 @@ import 'package:meshcore_open/utils/gpx_export.dart';
 import 'package:meshcore_open/widgets/elements_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:meshcore_open/services/sparse_location_logger.dart';
 
 import '../connector/meshcore_connector.dart';
 import '../connector/meshcore_protocol.dart';
@@ -490,6 +491,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final latController = TextEditingController();
     final lonController = TextEditingController();
     final intervalController = TextEditingController();
+    bool isLogging = connector.sparseLocationLogger?.isLogging() ?? false;
+
     latController.text = connector.selfLatitude?.toStringAsFixed(6) ?? '';
     lonController.text = connector.selfLongitude?.toStringAsFixed(6) ?? '';
 
@@ -533,6 +536,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   decimal: true,
                   signed: true,
                 ),
+              ),
+              const SizedBox(height: 16),
+              FeatureToggleRow(
+                title: "GPS Logging",
+                subtitle: "Enable GPS logging on the device",
+                value: isLogging,
+                onChanged: (value) async {
+                  setDialogState(() => isLogging = value);
+                  if (value) {
+                    await connector.sparseLocationLogger?.startLogging();
+                  } else {
+                    await connector.sparseLocationLogger?.stopLogging();
+                  }
+                },
               ),
               if (hasGPS) ...[
                 const SizedBox(height: 16),

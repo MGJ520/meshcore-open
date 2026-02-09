@@ -151,6 +151,7 @@ const int cmdGetContactByKey = 30;
 const int cmdGetChannel = 31;
 const int cmdSetChannel = 32;
 const int cmdSendTracePath = 36;
+const int cmdSetOtherParams = 38;
 const int cmdGetRadioSettings = 57;
 const int cmdGetTelemetryReq = 39;
 const int cmdGetCustomVar = 40;
@@ -775,5 +776,24 @@ Uint8List buildZeroHopContact(Uint8List pubKey) {
   final writer = BufferWriter();
   writer.writeByte(cmdShareContact);
   writer.writeBytes(pubKey);
+  return writer.toBytes();
+}
+
+// Build CMD_SET_OTHER_PARAMS frame
+// Format: [cmd][allowAutoAddContacts][allowTelemetryFlags][advert_loc_policy][multi_acks]
+Uint8List buildSetOtherParamsFrame(
+  bool allowAutoAddContacts,
+  int allowTelemetryFlags,
+  int advert_loc_policy,
+  int multi_acks,
+) {
+  final writer = BufferWriter();
+  writer.writeByte(cmdSetOtherParams);
+  writer.writeByte(
+    allowAutoAddContacts ? 0x01 : 0x00,
+  ); // Allow Auto Add Contacts
+  writer.writeByte(allowTelemetryFlags); // Allow Telemetry Flags
+  writer.writeByte(advert_loc_policy); // Advertisement Location Policy
+  writer.writeByte(multi_acks); // Multi Acknowledgements
   return writer.toBytes();
 }

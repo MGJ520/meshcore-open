@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart' as crypto;
+import 'package:geolocator_platform_interface/src/models/position.dart';
+import 'package:meshcore_open/services/sparse_location_logger.dart';
 import 'package:pointycastle/export.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
@@ -130,6 +132,7 @@ class MeshCoreConnector extends ChangeNotifier {
   PathHistoryService? _pathHistoryService;
   AppSettingsService? _appSettingsService;
   BackgroundService? _backgroundService;
+  SparseLocationLogger? _sparseLocationLogger;
   final NotificationService _notificationService = NotificationService();
   BleDebugLogService? _bleDebugLogService;
   AppDebugLogService? _appDebugLogService;
@@ -502,6 +505,7 @@ class MeshCoreConnector extends ChangeNotifier {
     BleDebugLogService? bleDebugLogService,
     AppDebugLogService? appDebugLogService,
     BackgroundService? backgroundService,
+    SparseLocationLogger? sparseLocationLogger,
   }) {
     _retryService = retryService;
     _pathHistoryService = pathHistoryService;
@@ -509,10 +513,13 @@ class MeshCoreConnector extends ChangeNotifier {
     _bleDebugLogService = bleDebugLogService;
     _appDebugLogService = appDebugLogService;
     _backgroundService = backgroundService;
+    _sparseLocationLogger = sparseLocationLogger;
 
     // Initialize notification service
     _notificationService.initialize();
     _loadChannelOrder();
+
+    _sparseLocationLogger?.initialize(_updateLocationandAdvert);
 
     // Initialize retry service callbacks
     _retryService?.initialize(
@@ -827,6 +834,8 @@ class MeshCoreConnector extends ChangeNotifier {
     removeListener(listener);
     return result;
   }
+
+  SparseLocationLogger? get sparseLocationLogger => _sparseLocationLogger;
 
   bool get _shouldAutoReconnect => !_manualDisconnect && _lastDeviceId != null;
 
@@ -3284,6 +3293,23 @@ class MeshCoreConnector extends ChangeNotifier {
     _unreadStore.flush();
 
     super.dispose();
+  }
+
+  _updateLocationandAdvert(Position position) async {
+    double lat = position.latitude;
+    double lon = position.longitude;
+
+    if (lat == 0.0 && lon == 0.0) {
+      // Invalid location
+      return;
+    }
+    lat = double.parse(lat.toStringAsFixed(3)) - 0.00015;
+    lon = double.parse(lon.toStringAsFixed(3)) - 0.00015;
+    print('Updating location to lat: $lat, lon: $lon');
+    await sendFrame(buildSetOtherParamsFrame(true, 0, 1, 0));
+    await setNodeLocation(lat: lat, lon: lon);
+    await sendSelfAdvert(flood: true);
+    await sendFrame(buildDeviceQueryFrame());
   }
 }
 

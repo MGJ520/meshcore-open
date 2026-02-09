@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:meshcore_open/services/sparse_location_logger.dart';
 import 'l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,7 @@ void main() async {
   final appDebugLogService = AppDebugLogService();
   final backgroundService = BackgroundService();
   final mapTileCacheService = MapTileCacheService();
-
+  final sparseLocationLogger = SparseLocationLogger();
   // Load settings
   await appSettingsService.loadSettings();
 
@@ -56,6 +57,7 @@ void main() async {
     bleDebugLogService: bleDebugLogService,
     appDebugLogService: appDebugLogService,
     backgroundService: backgroundService,
+    sparseLocationLogger: sparseLocationLogger,
   );
 
   await connector.loadContactCache();
@@ -76,6 +78,7 @@ void main() async {
       bleDebugLogService: bleDebugLogService,
       appDebugLogService: appDebugLogService,
       mapTileCacheService: mapTileCacheService,
+      sparseLocationLogger: sparseLocationLogger,
     ),
   );
 }
@@ -89,6 +92,7 @@ class MeshCoreApp extends StatelessWidget {
   final BleDebugLogService bleDebugLogService;
   final AppDebugLogService appDebugLogService;
   final MapTileCacheService mapTileCacheService;
+  final SparseLocationLogger sparseLocationLogger;
 
   const MeshCoreApp({
     super.key,
@@ -100,6 +104,7 @@ class MeshCoreApp extends StatelessWidget {
     required this.bleDebugLogService,
     required this.appDebugLogService,
     required this.mapTileCacheService,
+    required this.sparseLocationLogger,
   });
 
   @override

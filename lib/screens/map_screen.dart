@@ -357,8 +357,8 @@ class _MapScreenState extends State<MapScreen> {
                               connector.selfLatitude!,
                               connector.selfLongitude!,
                             ),
-                            width: 35,
-                            height: 35,
+                            width: 40,
+                            height: 40,
                             child: Container(
                               padding: const EdgeInsets.all(4),
                               decoration: BoxDecoration(
