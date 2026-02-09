@@ -349,6 +349,43 @@ class _MapScreenState extends State<MapScreen> {
                           ),
                         ..._buildMarkers(contactsWithLocation, settings),
                         ...sharedMarkers.map(_buildSharedMarker),
+                        if (connector.selfLatitude != null &&
+                            connector.selfLongitude != null)
+                          Marker(
+                            point: LatLng(
+                              connector.selfLatitude!,
+                              connector.selfLongitude!,
+                            ),
+                            width: 35,
+                            height: 35,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: Colors.teal,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.3),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                context.l10n.pathTrace_you,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ],
@@ -394,8 +431,8 @@ class _MapScreenState extends State<MapScreen> {
 
       final marker = Marker(
         point: LatLng(contact.latitude!, contact.longitude!),
-        width: 60,
-        height: 60,
+        width: 35,
+        height: 35,
         child: GestureDetector(
           onTap: () => _showNodeInfo(context, contact),
           child: Column(

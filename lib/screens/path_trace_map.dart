@@ -292,7 +292,7 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
                       ),
                     ),
                   ),
-                if (!_hasData && _noLocationErr)
+                if (!_hasData && !_noLocationErr)
                   Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -364,37 +364,6 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
 
   List<Marker> _buildHopMarkers(List<int> pathData) {
     return [
-      Marker(
-        point: LatLng(
-          context.read<MeshCoreConnector>().selfLatitude!,
-          context.read<MeshCoreConnector>().selfLongitude!,
-        ),
-        width: 40,
-        height: 40,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.white, width: 2),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.3),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            context.l10n.pathTrace_you,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-          ),
-        ),
-      ),
       for (final hop in pathData)
         if (_traceData!.pathContacts[hop]!.hasLocation)
           Marker(
@@ -402,9 +371,10 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
               _traceData!.pathContacts[hop]!.latitude!,
               _traceData!.pathContacts[hop]!.longitude!,
             ),
-            width: 40,
-            height: 40,
+            width: 35,
+            height: 35,
             child: Container(
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 color: Colors.green,
                 shape: BoxShape.circle,
@@ -433,6 +403,40 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
               ),
             ),
           ),
+      if (context.read<MeshCoreConnector>().selfLatitude != null &&
+          context.read<MeshCoreConnector>().selfLongitude != null)
+        Marker(
+          point: LatLng(
+            context.read<MeshCoreConnector>().selfLatitude!,
+            context.read<MeshCoreConnector>().selfLongitude!,
+          ),
+          width: 35,
+          height: 35,
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              context.l10n.pathTrace_you,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ),
     ];
   }
 

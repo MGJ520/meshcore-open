@@ -497,8 +497,8 @@ class _ChannelMessagePathMapScreenState
         if (hop.hasLocation)
           Marker(
             point: hop.position!,
-            width: 40,
-            height: 40,
+            width: 35,
+            height: 35,
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.green,
@@ -523,37 +523,39 @@ class _ChannelMessagePathMapScreenState
               ),
             ),
           ),
-      Marker(
-        point: LatLng(
-          context.read<MeshCoreConnector>().selfLatitude ?? 0.0,
-          context.read<MeshCoreConnector>().selfLongitude ?? 0.0,
-        ),
-        width: 40,
-        height: 40,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.white, width: 2),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.3),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
+      if (context.read<MeshCoreConnector>().selfLatitude != null &&
+          context.read<MeshCoreConnector>().selfLongitude != null)
+        Marker(
+          point: LatLng(
+            context.read<MeshCoreConnector>().selfLatitude!,
+            context.read<MeshCoreConnector>().selfLongitude!,
           ),
-          alignment: Alignment.center,
-          child: Text(
-            context.l10n.pathTrace_you,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
+          width: 35,
+          height: 35,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.teal,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              context.l10n.pathTrace_you,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
             ),
           ),
         ),
-      ),
     ];
   }
 
