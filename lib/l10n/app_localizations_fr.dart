@@ -560,11 +560,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appSettings_mapDisplay => 'Affichage de la carte';
 
   @override
-  String get appSettings_showRepeaters => 'Afficher les répétiteurs';
+  String get appSettings_showRepeaters => 'Afficher les répéteurs';
 
   @override
   String get appSettings_showRepeatersSubtitle =>
-      'Afficher les nœuds répétiteurs sur la carte';
+      'Afficher les nœuds répéteurs sur la carte';
 
   @override
   String get appSettings_showChatNodes => 'Afficher les nœuds de discussion';
@@ -671,7 +671,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get contacts_manageRepeater => 'Gérer le répétiteur';
+  String get contacts_manageRepeater => 'Gérer le répéteur';
 
   @override
   String get contacts_manageRoom => 'Gérer le Room Server';
@@ -1094,18 +1094,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'L\'historique du chemin est plein. Supprimez les entrées pour en ajouter de nouvelles.';
 
   @override
-  String get chat_hopSingular => 'Sautez';
+  String get chat_hopSingular => 'saut';
 
   @override
-  String get chat_hopPlural => 'sautez';
+  String get chat_hopPlural => 'sauts';
 
   @override
   String chat_hopsCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'hops',
-      one: 'hop',
+      other: 'sauts',
+      one: 'saut',
     );
     return '$count $_temp0';
   }
@@ -1259,7 +1259,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get map_chat => 'Chat';
 
   @override
-  String get map_repeater => 'Répétiteur';
+  String get map_repeater => 'Répéteur';
 
   @override
   String get map_room => 'Salle';
@@ -1365,7 +1365,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get map_joinRoom => 'Rejoindre la salle';
 
   @override
-  String get map_manageRepeater => 'Gérer le répétiteur';
+  String get map_manageRepeater => 'Gérer le répéteur';
 
   @override
   String get mapCache_title => 'Cache de Carte Hors Ligne';
@@ -1509,7 +1509,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Êtes-vous sûr de vouloir vous déconnecter de cet appareil ?';
 
   @override
-  String get login_repeaterLogin => 'Connexion au répétiteur';
+  String get login_repeaterLogin => 'Connexion au répéteur';
 
   @override
   String get login_roomLogin => 'Connexion Salle';
@@ -1529,7 +1529,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get login_repeaterDescription =>
-      'Entrez le mot de passe du répétiteur pour accéder aux paramètres et à l\'état.';
+      'Entrez le mot de passe du répéteur pour accéder aux paramètres et à l\'état.';
 
   @override
   String get login_roomDescription =>
@@ -1634,7 +1634,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get path_setPath => 'Définir le chemin';
 
   @override
-  String get repeater_management => 'Gestion des répétiteurs';
+  String get repeater_management => 'Gestion des répéteurs';
 
   @override
   String get room_management => 'Administración del Servidor de Habitación';
@@ -1647,7 +1647,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repeater_statusSubtitle =>
-      'Afficher l\'état, les statistiques et les voisins du répétiteur';
+      'Afficher l\'état, les statistiques et les voisins du répéteur';
 
   @override
   String get repeater_telemetry => 'Télémetrie';
@@ -1660,7 +1660,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get repeater_cli => 'CLI';
 
   @override
-  String get repeater_cliSubtitle => 'Envoyer des commandes au répétiteur';
+  String get repeater_cliSubtitle => 'Envoyer des commandes au répéteur';
 
   @override
   String get repeater_neighbours => 'Voisins';
@@ -1674,10 +1674,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repeater_settingsSubtitle =>
-      'Configurer les paramètres du répétiteur';
+      'Configurer les paramètres du répéteur';
 
   @override
-  String get repeater_statusTitle => 'État du répétiteur';
+  String get repeater_statusTitle => 'État du répéteur';
 
   @override
   String get repeater_routingMode => 'Mode de routage';
@@ -1783,16 +1783,16 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get repeater_settingsTitle => 'Paramètres du répétiteur';
+  String get repeater_settingsTitle => 'Paramètres du répéteur';
 
   @override
   String get repeater_basicSettings => 'Paramètres de base';
 
   @override
-  String get repeater_repeaterName => 'Nom du répétiteur';
+  String get repeater_repeaterName => 'Nom du répéteur';
 
   @override
-  String get repeater_repeaterNameHelper => 'Afficher le nom de ce répétiteur';
+  String get repeater_repeaterNameHelper => 'Afficher le nom de ce répéteur';
 
   @override
   String get repeater_adminPassword => 'Mot de passe Administrateur';
@@ -1856,7 +1856,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repeater_packetForwardingSubtitle =>
-      'Activer le répétiteur pour transmettre des paquets';
+      'Activer le répéteur pour transmettre des paquets';
 
   @override
   String get repeater_guestAccess => 'Accès Invité';
@@ -1905,11 +1905,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repeater_rebootRepeaterSubtitle =>
-      'Réinitialiser l\'appareil répétiteur';
+      'Réinitialiser l\'appareil répéteur';
 
   @override
   String get repeater_rebootRepeaterConfirm =>
-      'Êtes-vous sûr de vouloir redémarrer ce répétiteur ?';
+      'Êtes-vous sûr de vouloir redémarrer ce répéteur ?';
 
   @override
   String get repeater_regenerateIdentityKey => 'Ré générer la clé d\'identité';
@@ -1920,18 +1920,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repeater_regenerateIdentityKeyConfirm =>
-      'Cela générera une nouvelle identité pour le répétiteur. Continuer ?';
+      'Cela générera une nouvelle identité pour le répéteur. Continuer ?';
 
   @override
   String get repeater_eraseFileSystem => 'Supprimer le système de fichiers';
 
   @override
   String get repeater_eraseFileSystemSubtitle =>
-      'Formater le système de fichiers du répétiteur';
+      'Formater le système de fichiers du répéteur';
 
   @override
   String get repeater_eraseFileSystemConfirm =>
-      'AVERTISSEMENT : Cela effacera toutes les données du répétiteur. Cela ne peut pas être annulé !';
+      'AVERTISSEMENT : Cela effacera toutes les données du répéteur. Cela ne peut pas être annulé !';
 
   @override
   String get repeater_eraseSerialOnly =>
@@ -1999,7 +1999,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get repeater_cliTitle => 'Répétiteur CLI';
+  String get repeater_cliTitle => 'Répéteur CLI';
 
   @override
   String get repeater_debugNextCommand => 'Déboguer Prochaine Commande';
@@ -2091,7 +2091,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repeater_cliHelpSetRepeat =>
-      'Active ou désactive le rôle du répétiteur pour ce nœud.';
+      'Active ou désactive le rôle du répéteur pour ce nœud.';
 
   @override
   String get repeater_cliHelpSetAllowReadOnly =>
@@ -2115,7 +2115,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repeater_cliHelpSetAdvertInterval =>
-      'Définit l\'intervalle du minuteur pour envoyer un paquet d\'annonce local (sans relais). Définir sur 0 pour désactiver.';
+      'Définit l\'intervalle entre chaque émission d\'une annonce locale (sans relais). Définir sur 0 pour désactiver.';
 
   @override
   String get repeater_cliHelpSetFloodAdvertInterval =>
@@ -2201,7 +2201,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get repeater_cliHelpNeighbors =>
-      'Affiche une liste d\'autres nœuds répétiteurs entendus via des annonces sans relais. Chaque ligne est id-préfixe-hexadécimal:timestamp:snr-fois-4';
+      'Affiche une liste d\'autres nœuds répéteurs entendus via des annonces sans relais. Chaque ligne est id-préfixe-hexadécimal:timestamp:snr-fois-4';
 
   @override
   String get repeater_cliHelpNeighborRemove =>
@@ -2289,12 +2289,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get repeater_logging => 'Journalisation';
 
   @override
-  String get repeater_neighborsRepeaterOnly =>
-      'Voisins (Uniquement répétiteur)';
+  String get repeater_neighborsRepeaterOnly => 'Voisins (Uniquement répéteur)';
 
   @override
   String get repeater_regionManagementRepeaterOnly =>
-      'Gestion des régions (uniquement pour le répétiteur)';
+      'Gestion des régions (uniquement pour le répéteur)';
 
   @override
   String get repeater_regionNote =>
@@ -2399,7 +2398,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get channelPath_otherObservedPaths => 'Autres chemins observés';
 
   @override
-  String get channelPath_repeaterHops => 'Sauts du répétiteur';
+  String get channelPath_repeaterHops => 'Sauts du répéteur';
 
   @override
   String get channelPath_noHopDetails =>
@@ -2467,7 +2466,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get channelPath_noRepeaterLocations =>
-      'Aucune position de répétiteur disponible pour ce chemin.';
+      'Aucune position de répéteur disponible pour ce chemin.';
 
   @override
   String channelPath_primaryPath(int index) {
@@ -2713,7 +2712,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pathTrace_someHopsNoLocation =>
-      'Une ou plusieurs des houblons manquent d\'une localisation !';
+      'Un ou plusieurs des sauts manquent d\'une localisation !';
 
   @override
   String get contacts_pathTrace => 'Traçage de chemin';
@@ -2756,10 +2755,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Échec de l\'importation du contact.';
 
   @override
-  String get contacts_zeroHopAdvert => 'Annonce Zero Hop';
+  String get contacts_zeroHopAdvert => 'Annonce Zero saut';
 
   @override
-  String get contacts_floodAdvert => 'Annonce de crue';
+  String get contacts_floodAdvert => 'Annonce à tout le réseau';
 
   @override
   String get contacts_copyAdvertToClipboard =>
