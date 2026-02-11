@@ -24,44 +24,6 @@
             # Android development tools
             android-tools
             gradle
-
-            # iOS development (macOS only)
-          ] ++ (
-            if pkgs.stdenv.isDarwin then
-              with pkgs.darwin.apple_sdk.frameworks; [
-                Cocoa
-                Security
-                IOKit
-              ]
-            else
-              []
-          ) ++ [
-            # Common development tools
-            git
-            curl
-            wget
-            pkg-config
-
-            # Build tools
-            cmake
-            ninja
-            clang
-            llvm
-            # Linux desktop development
-            gtk3
-            glib
-            libdatrie
-            sysprof
-            xorg.libX11
-            xorg.libXext
-            xorg.libXrender
-            xorg.libXinerama
-            xorg.libXcursor
-            xorg.libXi
-            xorg.libXrandr
-            xorg.libXdamage
-            # Optional: testing
-            lcov
           ];
 
           shellHook = ''
