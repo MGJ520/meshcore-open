@@ -384,6 +384,7 @@ class AppSettingsScreen extends StatelessWidget {
     );
   }
 
+  // Fixed rendering issues
   Widget _buildBatteryCard(
     BuildContext context,
     AppSettingsService settingsService,
@@ -399,6 +400,7 @@ class AppSettingsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 4),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Text(
@@ -406,6 +408,8 @@ class AppSettingsScreen extends StatelessWidget {
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
+
+          // Main tile (icon + text only)
           ListTile(
             leading: const Icon(Icons.battery_full),
             title: Text(context.l10n.appSettings_batteryChemistry),
@@ -416,8 +420,19 @@ class AppSettingsScreen extends StatelessWidget {
                     )
                   : context.l10n.appSettings_batteryChemistryConnectFirst,
             ),
-            trailing: DropdownButton<String>(
-              value: selection,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+          ),
+
+          // Dropdown (separate full-width row)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            child: DropdownButtonFormField<String>(
+              initialValue: selection,
+              isExpanded: true,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                isDense: true,
+              ),
               onChanged: isConnected
                   ? (value) {
                       if (value != null) {
