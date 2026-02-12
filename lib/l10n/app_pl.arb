@@ -1575,7 +1575,6 @@
   "notification_newNodesCount": "{count} {count, plural, =1{nowy węzeł} few{nowe węzły} many{nowych węzłów} other{nowych węzłów}}",
   "notification_newTypeDiscovered": "Nowy {contactType} wykryty",
   "notification_receivedNewMessage": "Otrzymano nową wiadomość",
-  "contacts_zeroHopContactAdvertFailed": "Nie udało się wysłać kontaktu.",
   "settings_gpxExportContacts": "Eksportuj towarzyszy do GPX",
   "settings_gpxExportRepeaters": "Eksportuj powtórki / serwer pokojowy do GPX",
   "settings_gpxExportRepeatersSubtitle": "Eksportuje powtarzacze / roomserver z lokalizacją do pliku GPX.",
@@ -1591,6 +1590,10 @@
   "settings_gpxExportChat": "Lokalizacje towarzyszy",
   "settings_gpxExportShareText": "Dane mapy wyeksportowane z meshcore-open",
   "settings_gpxExportShareSubject": "Eksport danych mapy GPX meshcore-open",
-  "pathTrace_someHopsNoLocation": "Jeden lub więcej z chmieli nie ma określonej lokalizacji!"
-
+  "pathTrace_someHopsNoLocation": "Jeden lub więcej z chmieli nie ma określonej lokalizacji!",
+  "map_pathTraceCancelled": "Śledzenie ścieżki anulowano.",
+  "map_runTrace": "Uruchom ślad ścieżki",
+  "pathTrace_clearTooltip": "Wyczyść ścieżkę",
+  "map_removeLast": "Usuń ostatni",
+  "map_tapToAdd": "Kliknij na węzły, aby dodać je do ścieżki."
 }

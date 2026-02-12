@@ -1362,6 +1362,18 @@ class AppLocalizationsUk extends AppLocalizations {
   String get map_manageRepeater => 'Керувати ретранслятором';
 
   @override
+  String get map_tapToAdd => 'Натисніть на вузли, щоб додати їх до шляху';
+
+  @override
+  String get map_runTrace => 'Виконати трасування шляху';
+
+  @override
+  String get map_removeLast => 'Видалити останній';
+
+  @override
+  String get map_pathTraceCancelled => 'Відмінується трасування шляху';
+
+  @override
   String get mapCache_title => 'Офлайн-кеш карти';
 
   @override
@@ -2708,6 +2720,9 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get pathTrace_someHopsNoLocation =>
       'Одне або більше хмелів відсутнє місце розташування!';
+
+  @override
+  String get pathTrace_clearTooltip => 'Очистити шлях';
 
   @override
   String get contacts_pathTrace => 'Трасування шляхів';

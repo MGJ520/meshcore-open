@@ -1575,7 +1575,6 @@
   "notification_newNodesCount": "{count} {count, plural, =1{novo nó} other{novos nós}}",
   "notification_newTypeDiscovered": "Novo {contactType} descoberto",
   "notification_receivedNewMessage": "Nova mensagem recebida",
-  "contacts_zeroHopContactAdvertFailed": "Falha ao enviar contato.",
   "settings_gpxExportRepeaters": "Exportar repetidores / servidor de sala para GPX",
   "settings_gpxExportRepeatersSubtitle": "Exporta repetidores / roomserver com localização para arquivo GPX.",
   "settings_gpxExportSuccess": "Arquivo GPX exportado com sucesso.",
@@ -1591,6 +1590,10 @@
   "settings_gpxExportAllContacts": "Todos os locais de contatos",
   "settings_gpxExportShareText": "Dados do mapa exportados do meshcore-open",
   "settings_gpxExportShareSubject": "meshcore-open exportação de dados de mapa GPX",
-  "pathTrace_someHopsNoLocation": "Um ou mais dos lúpulos estão sem localização!"
-
+  "pathTrace_someHopsNoLocation": "Um ou mais dos lúpulos estão sem localização!",
+  "map_runTrace": "Executar Traçado de Caminho",
+  "map_pathTraceCancelled": "Rastreamento de caminho cancelado.",
+  "pathTrace_clearTooltip": "Limpar caminho",
+  "map_removeLast": "Remover Último",
+  "map_tapToAdd": "Toque nos nós para adicioná-los ao caminho."
 }

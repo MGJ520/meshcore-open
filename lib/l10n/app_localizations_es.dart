@@ -1361,6 +1361,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get map_manageRepeater => 'Gestionar Repetidor';
 
   @override
+  String get map_tapToAdd => 'Pulse en los nodos para agregarlos al camino.';
+
+  @override
+  String get map_runTrace => 'Ejecutar Rastreo de Ruta';
+
+  @override
+  String get map_removeLast => 'Eliminar último';
+
+  @override
+  String get map_pathTraceCancelled => 'Rastreo de ruta cancelado.';
+
+  @override
   String get mapCache_title => 'Caché de Mapa Offline';
 
   @override
@@ -2697,6 +2709,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get pathTrace_someHopsNoLocation =>
       'Uno o más de los lúpulos carecen de una ubicación';
+
+  @override
+  String get pathTrace_clearTooltip => 'Borrar ruta';
 
   @override
   String get contacts_pathTrace => 'Rastreo de caminos';

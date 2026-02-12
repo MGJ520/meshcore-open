@@ -1360,6 +1360,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get map_manageRepeater => 'Gestisci Ripetitore';
 
   @override
+  String get map_tapToAdd => 'Tocca i nodi per aggiungerli al percorso.';
+
+  @override
+  String get map_runTrace => 'Esegui Path Trace';
+
+  @override
+  String get map_removeLast => 'Rimuovi ultimo';
+
+  @override
+  String get map_pathTraceCancelled => 'Tracciamento del percorso annullato.';
+
+  @override
   String get mapCache_title => 'Cache Mappa Offline';
 
   @override
@@ -2698,6 +2710,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get pathTrace_someHopsNoLocation =>
       'Uno o più dei luppoli mancano di una posizione!';
+
+  @override
+  String get pathTrace_clearTooltip => 'Pulisci percorso';
 
   @override
   String get contacts_pathTrace => 'Traccia Percorso';

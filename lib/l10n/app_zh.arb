@@ -1575,7 +1575,6 @@
   "notification_newNodesCount": "{count} 个新节点",
   "notification_newTypeDiscovered": "发现新 {contactType}",
   "notification_receivedNewMessage": "收到新消息",
-  "contacts_contactAdvertCopyFailed": "将广告复制到剪贴板操作失败。",
   "settings_gpxExportRepeaters": "导出重复器/房间服务器到GPX",
   "settings_gpxExportRepeatersSubtitle": "导出带有位置的重复器/房间服务器到GPX文件。",
   "settings_gpxExportContactsSubtitle": "导出带有位置的伙伴到GPX文件。",
@@ -1591,6 +1590,10 @@
   "settings_gpxExportNoContacts": "没有联系人可导出",
   "settings_gpxExportShareText": "来自meshcore-open的导出地图数据",
   "settings_gpxExportShareSubject": "meshcore-open GPX 地图数据导出",
-  "pathTrace_someHopsNoLocation": "其中一个或多个啤酒花缺少位置！"
-
+  "pathTrace_someHopsNoLocation": "其中一个或多个啤酒花缺少位置！",
+  "map_tapToAdd": "点击节点将其添加到路径中",
+  "pathTrace_clearTooltip": "清除路径",
+  "map_pathTraceCancelled": "路径跟踪已取消",
+  "map_removeLast": "删除最后一个",
+  "map_runTrace": "运行路径跟踪"
 }

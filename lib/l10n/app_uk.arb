@@ -1575,7 +1575,6 @@
   "notification_newNodesCount": "{count} {count, plural, =1{новий вузол} few{нових вузли} many{нових вузлів} other{нових вузлів}}",
   "notification_newTypeDiscovered": "Виявлено новий {contactType}",
   "notification_receivedNewMessage": "Отримано нове повідомлення",
-  "contacts_ShareContactZeroHop": "Поділитися контактом за оголошенням",
   "settings_gpxExportRepeaters": "Експортувати ретранслятори / сервер кімнати до GPX",
   "settings_gpxExportRepeatersSubtitle": "Експортує ретранслятори / сервер кімнати з місцезнаходженням у файл GPX.",
   "settings_gpxExportSuccess": "Успішно експортовано файл GPX.",
@@ -1591,6 +1590,10 @@
   "settings_gpxExportShareText": "Дані карти експортовані з meshcore-open",
   "settings_gpxExportAllContacts": "Усі місця контактів",
   "settings_gpxExportShareSubject": "експорт даних карти meshcore-open у форматі GPX",
-  "pathTrace_someHopsNoLocation": "Одне або більше хмелів відсутнє місце розташування!"
-
+  "pathTrace_someHopsNoLocation": "Одне або більше хмелів відсутнє місце розташування!",
+  "map_tapToAdd": "Натисніть на вузли, щоб додати їх до шляху",
+  "map_runTrace": "Виконати трасування шляху",
+  "pathTrace_clearTooltip": "Очистити шлях",
+  "map_removeLast": "Видалити останній",
+  "map_pathTraceCancelled": "Відмінується трасування шляху"
 }

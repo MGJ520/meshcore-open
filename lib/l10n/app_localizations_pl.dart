@@ -1362,6 +1362,18 @@ class AppLocalizationsPl extends AppLocalizations {
   String get map_manageRepeater => 'Zarządzaj Powtórzami';
 
   @override
+  String get map_tapToAdd => 'Kliknij na węzły, aby dodać je do ścieżki.';
+
+  @override
+  String get map_runTrace => 'Uruchom ślad ścieżki';
+
+  @override
+  String get map_removeLast => 'Usuń ostatni';
+
+  @override
+  String get map_pathTraceCancelled => 'Śledzenie ścieżki anulowano.';
+
+  @override
   String get mapCache_title => 'Bufor Map Offline';
 
   @override
@@ -2696,6 +2708,9 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get pathTrace_someHopsNoLocation =>
       'Jeden lub więcej z chmieli nie ma określonej lokalizacji!';
+
+  @override
+  String get pathTrace_clearTooltip => 'Wyczyść ścieżkę';
 
   @override
   String get contacts_pathTrace => 'Śledzenie Ścieżek';

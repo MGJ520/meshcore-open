@@ -1362,6 +1362,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get map_manageRepeater => 'Gerenciar Repetidor';
 
   @override
+  String get map_tapToAdd => 'Toque nos nós para adicioná-los ao caminho.';
+
+  @override
+  String get map_runTrace => 'Executar Traçado de Caminho';
+
+  @override
+  String get map_removeLast => 'Remover Último';
+
+  @override
+  String get map_pathTraceCancelled => 'Rastreamento de caminho cancelado.';
+
+  @override
   String get mapCache_title => 'Cache de Mapa Offline';
 
   @override
@@ -2699,6 +2711,9 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get pathTrace_someHopsNoLocation =>
       'Um ou mais dos lúpulos estão sem localização!';
+
+  @override
+  String get pathTrace_clearTooltip => 'Limpar caminho';
 
   @override
   String get contacts_pathTrace => 'Traçado de Caminho';

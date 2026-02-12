@@ -1364,6 +1364,19 @@ class AppLocalizationsBg extends AppLocalizations {
   String get map_manageRepeater => 'Управление на Повтарящ се Елемент';
 
   @override
+  String get map_tapToAdd =>
+      'Натиснете върху възлите, за да ги добавите към пътя.';
+
+  @override
+  String get map_runTrace => 'Изпълни Път на Следване';
+
+  @override
+  String get map_removeLast => 'Премахни Последно';
+
+  @override
+  String get map_pathTraceCancelled => 'Отменен е следването на пътя.';
+
+  @override
   String get mapCache_title => 'Кеш на офлайн карти';
 
   @override
@@ -2698,6 +2711,9 @@ class AppLocalizationsBg extends AppLocalizations {
   @override
   String get pathTrace_someHopsNoLocation =>
       'Един или повече от хмелите липсва местоположение!';
+
+  @override
+  String get pathTrace_clearTooltip => 'Изчисти пътя';
 
   @override
   String get contacts_pathTrace => 'Пътен проследяване';

@@ -1575,7 +1575,6 @@
   "notification_newNodesCount": "{count} {count, plural, =1{nový uzol} few{nové uzly} other{nových uzlov}}",
   "notification_newTypeDiscovered": "Nový {contactType} objavený",
   "notification_receivedNewMessage": "Prijatá nová správa",
-  "contacts_ShareContact": "Kopírovať kontakt do schránky",
   "settings_gpxExportRepeatersSubtitle": "Exportuje repeater / roomserver s lokalitou do súboru GPX.",
   "settings_gpxExportContacts": "Export sprievodcov do GPX",
   "settings_gpxExportSuccess": "Úspešne exportovaný súbor GPX.",
@@ -1591,6 +1590,10 @@
   "settings_gpxExportChat": "Lokácie sprievodcov",
   "settings_gpxExportShareText": "Mapové údaje exportované z meshcore-open",
   "settings_gpxExportShareSubject": "meshcore-open export dát GPX mapových údajov",
-  "pathTrace_someHopsNoLocation": "Jedna alebo viac chmeľov chýba lokalita!"
-
+  "pathTrace_someHopsNoLocation": "Jedna alebo viac chmeľov chýba lokalita!",
+  "pathTrace_clearTooltip": "Zmazať cestu",
+  "map_tapToAdd": "Kliknite na uzly, aby ste ich pridali k ceste.",
+  "map_removeLast": "Odstrániť posledný",
+  "map_runTrace": "Spustiť trasovaním cesty",
+  "map_pathTraceCancelled": "Zrušenie stopáže cesty bolo zrušené."
 }

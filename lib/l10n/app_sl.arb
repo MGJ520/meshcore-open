@@ -1575,7 +1575,6 @@
   "notification_newNodesCount": "{count} {count, plural, =1{novo vozlišče} =2{novi vozlišči} few{nova vozlišča} other{novih vozlišč}}",
   "notification_newTypeDiscovered": "Odkrito novo {contactType}",
   "notification_receivedNewMessage": "Prejeto novo sporočilo",
-  "contacts_ShareContact": "Kopiraj stik v Odložišče",
   "settings_gpxExportAll": "Izvozi vse kontakte v GPX",
   "settings_gpxExportContacts": "Izvoz spremljevalcev v GPX",
   "settings_gpxExportRepeatersSubtitle": "Izvozi ponovljene oddajnike / strežnik sobe z lokacijo v datoteko GPX.",
@@ -1591,6 +1590,10 @@
   "settings_gpxExportNoContacts": "Ni stikov za izvoz.",
   "settings_gpxExportNotAvailable": "Ni podprto na vašem napravi/operacijskem sistemu",
   "settings_gpxExportShareSubject": "meshcore-open izvoz podatkov GPX karte",
-  "pathTrace_someHopsNoLocation": "Ena ali več hmelju manjka lokacija!"
-
+  "pathTrace_someHopsNoLocation": "Ena ali več hmelju manjka lokacija!",
+  "map_tapToAdd": "Pritisnite na vozlišča, da jih dodate poti.",
+  "map_removeLast": "Odstrani Zadnji",
+  "map_runTrace": "Zaženi sledenje poti",
+  "pathTrace_clearTooltip": "Počisti pot",
+  "map_pathTraceCancelled": "Spremljanje poti je prekinjeno."
 }

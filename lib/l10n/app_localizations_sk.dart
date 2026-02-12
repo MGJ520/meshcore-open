@@ -1357,6 +1357,18 @@ class AppLocalizationsSk extends AppLocalizations {
   String get map_manageRepeater => 'Spravovať Opakovanie';
 
   @override
+  String get map_tapToAdd => 'Kliknite na uzly, aby ste ich pridali k ceste.';
+
+  @override
+  String get map_runTrace => 'Spustiť trasovaním cesty';
+
+  @override
+  String get map_removeLast => 'Odstrániť posledný';
+
+  @override
+  String get map_pathTraceCancelled => 'Zrušenie stopáže cesty bolo zrušené.';
+
+  @override
   String get mapCache_title => 'Offline Mapa Pamäť';
 
   @override
@@ -2684,6 +2696,9 @@ class AppLocalizationsSk extends AppLocalizations {
   @override
   String get pathTrace_someHopsNoLocation =>
       'Jedna alebo viac chmeľov chýba lokalita!';
+
+  @override
+  String get pathTrace_clearTooltip => 'Zmazať cestu';
 
   @override
   String get contacts_pathTrace => 'Sledovanie lúčov';

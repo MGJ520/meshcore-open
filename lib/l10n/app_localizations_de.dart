@@ -1363,6 +1363,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get map_manageRepeater => 'Repeater verwalten';
 
   @override
+  String get map_tapToAdd =>
+      'Tippen Sie auf Knoten, um sie zum Pfad hinzuzufügen.';
+
+  @override
+  String get map_runTrace => 'Pfadverlauf ausführen';
+
+  @override
+  String get map_removeLast => 'Letztes Entfernen';
+
+  @override
+  String get map_pathTraceCancelled => 'Pfadverfolgung abgebrochen.';
+
+  @override
   String get mapCache_title => 'Offline-Karten-Cache';
 
   @override
@@ -2703,6 +2716,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get pathTrace_someHopsNoLocation =>
       'Bei einer oder mehreren Knoten fehlt der Standort!';
+
+  @override
+  String get pathTrace_clearTooltip => 'Pfad löschen';
 
   @override
   String get contacts_pathTrace => 'Pfadverfolgung';

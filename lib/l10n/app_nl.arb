@@ -1575,7 +1575,6 @@
   "notification_newNodesCount": "{count} {count, plural, =1{nieuw knooppunt} other{nieuwe knooppunten}}",
   "notification_newTypeDiscovered": "Nieuw {contactType} ontdekt",
   "notification_receivedNewMessage": "Nieuw bericht ontvangen",
-  "contacts_zeroHopContactAdvertFailed": "Mislukt om contact te verzenden",
   "settings_gpxExportRepeatersSubtitle": "Exporteert repeaters / roomserver met een locatie naar GPX-bestand.",
   "settings_gpxExportRepeaters": "Exporteer repeaters / roomserver naar GPX",
   "settings_gpxExportSuccess": "Succesvol GPX-bestand geëxporteerd.",
@@ -1591,6 +1590,10 @@
   "settings_gpxExportAllContacts": "Alle contactlocaties",
   "settings_gpxExportShareText": "Kaartgegevens geëxporteerd uit meshcore-open",
   "settings_gpxExportShareSubject": "meshcore-open GPX kaartgegevens exporteren",
-  "pathTrace_someHopsNoLocation": "Een of meer van de hops ontbreken een locatie!"
-
+  "pathTrace_someHopsNoLocation": "Een of meer van de hops ontbreken een locatie!",
+  "map_removeLast": "Verwijder Laatste",
+  "pathTrace_clearTooltip": "Weg wissen",
+  "map_pathTraceCancelled": "Pad traceren geannuleerd",
+  "map_tapToAdd": "Tik op knooppunten om ze toe te voegen aan het pad",
+  "map_runTrace": "Padeshulp traceren"
 }

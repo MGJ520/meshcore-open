@@ -1349,6 +1349,18 @@ class AppLocalizationsSv extends AppLocalizations {
   String get map_manageRepeater => 'Hantera Upprepare';
 
   @override
+  String get map_tapToAdd => 'Tryck på noder för att lägga till dem i banan.';
+
+  @override
+  String get map_runTrace => 'Kör spårsökning';
+
+  @override
+  String get map_removeLast => 'Ta bort sista';
+
+  @override
+  String get map_pathTraceCancelled => 'Sökvägsspårning avbruten.';
+
+  @override
   String get mapCache_title => 'Offline Kartcache';
 
   @override
@@ -2672,6 +2684,9 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get pathTrace_someHopsNoLocation =>
       'En eller flera av humlen saknar en plats!';
+
+  @override
+  String get pathTrace_clearTooltip => 'Rensa väg';
 
   @override
   String get contacts_pathTrace => 'Path Trace';
