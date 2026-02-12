@@ -186,6 +186,37 @@ class SparseLocationLogger {
     }
   }
 
+  Position snapToGridCenter({
+    required Position position,
+    required double cellSizeDegrees, // e.g. 0.01 ≈ 1.1 km, 0.001 ≈ 110 m
+  }) {
+    Position snappedPosition = position;
+    // Snap latitude
+    final latFloor =
+        (position.latitude / cellSizeDegrees).floor() * cellSizeDegrees;
+    final snappedLat = latFloor + (cellSizeDegrees / 2);
+
+    // Snap longitude
+    final lonFloor =
+        (position.longitude / cellSizeDegrees).floor() * cellSizeDegrees;
+    final snappedLon = lonFloor + (cellSizeDegrees / 2);
+
+    snappedPosition = Position(
+      latitude: snappedLat,
+      longitude: snappedLon,
+      altitude: position.altitude,
+      accuracy: position.accuracy,
+      heading: position.heading,
+      speed: position.speed,
+      speedAccuracy: position.speedAccuracy,
+      altitudeAccuracy: position.altitudeAccuracy,
+      headingAccuracy: position.headingAccuracy,
+      timestamp: position.timestamp,
+    );
+
+    return snappedPosition;
+  }
+
   Future<String> getGpxFilePath() async => _gpxFile?.path ?? 'Not started';
   bool isLogging() => _positionStream != null;
   int getPointCount() => _currentSegment.trkpts.length;
