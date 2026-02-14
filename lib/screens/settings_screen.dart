@@ -742,7 +742,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  _gpxExport(
+  Future<void> _gpxExport(
     GpxExport exporter,
     String name,
     String description,
@@ -782,7 +782,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  _buildExportCard(MeshCoreConnector connector) {
+  Widget _buildExportCard(MeshCoreConnector connector) {
     final l10n = context.l10n;
     return Card(
       child: Column(

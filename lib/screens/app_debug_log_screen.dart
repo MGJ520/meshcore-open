@@ -55,7 +55,7 @@ class AppDebugLogScreen extends StatelessWidget {
             child: hasEntries
                 ? ListView.separated(
                     itemCount: entries.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
+                    separatorBuilder: (_, _) => const Divider(height: 1),
                     itemBuilder: (context, index) {
                       final entry = entries[index];
                       return ListTile(

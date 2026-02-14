@@ -530,7 +530,7 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
                         child: ListView.separated(
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           itemCount: pathTraceData.pathData.length + 1,
-                          separatorBuilder: (_, __) => const Divider(height: 1),
+                          separatorBuilder: (_, _) => const Divider(height: 1),
                           itemBuilder: (context, index) {
                             return Column(
                               children: [

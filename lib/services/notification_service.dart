@@ -67,7 +67,7 @@ class NotificationService {
 
     try {
       await _notifications.initialize(
-        initSettings,
+        settings: initSettings,
         onDidReceiveNotificationResponse: _onNotificationTapped,
       );
       _isInitialized = true;
@@ -149,10 +149,10 @@ class NotificationService {
     );
 
     await _notifications.show(
-      contactId?.hashCode ?? 0,
-      contactName,
-      message,
-      notificationDetails,
+      id: contactId?.hashCode ?? 0,
+      title: contactName,
+      body: message,
+      notificationDetails: notificationDetails,
       payload: 'message:$contactId',
     );
   }
@@ -194,10 +194,10 @@ class NotificationService {
     );
 
     await _notifications.show(
-      contactId?.hashCode ?? DateTime.now().millisecondsSinceEpoch,
-      _l10n.notification_newTypeDiscovered(contactType),
-      contactName,
-      notificationDetails,
+      id: contactId?.hashCode ?? DateTime.now().millisecondsSinceEpoch,
+      title: _l10n.notification_newTypeDiscovered(contactType),
+      body: contactName,
+      notificationDetails: notificationDetails,
       payload: 'advert:$contactId',
     );
   }
@@ -248,10 +248,10 @@ class NotificationService {
         : preview;
 
     await _notifications.show(
-      channelIndex?.hashCode ?? DateTime.now().millisecondsSinceEpoch,
-      channelName,
-      body,
-      notificationDetails,
+      id: channelIndex?.hashCode ?? DateTime.now().millisecondsSinceEpoch,
+      title: channelName,
+      body: body,
+      notificationDetails: notificationDetails,
       payload: 'channel:$channelIndex',
     );
   }
@@ -285,7 +285,7 @@ class NotificationService {
   }
 
   Future<void> cancel(int id) async {
-    await _notifications.cancel(id);
+    await _notifications.cancel(id: id);
   }
 
   // ─────────────────────────────────────────────────────────────────
@@ -469,10 +469,10 @@ class NotificationService {
     const notificationDetails = NotificationDetails(android: androidDetails);
 
     await _notifications.show(
-      'batch_summary'.hashCode,
-      _l10n.notification_activityTitle,
-      parts.join(', '),
-      notificationDetails,
+      id: 'batch_summary'.hashCode,
+      title: _l10n.notification_activityTitle,
+      body: parts.join(', '),
+      notificationDetails: notificationDetails,
       payload: 'batch',
     );
   }

@@ -100,7 +100,7 @@ class _BleDebugLogScreenState extends State<BleDebugLogScreen> {
                           itemCount: showingFrames
                               ? entries.length
                               : rawEntries.length,
-                          separatorBuilder: (_, __) => const Divider(height: 1),
+                          separatorBuilder: (_, _) => const Divider(height: 1),
                           itemBuilder: (context, index) {
                             if (showingFrames) {
                               final entry = entries[index];

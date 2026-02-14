@@ -594,7 +594,7 @@ class _ChannelMessagePathMapScreenState
                     : ListView.separated(
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         itemCount: hops.length,
-                        separatorBuilder: (_, __) => const Divider(height: 1),
+                        separatorBuilder: (_, _) => const Divider(height: 1),
                         itemBuilder: (context, index) {
                           final hop = hops[index];
                           return ListTile(
