@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:meshcore_open/utils/app_logger.dart';
 import 'package:provider/provider.dart';
 import '../l10n/l10n.dart';
 import '../models/contact.dart';
@@ -96,60 +97,75 @@ class _NeighboursScreenState extends State<NeighboursScreen> {
     int resultsCount,
   ) {
     final Map<int, Map<String, dynamic>> neighbours = {};
-    for (var i = 0; i < resultsCount; i++) {
-      final neighbourData = neighbours.putIfAbsent(
-        i,
-        () => {
-          'contact': null,
-          'publicKey': <Uint8List>{},
-          'lastHeard': <int>{},
-          'snr': <double>{},
-        },
-      );
-      neighbourData['publicKey'] = buffer.readBytes(_reqNeighboursKeyLen);
-      neighbourData['lastHeard'] = buffer.readUInt32LE();
-      neighbourData['snr'] = buffer.readInt8() / 4.0;
-    }
+    try {
+      for (var i = 0; i < resultsCount; i++) {
+        final neighbourData = neighbours.putIfAbsent(
+          i,
+          () => {
+            'contact': null,
+            'publicKey': <Uint8List>{},
+            'lastHeard': <int>{},
+            'snr': <double>{},
+          },
+        );
+        neighbourData['publicKey'] = buffer.readBytes(_reqNeighboursKeyLen);
+        neighbourData['lastHeard'] = buffer.readUInt32LE();
+        neighbourData['snr'] = buffer.readInt8() / 4.0;
+      }
 
-    return neighbours.values.toList();
+      return neighbours.values.toList();
+    } catch (e) {
+      appLogger.error(
+        'Error parsing neighbours data: $e',
+        tag: 'NeighboursScreen',
+      );
+      return [];
+    }
   }
 
   void _handleNeighboursResponse(MeshCoreConnector connector, Uint8List frame) {
     final buffer = BufferReader(frame);
-    final neighbourCount = buffer.readUInt16LE();
-    final parsedNeighbours = parseNeighboursData(buffer, buffer.readUInt16LE());
-    connector.contacts.where((c) => c.type == advTypeRepeater).forEach((
-      repeater,
-    ) {
-      for (var neighbourData in parsedNeighbours) {
-        final publicKey = neighbourData['publicKey'];
-        if (listEquals(
-          repeater.publicKey.sublist(0, _reqNeighboursKeyLen),
-          publicKey,
-        )) {
-          neighbourData['contact'] = repeater;
+    try {
+      final neighbourCount = buffer.readUInt16LE();
+      final parsedNeighbours = parseNeighboursData(
+        buffer,
+        buffer.readUInt16LE(),
+      );
+      connector.contacts.where((c) => c.type == advTypeRepeater).forEach((
+        repeater,
+      ) {
+        for (var neighbourData in parsedNeighbours) {
+          final publicKey = neighbourData['publicKey'];
+          if (listEquals(
+            repeater.publicKey.sublist(0, _reqNeighboursKeyLen),
+            publicKey,
+          )) {
+            neighbourData['contact'] = repeater;
+          }
         }
-      }
-    });
+      });
 
-    setState(() {
-      _parsedNeighbours = parsedNeighbours;
-      _neighbourCount = neighbourCount;
-    });
+      setState(() {
+        _parsedNeighbours = parsedNeighbours;
+        _neighbourCount = neighbourCount;
+      });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(context.l10n.neighbors_receivedData),
-        backgroundColor: Colors.green,
-      ),
-    );
-    _statusTimeout?.cancel();
-    if (!mounted) return;
-    setState(() {
-      _isLoading = false;
-      _isLoaded = true;
-      _hasData = true;
-    });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(context.l10n.neighbors_receivedData),
+          backgroundColor: Colors.green,
+        ),
+      );
+      _statusTimeout?.cancel();
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+        _isLoaded = true;
+        _hasData = true;
+      });
+    } catch (e) {
+      appLogger.error('Error handling neighbours response: $e');
+    }
   }
 
   Contact _resolveRepeater(MeshCoreConnector connector) {
@@ -430,6 +446,7 @@ class _NeighboursScreenState extends State<NeighboursScreen> {
     double snr,
     int spreadingFactor,
   ) {
+    final snrUi = snrUiFromSNR(snr, spreadingFactor);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),
       child: Row(
@@ -443,9 +460,15 @@ class _NeighboursScreenState extends State<NeighboursScreen> {
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
               subtitle: Text(value),
-              trailing: SNRIcon(
-                snr: snr,
-                snrLevels: getSNRfromSF(spreadingFactor),
+              trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(snrUi.icon, color: snrUi.color, size: 18.0),
+                  Text(
+                    snrUi.text!,
+                    style: TextStyle(fontSize: 10, color: snrUi.color),
+                  ),
+                ],
               ),
             ),
           ),

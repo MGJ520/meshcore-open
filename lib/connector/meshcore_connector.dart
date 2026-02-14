@@ -37,6 +37,29 @@ class MeshCoreUuids {
   static const String txCharacteristic = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
 }
 
+class DirectRepeater {
+  static const int maxAgeMinutes = 30; // Max age for direct repeater info
+  final int pubkeyFirstByte;
+  double snr;
+  DateTime lastUpdated;
+
+  DirectRepeater({
+    required this.pubkeyFirstByte,
+    required this.snr,
+    DateTime? lastUpdated,
+  }) : lastUpdated = lastUpdated ?? DateTime.now();
+
+  void update(double newSNR) {
+    snr = newSNR;
+    lastUpdated = DateTime.now();
+  }
+
+  bool isStale() {
+    return DateTime.now().difference(lastUpdated) >
+        const Duration(minutes: maxAgeMinutes);
+  }
+}
+
 enum MeshCoreConnectionState {
   disconnected,
   scanning,
@@ -93,6 +116,7 @@ class MeshCoreConnector extends ChangeNotifier {
   int? _batteryMillivolts;
   double? _selfLatitude;
   double? _selfLongitude;
+  final List<DirectRepeater> _directRepeaters = List.empty(growable: true);
   bool _isLoadingContacts = false;
   bool _isLoadingChannels = false;
   bool _hasLoadedChannels = false;
@@ -194,6 +218,7 @@ class MeshCoreConnector extends ChangeNotifier {
   String? get selfName => _selfName;
   double? get selfLatitude => _selfLatitude;
   double? get selfLongitude => _selfLongitude;
+  List<DirectRepeater> get directRepeaters => _directRepeaters;
   int? get currentTxPower => _currentTxPower;
   int? get maxTxPower => _maxTxPower;
   int? get currentFreqHz => _currentFreqHz;
@@ -1690,6 +1715,11 @@ class MeshCoreConnector extends ChangeNotifier {
         _isLoadingContacts = true;
         notifyListeners();
         break;
+      case pushCodeNewAdvert:
+        debugPrint('Got New CONTACT');
+        // It's the same format as respCodeContact, so we can reuse the handler
+        _handleContact(frame);
+        break;
       case respCodeContact:
         debugPrint('Got CONTACT');
         _handleContact(frame);
@@ -1734,6 +1764,7 @@ class MeshCoreConnector extends ChangeNotifier {
       case pushCodeStatusResponse:
         break;
       case pushCodeLogRxData:
+        _handleRxData(frame);
         _handleLogRxData(frame);
         break;
       case respCodeChannelInfo:
@@ -1747,6 +1778,7 @@ class MeshCoreConnector extends ChangeNotifier {
         break;
       case respCodeCustomVars:
         _handleCustomVars(frame);
+        break;
       default:
         debugPrint('Unknown frame code: $code');
     }
@@ -1999,6 +2031,80 @@ class MeshCoreConnector extends ChangeNotifier {
       if (!_isLoadingContacts) {
         unawaited(_persistContacts());
       }
+    }
+  }
+
+  void _handleContactAdvert(Contact contact) {
+    if (contact.publicKey == _selfPublicKey) {
+      return;
+    }
+
+    if (contact.type == advTypeRepeater) {
+      _contactUnreadCount.remove(contact.publicKeyHex);
+      _unreadStore.saveContactUnreadCount(
+        Map<String, int>.from(_contactUnreadCount),
+      );
+    }
+    // Check if this is a new contact
+    final isNewContact = !_knownContactKeys.contains(contact.publicKeyHex);
+    final existingIndex = _contacts.indexWhere(
+      (c) => c.publicKeyHex == contact.publicKeyHex,
+    );
+
+    if (existingIndex >= 0) {
+      final existing = _contacts[existingIndex];
+      final mergedLastMessageAt =
+          existing.lastMessageAt.isAfter(contact.lastMessageAt)
+          ? existing.lastMessageAt
+          : contact.lastMessageAt;
+
+      appLogger.info(
+        'Refreshing contact ${contact.name}: devicePath=${contact.pathLength}, existingOverride=${existing.pathOverride}',
+        tag: 'Connector',
+      );
+
+      // CRITICAL: Preserve user's path override when contact is refreshed from device
+      _contacts[existingIndex] = contact.copyWith(
+        lastMessageAt: mergedLastMessageAt,
+        pathOverride: existing.pathOverride, // Preserve user's path choice
+        pathOverrideBytes: existing.pathOverrideBytes,
+      );
+
+      appLogger.info(
+        'After merge: pathOverride=${_contacts[existingIndex].pathOverride}, devicePath=${_contacts[existingIndex].pathLength}',
+        tag: 'Connector',
+      );
+    } else {
+      _contacts.add(contact);
+      appLogger.info(
+        'Added new contact ${contact.name}: pathLen=${contact.pathLength}',
+        tag: 'Connector',
+      );
+    }
+    _knownContactKeys.add(contact.publicKeyHex);
+    _loadMessagesForContact(contact.publicKeyHex);
+
+    // Add path to history if we have a valid path
+    if (_pathHistoryService != null && contact.pathLength >= 0) {
+      _pathHistoryService!.handlePathUpdated(contact);
+    }
+
+    notifyListeners();
+
+    // Show notification for new contact (advertisement)
+    if (isNewContact && _appSettingsService != null) {
+      final settings = _appSettingsService!.settings;
+      if (settings.notificationsEnabled && settings.notifyOnNewAdvert) {
+        _notificationService.showAdvertNotification(
+          contactName: contact.name,
+          contactType: contact.typeLabel,
+          contactId: contact.publicKeyHex,
+        );
+      }
+    }
+
+    if (!_isLoadingContacts) {
+      unawaited(_persistContacts());
     }
   }
 
@@ -3261,7 +3367,11 @@ class MeshCoreConnector extends ChangeNotifier {
 
   void _handleCustomVars(Uint8List frame) {
     final buf = BufferReader(frame.sublist(1));
-    _currentCustomVars = _parseKeyValueString(buf.readString());
+    try {
+      _currentCustomVars = _parseKeyValueString(buf.readString());
+    } catch (e) {
+      appLogger.warn('Malformed custom vars frame: $e', tag: 'Connector');
+    }
   }
 
   void _setState(MeshCoreConnectionState newState) {
@@ -3284,6 +3394,158 @@ class MeshCoreConnector extends ChangeNotifier {
     _unreadStore.flush();
 
     super.dispose();
+  }
+
+  void _handleRxData(Uint8List frame) {
+    final packet = BufferReader(frame);
+    try {
+      packet.skipBytes(1); // Skip frame type byte
+      final snr = packet.readInt8() / 4.0;
+      packet.skipBytes(1); // Skip RSSI and noise bytes, as SNR is more reliable
+      //final rssi = packet.readByte();
+      final header = packet.readByte();
+      final routeType = header & 0x03;
+      final payloadType = (header >> 2) & 0x0F;
+      //final payloadVer = (header >> 6) & 0x03;
+      final pathLen = packet.readByte();
+      final pathBytes = packet.readBytes(pathLen);
+      final payload = packet.readBytes(packet.remaining);
+
+      switch (payloadType) {
+        case payloadTypeADVERT:
+          _handlePayloadAdvertReceived(payload, pathBytes, routeType, snr);
+          break;
+        default:
+      }
+    } catch (e) {
+      appLogger.warn('Malformed RX frame: $e', tag: 'Connector');
+    }
+  }
+
+  void _handlePayloadAdvertReceived(
+    Uint8List frame,
+    Uint8List path,
+    int routeType,
+    double snr,
+  ) {
+    final advert = BufferReader(frame);
+    double latitude = 0.0;
+    double longitude = 0.0;
+    String name = '';
+    String contactKeyHex = '';
+    Uint8List publicKey = Uint8List(0);
+    int type = 0;
+    int timestamp = 0;
+    bool hasLocation = false;
+    bool hasName = false;
+    try {
+      publicKey = advert.readBytes(32);
+      contactKeyHex = publicKey
+          .map((b) => b.toRadixString(16).padLeft(2, '0'))
+          .join();
+
+      timestamp = advert.readInt32LE();
+      //TODO add signature verification
+      advert.skipBytes(64); // Skip signature for now
+      final flags = advert.readByte();
+      type = flags & 0x0F;
+      hasLocation = (flags & 0x10) != 0;
+      // For future use:
+      //final hasFeature1 = (flags & 0x20) != 0;
+      //final hasFeature2 = (flags & 0x40) != 0;
+      hasName = (flags & 0x80) != 0;
+      if (hasLocation && advert.remaining >= 8) {
+        latitude = advert.readInt32LE() / 1e6;
+        longitude = advert.readInt32LE() / 1e6;
+      }
+      if (hasName && advert.remaining > 0) {
+        name = advert.readString();
+      }
+    } catch (e) {
+      appLogger.warn('Malformed advert frame: $e', tag: 'Connector');
+      return;
+    }
+
+    // Check if this is a new contact
+    final isNewContact = !_knownContactKeys.contains(contactKeyHex);
+    if (isNewContact) {
+      final newContect = Contact(
+        publicKey: publicKey,
+        name: name,
+        type: type,
+        pathLength: path.length,
+        path: path,
+        latitude: latitude,
+        longitude: longitude,
+        lastSeen: DateTime.fromMillisecondsSinceEpoch(timestamp * 1000),
+      );
+      _handleContactAdvert(newContect);
+      _updateDirectRepeater(newContect, snr, path);
+      return;
+    }
+
+    final existingIndex = _contacts.indexWhere(
+      (c) => c.publicKeyHex == contactKeyHex,
+    );
+
+    if (existingIndex >= 0) {
+      final existing = _contacts[existingIndex];
+      final mergedLastMessageAt = existing.lastMessageAt.isAfter(DateTime.now())
+          ? DateTime.now()
+          : existing.lastMessageAt;
+
+      appLogger.info(
+        'Refreshing contact ${existing.name}: devicePath=${existing.pathLength}, existingOverride=${existing.pathOverride}',
+        tag: 'Connector',
+      );
+
+      // CRITICAL: Preserve user's path override when contact is refreshed from device
+      _contacts[existingIndex] = existing.copyWith(
+        latitude: hasLocation ? latitude : existing.latitude,
+        longitude: hasLocation ? longitude : existing.longitude,
+        name: hasName ? name : existing.name,
+        path: path,
+        pathLength: path.length,
+        lastMessageAt: mergedLastMessageAt,
+        lastSeen: DateTime.fromMillisecondsSinceEpoch(timestamp * 1000),
+        pathOverride: existing.pathOverride, // Preserve user's path choice
+        pathOverrideBytes: existing.pathOverrideBytes,
+      );
+
+      _updateDirectRepeater(_contacts[existingIndex], snr, path);
+
+      appLogger.info(
+        'After merge: pathOverride=${_contacts[existingIndex].pathOverride}, devicePath=${_contacts[existingIndex].pathLength}',
+        tag: 'Connector',
+      );
+    }
+  }
+
+  void _updateDirectRepeater(Contact contact, double snr, Uint8List path) {
+    final pubkeyFirstByte = path.isNotEmpty
+        ? path.last
+        : contact.publicKey.first;
+
+    _directRepeaters.removeWhere((r) => r.isStale());
+
+    if (contact.type == advTypeChat && contact.type == advTypeSensor) {
+      notifyListeners();
+      return;
+    }
+
+    final isTracked = _directRepeaters.where(
+      (r) => r.pubkeyFirstByte == pubkeyFirstByte,
+    );
+
+    if (isTracked.isNotEmpty) {
+      final repeater = isTracked.first;
+      repeater.update(snr);
+    } else if (isTracked.isEmpty && _directRepeaters.length < 5) {
+      _directRepeaters.add(
+        DirectRepeater(pubkeyFirstByte: pubkeyFirstByte, snr: snr),
+      );
+    }
+    notifyListeners();
   }
 }
 

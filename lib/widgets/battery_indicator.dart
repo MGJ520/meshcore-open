@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meshcore_open/widgets/snr_indicator.dart';
 
 import '../connector/meshcore_connector.dart';
 
@@ -42,6 +43,7 @@ class _BatteryIndicatorState extends State<BatteryIndicator> {
   Widget build(BuildContext context) {
     final percent = widget.connector.batteryPercent;
     final millivolts = widget.connector.batteryMillivolts;
+    final directRepeaters = widget.connector.directRepeaters;
 
     if (millivolts == null) {
       return const SizedBox.shrink();
@@ -55,6 +57,20 @@ class _BatteryIndicatorState extends State<BatteryIndicator> {
     }
 
     final batteryUi = batteryUiForPercent(percent);
+    final directBestRepeaters = List.of(directRepeaters)
+      ..sort((a, b) {
+        final dateCompare = b.lastUpdated.compareTo(a.lastUpdated);
+        if (dateCompare != 0) return dateCompare;
+        return (b.snr).compareTo(a.snr);
+      });
+    final directRepeater = directBestRepeaters.isEmpty
+        ? null
+        : directBestRepeaters.first;
+
+    final snrUi = snrUiFromSNR(
+      directBestRepeaters.isNotEmpty ? directRepeater!.snr : null,
+      widget.connector.currentSf,
+    );
 
     return InkWell(
       onTap: () {
@@ -68,24 +84,76 @@ class _BatteryIndicatorState extends State<BatteryIndicator> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(batteryUi.icon, size: 18, color: batteryUi.color),
-            const SizedBox(width: 2),
-            Flexible(
-              child: Text(
-                displayText,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: batteryUi.color,
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(batteryUi.icon, size: 18, color: batteryUi.color),
+                const SizedBox(width: 2),
+                Flexible(
+                  child: Text(
+                    displayText,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: batteryUi.color,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-                overflow: TextOverflow.visible,
-                maxLines: 1,
-                softWrap: false,
+              ],
+            ),
+            const SizedBox(width: 8),
+            Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(snrUi.icon, size: 18, color: snrUi.color),
+                      Text(
+                        snrUi.text,
+                        style: TextStyle(fontSize: 12, color: snrUi.color),
+                      ),
+                    ],
+                  ),
+                  if (directRepeater != null)
+                    Text(
+                      '${directRepeaters.length}: ${directRepeater.pubkeyFirstByte.toRadixString(16).padLeft(2, '0')}: ${_formatLastUpdated(directRepeater.lastUpdated)}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                ],
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  String _formatLastUpdated(DateTime lastSeen) {
+    final now = DateTime.now();
+    final diff = now.difference(lastSeen);
+
+    if (diff.isNegative || diff.inMinutes < 1) {
+      return "${diff.inSeconds}s";
+    }
+    if (diff.inMinutes < 60) {
+      return "${diff.inMinutes}m";
+    }
+    if (diff.inHours < 24) {
+      final hours = diff.inHours;
+      return hours == 1 ? "1h" : "${hours}hs";
+    }
+    final days = diff.inDays;
+    return days == 1 ? "1d" : "${days}ds";
   }
 }

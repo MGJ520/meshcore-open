@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:meshcore_open/screens/path_trace_map.dart';
+import 'package:meshcore_open/widgets/app_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../connector/meshcore_connector.dart';
@@ -17,7 +18,6 @@ import '../services/map_marker_service.dart';
 import '../services/map_tile_cache_service.dart';
 import '../utils/contact_search.dart';
 import '../utils/route_transitions.dart';
-import '../widgets/battery_indicator.dart';
 import '../widgets/quick_switch_bar.dart';
 import 'channels_screen.dart';
 import 'chat_screen.dart';
@@ -262,8 +262,7 @@ class _MapScreenState extends State<MapScreen> {
           canPop: allowBack,
           child: Scaffold(
             appBar: AppBar(
-              leading: BatteryIndicator(connector: connector),
-              title: Text(context.l10n.map_title),
+              title: AppBarTitle(context.l10n.map_title, null),
               centerTitle: true,
               automaticallyImplyLeading: false,
               actions: [
@@ -384,8 +383,8 @@ class _MapScreenState extends State<MapScreen> {
                               connector.selfLatitude!,
                               connector.selfLongitude!,
                             ),
-                            width: 35,
-                            height: 35,
+                            width: 40,
+                            height: 40,
                             child: Container(
                               padding: const EdgeInsets.all(4),
                               decoration: BoxDecoration(

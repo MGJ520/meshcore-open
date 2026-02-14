@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+class SNRUi {
+  final IconData icon;
+  final Color color;
+  final String text;
+  const SNRUi(this.icon, this.color, this.text);
+}
+
 List<double> getSNRfromSF(int spreadingFactor) {
   switch (spreadingFactor) {
     case 7:
@@ -19,44 +26,33 @@ List<double> getSNRfromSF(int spreadingFactor) {
   }
 }
 
-class SNRIcon extends StatelessWidget {
-  final double snr;
-  final List<double> snrLevels;
-
-  const SNRIcon({
-    super.key,
-    required this.snr,
-    this.snrLevels = const [4.0, -2.0, -4.0, -6.0],
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    IconData icon;
-    Color color;
-
-    if (snr >= snrLevels[0]) {
-      icon = Icons.signal_cellular_alt;
-      color = Colors.green;
-    } else if (snr >= snrLevels[1]) {
-      icon = Icons.signal_cellular_alt;
-      color = Colors.lightGreen;
-    } else if (snr >= snrLevels[2]) {
-      icon = Icons.signal_cellular_alt;
-      color = Colors.yellow;
-    } else if (snr >= snrLevels[3]) {
-      icon = Icons.signal_cellular_alt_2_bar;
-      color = Colors.orange;
-    } else {
-      icon = Icons.signal_cellular_alt_1_bar;
-      color = Colors.red;
-    }
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, color: color),
-        Text('$snr dB', style: TextStyle(fontSize: 10, color: color)),
-      ],
-    );
+SNRUi snrUiFromSNR(double? snr, int? spreadingFactor) {
+  if (snr == null || spreadingFactor == null) {
+    return const SNRUi(Icons.signal_cellular_off, Colors.grey, '—');
   }
+
+  final snrLevels = getSNRfromSF(spreadingFactor);
+
+  IconData icon;
+  Color color;
+  String text = '${snr.toStringAsFixed(1)} dB';
+
+  if (snr >= snrLevels[0]) {
+    icon = Icons.signal_cellular_alt;
+    color = Colors.green;
+  } else if (snr >= snrLevels[1]) {
+    icon = Icons.signal_cellular_alt;
+    color = Colors.lightGreen;
+  } else if (snr >= snrLevels[2]) {
+    icon = Icons.signal_cellular_alt;
+    color = Colors.yellow;
+  } else if (snr >= snrLevels[3]) {
+    icon = Icons.signal_cellular_alt_2_bar;
+    color = Colors.orange;
+  } else {
+    icon = Icons.signal_cellular_alt_1_bar;
+    color = Colors.red;
+  }
+
+  return SNRUi(icon, color, text);
 }
