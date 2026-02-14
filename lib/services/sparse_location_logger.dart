@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:gpx/gpx.dart';
 import 'package:path_provider/path_provider.dart';
@@ -34,17 +35,24 @@ class SparseLocationLogger {
     _onNewLogPoint = onNewLogPoint;
   }
 
-  Future<void> startLogging() async {
+  Future<bool> getPremissons() async {
     // Permissions & service check (same as before)
     var status = await Permission.location.request();
     if (!status.isGranted) {
-      print('Location permission denied');
-      return;
+      debugPrint('Location permission denied');
+      return false;
     }
 
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      print('Location services disabled');
+      debugPrint('Location services disabled');
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> startLogging() async {
+    if (!await getPremissons()) {
       return;
     }
 
@@ -92,7 +100,7 @@ class SparseLocationLogger {
     _lastHeading = null;
     _lastLoggedTime = null;
 
-    print('Sparse GPX logging started → ${_gpxFile?.path}');
+    debugPrint('Sparse GPX logging started → ${_gpxFile?.path}');
   }
 
   Future<void> stopLogging() async {
@@ -107,7 +115,7 @@ class SparseLocationLogger {
 
       await _gpxFile?.writeAsString(xmlString);
 
-      final result = await SharePlus.instance.share(
+      await SharePlus.instance.share(
         ShareParams(
           text: 'Sparse GPS track',
           subject: 'Sparse GPS track',
@@ -118,7 +126,20 @@ class SparseLocationLogger {
       await _gpxFile?.delete();
     }
 
-    print('Logging stopped');
+    debugPrint('Logging stopped');
+  }
+
+  Future<void> updateMyLocation() async {
+    if (!await getPremissons()) {
+      return;
+    }
+
+    try {
+      final position = await Geolocator.getCurrentPosition();
+      _onNewLogPoint?.call(position);
+    } catch (e) {
+      debugPrint('Error updating location: $e');
+    }
   }
 
   Future<void> _onPositionReceived(Position position) async {
@@ -176,30 +197,30 @@ class SparseLocationLogger {
 
       _currentSegment.trkpts.add(pt);
       _onNewLogPoint?.call(position);
-      print('Logged point: ${pt.lat}, ${pt.lon} ($reason)');
+      debugPrint('Logged point: ${pt.lat}, ${pt.lon} ($reason)');
 
       _lastLoggedPosition = position;
       _lastHeading = heading;
       _lastLoggedTime = now;
     } else {
-      print('Skipped point: ${position.latitude}, ${position.longitude}');
+      debugPrint('Skipped point: ${position.latitude}, ${position.longitude}');
     }
   }
 
   Position snapToGridCenter({
     required Position position,
-    required double cellSizeDegrees, // e.g. 0.01 ≈ 1.1 km, 0.001 ≈ 110 m
+    required double cellSizeMeters,
   }) {
     Position snappedPosition = position;
     // Snap latitude
     final latFloor =
-        (position.latitude / cellSizeDegrees).floor() * cellSizeDegrees;
-    final snappedLat = latFloor + (cellSizeDegrees / 2);
+        (position.latitude / cellSizeMeters).floor() * cellSizeMeters;
+    final snappedLat = latFloor + (cellSizeMeters / 2);
 
     // Snap longitude
     final lonFloor =
-        (position.longitude / cellSizeDegrees).floor() * cellSizeDegrees;
-    final snappedLon = lonFloor + (cellSizeDegrees / 2);
+        (position.longitude / cellSizeMeters).floor() * cellSizeMeters;
+    final snappedLon = lonFloor + (cellSizeMeters / 2);
 
     snappedPosition = Position(
       latitude: snappedLat,

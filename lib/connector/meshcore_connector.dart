@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart' as crypto;
-import 'package:geolocator_platform_interface/src/models/position.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:meshcore_open/services/sparse_location_logger.dart';
 import 'package:pointycastle/export.dart';
 import 'package:flutter/foundation.dart';
@@ -1699,6 +1699,11 @@ class MeshCoreConnector extends ChangeNotifier {
         _isLoadingContacts = true;
         notifyListeners();
         break;
+      case pushCodeNewAdvert:
+        debugPrint('Got New CONTACT');
+        // It the same format as respCodeContact, so we can reuse the handler
+        _handleContact(frame);
+        break;
       case respCodeContact:
         debugPrint('Got CONTACT');
         _handleContact(frame);
@@ -1743,6 +1748,7 @@ class MeshCoreConnector extends ChangeNotifier {
       case pushCodeStatusResponse:
         break;
       case pushCodeLogRxData:
+        _handleRxData(frame);
         _handleLogRxData(frame);
         break;
       case respCodeChannelInfo:
@@ -1756,6 +1762,7 @@ class MeshCoreConnector extends ChangeNotifier {
         break;
       case respCodeCustomVars:
         _handleCustomVars(frame);
+        break;
       default:
         debugPrint('Unknown frame code: $code');
     }
@@ -2008,6 +2015,76 @@ class MeshCoreConnector extends ChangeNotifier {
       if (!_isLoadingContacts) {
         unawaited(_persistContacts());
       }
+    }
+  }
+
+  void _handleContactAdvert(Contact contact) {
+    if (contact.type == advTypeRepeater) {
+      _contactUnreadCount.remove(contact.publicKeyHex);
+      _unreadStore.saveContactUnreadCount(
+        Map<String, int>.from(_contactUnreadCount),
+      );
+    }
+    // Check if this is a new contact
+    final isNewContact = !_knownContactKeys.contains(contact.publicKeyHex);
+    final existingIndex = _contacts.indexWhere(
+      (c) => c.publicKeyHex == contact.publicKeyHex,
+    );
+
+    if (existingIndex >= 0) {
+      final existing = _contacts[existingIndex];
+      final mergedLastMessageAt =
+          existing.lastMessageAt.isAfter(contact.lastMessageAt)
+          ? existing.lastMessageAt
+          : contact.lastMessageAt;
+
+      appLogger.info(
+        'Refreshing contact ${contact.name}: devicePath=${contact.pathLength}, existingOverride=${existing.pathOverride}',
+        tag: 'Connector',
+      );
+
+      // CRITICAL: Preserve user's path override when contact is refreshed from device
+      _contacts[existingIndex] = contact.copyWith(
+        lastMessageAt: mergedLastMessageAt,
+        pathOverride: existing.pathOverride, // Preserve user's path choice
+        pathOverrideBytes: existing.pathOverrideBytes,
+      );
+
+      appLogger.info(
+        'After merge: pathOverride=${_contacts[existingIndex].pathOverride}, devicePath=${_contacts[existingIndex].pathLength}',
+        tag: 'Connector',
+      );
+    } else {
+      _contacts.add(contact);
+      appLogger.info(
+        'Added new contact ${contact.name}: pathLen=${contact.pathLength}',
+        tag: 'Connector',
+      );
+    }
+    _knownContactKeys.add(contact.publicKeyHex);
+    _loadMessagesForContact(contact.publicKeyHex);
+
+    // Add path to history if we have a valid path
+    if (_pathHistoryService != null && contact.pathLength >= 0) {
+      _pathHistoryService!.handlePathUpdated(contact);
+    }
+
+    notifyListeners();
+
+    // Show notification for new contact (advertisement)
+    if (isNewContact && _appSettingsService != null) {
+      final settings = _appSettingsService!.settings;
+      if (settings.notificationsEnabled && settings.notifyOnNewAdvert) {
+        _notificationService.showAdvertNotification(
+          contactName: contact.name,
+          contactType: contact.typeLabel,
+          contactId: contact.publicKeyHex,
+        );
+      }
+    }
+
+    if (!_isLoadingContacts) {
+      unawaited(_persistContacts());
     }
   }
 
@@ -3296,20 +3373,133 @@ class MeshCoreConnector extends ChangeNotifier {
   }
 
   _updateLocationandAdvert(Position position) async {
-    double lat = position.latitude;
-    double lon = position.longitude;
+    final snapToGridCenter = _sparseLocationLogger?.snapToGridCenter(
+      position: position,
+      cellSizeMeters: 0.001,
+    );
+    double lat = snapToGridCenter?.latitude ?? 0.0;
+    double lon = snapToGridCenter?.longitude ?? 0.0;
 
     if (lat == 0.0 && lon == 0.0) {
-      // Invalid location
+      debugPrint('Invalid location (0,0), skipping advert');
       return;
     }
-    lat = double.parse(lat.toStringAsFixed(3)) - 0.00015;
-    lon = double.parse(lon.toStringAsFixed(3)) - 0.00015;
-    print('Updating location to lat: $lat, lon: $lon');
-    await sendFrame(buildSetOtherParamsFrame(true, 0, 1, 0));
+
+    await sendFrame(buildSetOtherParamsFrame(true, 1, 1, 0));
     await setNodeLocation(lat: lat, lon: lon);
     await sendSelfAdvert(flood: true);
-    await sendFrame(buildDeviceQueryFrame());
+    _selfLatitude = lat;
+    _selfLongitude = lon;
+    notifyListeners();
+  }
+
+  void _handleRxData(Uint8List frame) {
+    final packet = BufferReader(frame);
+    packet.skipBytes(3); // Skip frame type byte
+    //final snr = packet.readByte() / 4.0;
+    //final rssi = packet.readByte();
+    final header = packet.readByte();
+    //final routeType = header & 0x03;
+    final payloadType = (header >> 2) & 0x0F;
+    //final payloadVer = (header >> 6) & 0x03;
+
+    if (packet.remaining <= 0) return;
+    final pathLen = packet.readByte();
+
+    if (packet.remaining < pathLen) return;
+    final pathBytes = packet.readBytes(pathLen);
+
+    if (packet.remaining <= 0) return;
+    final payload = packet.readBytes(packet.remaining);
+
+    switch (payloadType) {
+      case payloadTypeADVERT:
+        _handlePayloadAdvertReceived(payload, pathBytes);
+        break;
+      default:
+    }
+  }
+
+  void _handlePayloadAdvertReceived(Uint8List frame, Uint8List path) {
+    final advert = BufferReader(frame);
+    if (advert.remaining <= 32) return;
+    final publicKey = advert.readBytes(32);
+    final contactKeyHex = publicKey
+        .map((b) => b.toRadixString(16).padLeft(2, '0'))
+        .join();
+    if (advert.remaining <= 4) return;
+    final timestamp = advert.readInt32LE();
+    if (advert.remaining <= 64) return;
+    advert.skipBytes(64); // Skip signature for now
+    if (advert.remaining <= 1) return;
+    final flags = advert.readByte();
+    final type = flags & 0x0F;
+    final hasLocation = (flags & 0x10) != 0;
+    //final hasFeature1 = (flags & 0x20) != 0;
+    //final hasFeature2 = (flags & 0x40) != 0;
+    final hasName = (flags & 0x80) != 0;
+    double latitude = 0.0;
+    double longitude = 0.0;
+    if (hasLocation && advert.remaining >= 8) {
+      latitude = advert.readInt32LE() / 1e6;
+      longitude = advert.readInt32LE() / 1e6;
+    }
+    String name = '';
+    if (hasName && advert.remaining > 0) {
+      name = advert.readString();
+    }
+    // Check if this is a new contact
+    final isNewContact = !_knownContactKeys.contains(contactKeyHex);
+    if (isNewContact) {
+      _handleContactAdvert(
+        Contact(
+          publicKey: publicKey,
+          name: name,
+          type: type,
+          pathLength: path.length,
+          path: path,
+          latitude: latitude,
+          longitude: longitude,
+          lastSeen: DateTime.fromMillisecondsSinceEpoch(timestamp * 1000),
+        ),
+      );
+      return;
+    }
+
+    final existingIndex = _contacts.indexWhere(
+      (c) => c.publicKeyHex == contactKeyHex,
+    );
+
+    if (existingIndex >= 0) {
+      final existing = _contacts[existingIndex];
+      final mergedLastMessageAt = existing.lastMessageAt.isAfter(DateTime.now())
+          ? DateTime.now()
+          : existing.lastMessageAt;
+
+      appLogger.info(
+        'Refreshing contact ${existing.name}: devicePath=${existing.pathLength}, existingOverride=${existing.pathOverride}',
+        tag: 'Connector',
+      );
+
+      // CRITICAL: Preserve user's path override when contact is refreshed from device
+      _contacts[existingIndex] = existing.copyWith(
+        latitude: hasLocation ? latitude : existing.latitude,
+        longitude: hasLocation ? longitude : existing.longitude,
+        name: hasName ? name : existing.name,
+        path: path,
+        pathLength: path.length,
+        lastMessageAt: mergedLastMessageAt,
+        lastSeen: DateTime.fromMillisecondsSinceEpoch(timestamp * 1000),
+        pathOverride: existing.pathOverride, // Preserve user's path choice
+        pathOverrideBytes: existing.pathOverrideBytes,
+      );
+
+      appLogger.info(
+        'After merge: pathOverride=${_contacts[existingIndex].pathOverride}, devicePath=${_contacts[existingIndex].pathLength}',
+        tag: 'Connector',
+      );
+      notifyListeners();
+    }
   }
 }
 

@@ -275,6 +275,17 @@ class _MapScreenState extends State<MapScreen> {
                         ),
                       ),
                     ),
+                    PopupMenuItem(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.refresh),
+                          const SizedBox(width: 8),
+                          Text(context.l10n.map_updateMyLocation),
+                        ],
+                      ),
+                      onTap: () =>
+                          connector.sparseLocationLogger?.updateMyLocation(),
+                    ),
                   ],
                   icon: const Icon(Icons.more_vert),
                 ),
