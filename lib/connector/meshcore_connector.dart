@@ -3466,8 +3466,14 @@ class MeshCoreConnector extends ChangeNotifier {
       return;
     }
 
+    if (publicKey == _selfPublicKey) {
+      appLogger.info('Ignoring advert from self', tag: 'Connector');
+      return;
+    }
+
     // Check if this is a new contact
     final isNewContact = !_knownContactKeys.contains(contactKeyHex);
+
     if (isNewContact) {
       final newContect = Contact(
         publicKey: publicKey,
