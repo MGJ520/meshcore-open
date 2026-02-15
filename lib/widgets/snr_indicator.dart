@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import '../connector/meshcore_connector.dart';
+import '../l10n/l10n.dart';
 
 class SNRUi {
   final IconData icon;
@@ -55,4 +59,142 @@ SNRUi snrUiFromSNR(double? snr, int? spreadingFactor) {
   }
 
   return SNRUi(icon, color, text);
+}
+
+class SNRIndicator extends StatefulWidget {
+  final MeshCoreConnector connector;
+
+  const SNRIndicator({super.key, required this.connector});
+
+  @override
+  State<SNRIndicator> createState() => _SNRIndicatorState();
+}
+
+class _SNRIndicatorState extends State<SNRIndicator> {
+  @override
+  Widget build(BuildContext context) {
+    final directRepeaters = widget.connector.directRepeaters;
+    final directBestRepeaters = List.of(directRepeaters)
+      ..sort((a, b) => (b.snr).compareTo(a.snr));
+    final directRepeater = directBestRepeaters.isEmpty
+        ? null
+        : directBestRepeaters.first;
+
+    final snrUi = snrUiFromSNR(
+      directBestRepeaters.isNotEmpty ? directRepeater!.snr : null,
+      widget.connector.currentSf,
+    );
+
+    return InkWell(
+      onTap: () {
+        if (directRepeater != null) {
+          _showFullPathDialog(context, directBestRepeaters);
+        }
+      },
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(snrUi.icon, size: 18, color: snrUi.color),
+                Text(
+                  snrUi.text,
+                  style: TextStyle(fontSize: 12, color: snrUi.color),
+                ),
+              ],
+            ),
+            if (directRepeater != null)
+              Text(
+                '${directRepeaters.length}: ${directRepeater.pubkeyFirstByte.toRadixString(16).padLeft(2, '0')}: ${_formatLastUpdated(directRepeater.lastUpdated)}',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _formatLastUpdated(DateTime lastSeen) {
+    final now = DateTime.now();
+    final diff = now.difference(lastSeen);
+
+    if (diff.isNegative || diff.inMinutes < 1) {
+      return "${diff.inSeconds}s";
+    }
+    if (diff.inMinutes < 60) {
+      return "${diff.inMinutes}m";
+    }
+    if (diff.inHours < 24) {
+      final hours = diff.inHours;
+      return hours == 1 ? "1h" : "${hours}hs";
+    }
+    final days = diff.inDays;
+    return days == 1 ? "1d" : "${days}ds";
+  }
+
+  void _showFullPathDialog(
+    BuildContext context,
+    List<DirectRepeater> directBestRepeaters,
+  ) {
+    final l10n = context.l10n;
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Nearby Repeaters"),
+        content: Expanded(
+          child: Scrollbar(
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              itemCount: directBestRepeaters.length,
+              separatorBuilder: (_, _) => const Divider(height: 1),
+              itemBuilder: (context, index) {
+                final repeater = directBestRepeaters[index];
+                final snrUi = snrUiFromSNR(
+                  repeater.snr,
+                  widget.connector.currentSf,
+                );
+
+                final name = widget.connector.contacts
+                    .where((c) => c.publicKey.first == repeater.pubkeyFirstByte)
+                    .map((c) => c.name)
+                    .firstOrNull;
+
+                return Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(snrUi.icon, color: snrUi.color),
+                      title: Text(
+                        name ??
+                            '${repeater.pubkeyFirstByte.toRadixString(16).padLeft(2, '0')}',
+                      ),
+                      subtitle: Text(
+                        'SNR: ${repeater.snr.toStringAsFixed(1)} dB\nLast seen: ${_formatLastUpdated(repeater.lastUpdated)}',
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(l10n.common_close),
+          ),
+        ],
+      ),
+    );
+  }
 }
