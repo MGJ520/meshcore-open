@@ -133,6 +133,17 @@ class _PathManagementDialog extends StatelessWidget {
       builder: (context, connector, pathService, _) {
         final currentContact = _resolveContact(connector);
         final paths = pathService.getRecentPaths(currentContact.publicKeyHex);
+        final directRepeaters = List.of(connector.directRepeaters)
+          ..sort((a, b) => (b.snr).compareTo(a.snr));
+        final directRepeater = directRepeaters.isEmpty
+            ? null
+            : directRepeaters.first;
+        final secondDirectRepeater = directRepeaters.length < 2
+            ? null
+            : directRepeaters.elementAt(1);
+        final thirdDirectRepeater = directRepeaters.length < 3
+            ? null
+            : directRepeaters.elementAt(2);
 
         return AlertDialog(
           title: Text(l10n.chat_pathManagement),
@@ -174,15 +185,37 @@ class _PathManagementDialog extends StatelessWidget {
                   ],
                   const SizedBox(height: 8),
                   ...paths.map((path) {
+                    final isDirectRepeater =
+                        directRepeater != null &&
+                        path.pathBytes.isNotEmpty &&
+                        directRepeater.pubkeyFirstByte == path.pathBytes.first;
+                    final isSecoundDirectRepeater =
+                        secondDirectRepeater != null &&
+                        path.pathBytes.isNotEmpty &&
+                        secondDirectRepeater.pubkeyFirstByte ==
+                            path.pathBytes.first;
+                    final isThirdDirectRepeater =
+                        thirdDirectRepeater != null &&
+                        path.pathBytes.isNotEmpty &&
+                        thirdDirectRepeater.pubkeyFirstByte ==
+                            path.pathBytes.first;
+                    Color color = Colors.grey;
+                    if (isDirectRepeater) {
+                      color = Colors.green;
+                    } else if (isSecoundDirectRepeater) {
+                      color = Colors.yellow;
+                    } else if (isThirdDirectRepeater) {
+                      color = Colors.red;
+                    } else if (path.wasFloodDiscovery) {
+                      color = Colors.blue;
+                    }
                     return Card(
                       margin: const EdgeInsets.symmetric(vertical: 4),
                       child: ListTile(
                         dense: true,
                         leading: CircleAvatar(
                           radius: 16,
-                          backgroundColor: path.wasFloodDiscovery
-                              ? Colors.blue
-                              : Colors.green,
+                          backgroundColor: color,
                           child: Text(
                             '${path.hopCount}',
                             style: const TextStyle(fontSize: 12),
