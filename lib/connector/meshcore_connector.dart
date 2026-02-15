@@ -3534,7 +3534,7 @@ class MeshCoreConnector extends ChangeNotifier {
 
     _directRepeaters.removeWhere((r) => r.isStale());
 
-    if (contact.type == advTypeChat && contact.type == advTypeSensor) {
+    if (contact.type == advTypeChat || contact.type == advTypeSensor) {
       notifyListeners();
       return;
     }
