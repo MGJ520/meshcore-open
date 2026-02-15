@@ -28,7 +28,7 @@ class AppBarTitle extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (leading != null) leading!,
+            leading ?? const SizedBox.shrink(),
             Text(title),
             if (connector.isConnected && connector.selfName != null)
               Center(
@@ -47,7 +47,7 @@ class AppBarTitle extends StatelessWidget {
             SNRIndicator(connector: connector),
           ],
         ),
-        if (trailing != null) trailing!,
+        trailing ?? const SizedBox.shrink(),
       ],
     );
   }

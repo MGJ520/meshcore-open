@@ -465,7 +465,7 @@ class _NeighboursScreenState extends State<NeighboursScreen> {
                 children: [
                   Icon(snrUi.icon, color: snrUi.color, size: 18.0),
                   Text(
-                    snrUi.text!,
+                    snrUi.text,
                     style: TextStyle(fontSize: 10, color: snrUi.color),
                   ),
                 ],

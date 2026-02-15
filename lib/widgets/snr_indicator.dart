@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import '../connector/meshcore_connector.dart';
 import '../l10n/l10n.dart';
@@ -176,7 +174,9 @@ class _SNRIndicatorState extends State<SNRIndicator> {
                       leading: Icon(snrUi.icon, color: snrUi.color),
                       title: Text(
                         name ??
-                            '${repeater.pubkeyFirstByte.toRadixString(16).padLeft(2, '0')}',
+                            repeater.pubkeyFirstByte
+                                .toRadixString(16)
+                                .padLeft(2, '0'),
                       ),
                       subtitle: Text(
                         'SNR: ${repeater.snr.toStringAsFixed(1)} dB\nLast seen: ${_formatLastUpdated(repeater.lastUpdated)}',
