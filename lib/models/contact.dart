@@ -119,7 +119,7 @@ class Contact {
     final pathBytes = _pathBytesForDisplay;
     Uint8List? traceBytes;
 
-    if (pathLength <= 0) {
+    if (pathBytes.isEmpty) {
       traceBytes = Uint8List(1);
       traceBytes[0] = publicKey[0];
       return traceBytes;
