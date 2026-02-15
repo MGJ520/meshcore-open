@@ -2035,7 +2035,7 @@ class MeshCoreConnector extends ChangeNotifier {
   }
 
   void _handleContactAdvert(Contact contact) {
-    if (contact.publicKey == _selfPublicKey) {
+    if (listEquals(contact.publicKey, _selfPublicKey)) {
       return;
     }
 
