@@ -160,6 +160,7 @@ class Contact {
   }
 
   static Contact? fromFrame(Uint8List data) {
+    if (data.isEmpty) return null;
     if (data[0] != respCodeContact) return null;
     try {
       final pubKey = Uint8List.fromList(
