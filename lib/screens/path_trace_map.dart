@@ -33,7 +33,7 @@ String formatDistance(double distanceMeters) {
 
 class PathTraceData {
   final Uint8List pathData;
-  final Uint8List snrData;
+  final List<double> snrData;
   final Map<int, Contact> pathContacts;
 
   PathTraceData({
@@ -216,7 +216,7 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
         _hasData = true;
         _traceData = PathTraceData(
           pathData: pathData,
-          snrData: snrData,
+          snrData: snrData.map((e) => e.toDouble() / 4).toList(),
           pathContacts: pathContacts,
         );
         _points = <LatLng>[];
@@ -549,7 +549,7 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
                           itemBuilder: (context, index) {
                             final snrUi = snrUiFromSNR(
                               index < pathTraceData.snrData.length
-                                  ? pathTraceData.snrData[index].toDouble()
+                                  ? pathTraceData.snrData[index]
                                   : null,
                               context.read<MeshCoreConnector>().currentSf,
                             );
