@@ -192,9 +192,8 @@ class CayenneLpp {
     } catch (e) {
       // Handle parsing errors, possibly due to malformed data
       appLogger.error('Error parsing Cayenne LPP data: $e');
-      return <
-        Map<String, dynamic>
-      >[]; // Return an empty list on error to avoid crashing the app
+      // Return any telemetry parsed so far to preserve partial data
+      return telemetry;
     }
   }
 
