@@ -216,7 +216,7 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
         _hasData = true;
         _traceData = PathTraceData(
           pathData: pathData,
-          snrData: snrData.map((e) => e.toDouble() / 4).toList(),
+          snrData: snrData.map((e) => e.toSigned(8).toDouble() / 4).toList(),
           pathContacts: pathContacts,
         );
         _points = <LatLng>[];
