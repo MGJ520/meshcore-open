@@ -2905,4 +2905,10 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get settings_gpxExportShareSubject =>
       'meshcore-open экспорт данных карты GPX';
+
+  @override
+  String get snrIndicator_nearByRepeaters => 'Ближайшие ретрансляторы';
+
+  @override
+  String get snrIndicator_lastSeen => 'Последний раз видели';
 }

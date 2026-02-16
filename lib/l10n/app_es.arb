@@ -1626,5 +1626,7 @@
   "map_pathTraceCancelled": "Rastreo de ruta cancelado.",
   "scanner_bluetoothOffMessage": "Por favor, active el Bluetooth para escanear dispositivos.",
   "scanner_bluetoothOff": "Bluetooth está desactivado.",
-  "scanner_enableBluetooth": "Habilitar Bluetooth"
+  "scanner_enableBluetooth": "Habilitar Bluetooth",
+  "snrIndicator_nearByRepeaters": "Repetidores cercanos",
+  "snrIndicator_lastSeen": "Visto por última vez"
 }

@@ -2886,4 +2886,10 @@ class AppLocalizationsSl extends AppLocalizations {
   @override
   String get settings_gpxExportShareSubject =>
       'meshcore-open izvoz podatkov GPX karte';
+
+  @override
+  String get snrIndicator_nearByRepeaters => 'Bližnji ponovitelji';
+
+  @override
+  String get snrIndicator_lastSeen => 'Zadnjič videno';
 }

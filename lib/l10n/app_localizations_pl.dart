@@ -2899,4 +2899,10 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get settings_gpxExportShareSubject =>
       'Eksport danych mapy GPX meshcore-open';
+
+  @override
+  String get snrIndicator_nearByRepeaters => 'Nadajniki w pobliżu';
+
+  @override
+  String get snrIndicator_lastSeen => 'Ostatnio widziany';
 }

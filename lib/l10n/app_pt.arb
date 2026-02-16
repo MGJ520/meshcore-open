@@ -1598,5 +1598,7 @@
   "map_tapToAdd": "Toque nos nós para adicioná-los ao caminho.",
   "scanner_enableBluetooth": "Ative o Bluetooth",
   "scanner_bluetoothOff": "Bluetooth está desativado",
-  "scanner_bluetoothOffMessage": "Por favor, ative o Bluetooth para escanear por dispositivos."
+  "scanner_bluetoothOffMessage": "Por favor, ative o Bluetooth para escanear por dispositivos.",
+  "snrIndicator_nearByRepeaters": "Repetidores Próximos",
+  "snrIndicator_lastSeen": "Visto pela última vez"
 }

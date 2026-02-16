@@ -2894,4 +2894,10 @@ class AppLocalizationsBg extends AppLocalizations {
   @override
   String get settings_gpxExportShareSubject =>
       'meshcore-open износ на данни за карта в формат GPX';
+
+  @override
+  String get snrIndicator_nearByRepeaters => 'Близки повтарящи се устройства';
+
+  @override
+  String get snrIndicator_lastSeen => 'Последно видян';
 }

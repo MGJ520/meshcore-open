@@ -1395,5 +1395,7 @@
   "settings_gpxExportChat": "Companion locations",
   "settings_gpxExportAllContacts": "All contacts locations",
   "settings_gpxExportShareText": "Map data exported from meshcore-open",
-  "settings_gpxExportShareSubject": "meshcore-open GPX map data export"
+  "settings_gpxExportShareSubject": "meshcore-open GPX map data export",
+  "snrIndicator_nearByRepeaters": "Nearby Repeaters",
+  "snrIndicator_lastSeen": "Last seen"
 }

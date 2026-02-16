@@ -2719,4 +2719,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get settings_gpxExportShareSubject => 'meshcore-open GPX 地图数据导出';
+
+  @override
+  String get snrIndicator_nearByRepeaters => '附近的重复器';
+
+  @override
+  String get snrIndicator_lastSeen => '最近访问';
 }

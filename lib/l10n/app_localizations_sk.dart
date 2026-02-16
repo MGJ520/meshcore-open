@@ -2881,4 +2881,10 @@ class AppLocalizationsSk extends AppLocalizations {
   @override
   String get settings_gpxExportShareSubject =>
       'meshcore-open export dát GPX mapových údajov';
+
+  @override
+  String get snrIndicator_nearByRepeaters => 'Miestne opakovače';
+
+  @override
+  String get snrIndicator_lastSeen => 'Naposledy videný';
 }

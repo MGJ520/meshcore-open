@@ -2893,4 +2893,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settings_gpxExportShareSubject =>
       'meshcore-open exportación de datos de mapa GPX';
+
+  @override
+  String get snrIndicator_nearByRepeaters => 'Repetidores cercanos';
+
+  @override
+  String get snrIndicator_lastSeen => 'Visto por última vez';
 }

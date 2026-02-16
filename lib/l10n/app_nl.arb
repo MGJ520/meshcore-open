@@ -1598,5 +1598,7 @@
   "map_runTrace": "Padeshulp traceren",
   "scanner_enableBluetooth": "Activeer Bluetooth",
   "scanner_bluetoothOffMessage": "Zorg ervoor dat Bluetooth is ingeschakeld om naar apparaten te zoeken.",
-  "scanner_bluetoothOff": "Bluetooth is uitgeschakeld"
+  "scanner_bluetoothOff": "Bluetooth is uitgeschakeld",
+  "snrIndicator_lastSeen": "Laatst gezien",
+  "snrIndicator_nearByRepeaters": "Nabije herhalingseenheden"
 }

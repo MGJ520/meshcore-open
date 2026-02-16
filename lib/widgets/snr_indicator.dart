@@ -149,7 +149,7 @@ class _SNRIndicatorState extends State<SNRIndicator> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Nearby Repeaters"),
+        title: Text(l10n.snrIndicator_nearByRepeaters),
         content: Expanded(
           child: Scrollbar(
             child: ListView.separated(
@@ -179,7 +179,7 @@ class _SNRIndicatorState extends State<SNRIndicator> {
                                 .padLeft(2, '0'),
                       ),
                       subtitle: Text(
-                        'SNR: ${repeater.snr.toStringAsFixed(1)} dB\nLast seen: ${_formatLastUpdated(repeater.lastUpdated)}',
+                        'SNR: ${repeater.snr.toStringAsFixed(1)} dB\n${l10n.snrIndicator_lastSeen}: ${_formatLastUpdated(repeater.lastUpdated)}',
                       ),
                     ),
                   ],

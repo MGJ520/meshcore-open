@@ -1598,5 +1598,7 @@
   "map_tapToAdd": "Kliknij na węzły, aby dodać je do ścieżki.",
   "scanner_bluetoothOffMessage": "Prosimy włączyć Bluetooth, aby przeskanować urządzenia.",
   "scanner_bluetoothOff": "Bluetooth jest wyłączony",
-  "scanner_enableBluetooth": "Włącz Bluetooth"
+  "scanner_enableBluetooth": "Włącz Bluetooth",
+  "snrIndicator_lastSeen": "Ostatnio widziany",
+  "snrIndicator_nearByRepeaters": "Nadajniki w pobliżu"
 }

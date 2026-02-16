@@ -838,5 +838,7 @@
   "map_runTrace": "Запустить трассировку пути",
   "scanner_enableBluetooth": "Включите Bluetooth",
   "scanner_bluetoothOff": "Bluetooth выключен",
-  "scanner_bluetoothOffMessage": "Пожалуйста, включите Bluetooth, чтобы найти устройства."
+  "scanner_bluetoothOffMessage": "Пожалуйста, включите Bluetooth, чтобы найти устройства.",
+  "snrIndicator_nearByRepeaters": "Ближайшие ретрансляторы",
+  "snrIndicator_lastSeen": "Последний раз видели"
 }

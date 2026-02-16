@@ -5035,6 +5035,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'meshcore-open GPX map data export'**
   String get settings_gpxExportShareSubject;
+
+  /// No description provided for @snrIndicator_nearByRepeaters.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby Repeaters'**
+  String get snrIndicator_nearByRepeaters;
+
+  /// No description provided for @snrIndicator_lastSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Last seen'**
+  String get snrIndicator_lastSeen;
 }
 
 class _AppLocalizationsDelegate

@@ -1598,5 +1598,7 @@
   "map_pathTraceCancelled": "Zrušenie stopáže cesty bolo zrušené.",
   "scanner_bluetoothOffMessage": "Prosím, zapnite Bluetooth, aby ste mohli skenovať pre zariadenia.",
   "scanner_bluetoothOff": "Bluetooth je vypnutý",
-  "scanner_enableBluetooth": "Povolte Bluetooth"
+  "scanner_enableBluetooth": "Povolte Bluetooth",
+  "snrIndicator_lastSeen": "Naposledy videný",
+  "snrIndicator_nearByRepeaters": "Miestne opakovače"
 }

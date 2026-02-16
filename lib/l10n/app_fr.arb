@@ -1598,5 +1598,7 @@
   "map_runTrace": "Exécuter la traçage de chemin",
   "scanner_bluetoothOffMessage": "Veuillez activer le Bluetooth pour rechercher des appareils.",
   "scanner_bluetoothOff": "Le Bluetooth est désactivé.",
-  "scanner_enableBluetooth": "Activer le Bluetooth"
+  "scanner_enableBluetooth": "Activer le Bluetooth",
+  "snrIndicator_lastSeen": "Dernière fois vu",
+  "snrIndicator_nearByRepeaters": "Répéteurs à proximité"
 }

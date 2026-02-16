@@ -2866,4 +2866,10 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get settings_gpxExportShareSubject =>
       'meshcore-open export av GPX-kartdata';
+
+  @override
+  String get snrIndicator_nearByRepeaters => 'Närliggande uppreparstationer';
+
+  @override
+  String get snrIndicator_lastSeen => 'Senast sedd';
 }

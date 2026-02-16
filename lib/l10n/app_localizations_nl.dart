@@ -2885,4 +2885,10 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get settings_gpxExportShareSubject =>
       'meshcore-open GPX kaartgegevens exporteren';
+
+  @override
+  String get snrIndicator_nearByRepeaters => 'Nabije herhalingseenheden';
+
+  @override
+  String get snrIndicator_lastSeen => 'Laatst gezien';
 }
