@@ -258,8 +258,9 @@ class CayenneLpp {
             break;
           // Add more types as needed...
           default:
-            // Unknown type: skip or handle error?
-            continue;
+            throw Exception(
+              'Unsupported LPP type: ${type.toRadixString(16).padLeft(2, '0')}',
+            );
         }
       }
 
