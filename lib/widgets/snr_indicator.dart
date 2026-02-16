@@ -150,7 +150,7 @@ class _SNRIndicatorState extends State<SNRIndicator> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l10n.snrIndicator_nearByRepeaters),
-        content: Expanded(
+        content: SizedBox(
           child: Scrollbar(
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(vertical: 4),

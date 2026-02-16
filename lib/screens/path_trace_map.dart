@@ -166,6 +166,15 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
           });
         }
 
+        if (code == respCodeErr) {
+          _timeoutTimer?.cancel();
+          if (!mounted) return;
+          setState(() {
+            _isLoading = false;
+            _failed2Loaded = true;
+          });
+        }
+
         // Check if it's a binary response
         if (frame.length > 8 &&
             code == pushCodeTraceData &&
@@ -178,6 +187,12 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
           }
         }
       } catch (e) {
+        _timeoutTimer?.cancel();
+        if (!mounted) return;
+        setState(() {
+          _isLoading = false;
+          _failed2Loaded = true;
+        });
         // Handle any parsing errors gracefully
         appLogger.error('Error parsing frame: $e', tag: 'PathTraceMapScreen');
       }
