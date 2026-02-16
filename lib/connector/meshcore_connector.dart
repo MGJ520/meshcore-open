@@ -3401,7 +3401,7 @@ class MeshCoreConnector extends ChangeNotifier {
     try {
       packet.skipBytes(1); // Skip frame type byte
       final snr = packet.readInt8() / 4.0;
-      packet.skipBytes(1); // Skip RSSI and noise bytes, as SNR is more reliable
+      packet.skipBytes(1); // Skip RSSI byte
       //final rssi = packet.readByte();
       final header = packet.readByte();
       final routeType = header & 0x03;
