@@ -72,7 +72,7 @@ class _BatteryIndicatorState extends State<BatteryIndicator> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(batteryUi.icon, size: 18, color: batteryUi.color),
-                const SizedBox(width: 2),
+                const SizedBox(height: 2),
                 Flexible(
                   child: Text(
                     displayText,
