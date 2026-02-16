@@ -3475,7 +3475,7 @@ class MeshCoreConnector extends ChangeNotifier {
     final isNewContact = !_knownContactKeys.contains(contactKeyHex);
 
     if (isNewContact) {
-      final newContect = Contact(
+      final newContact = Contact(
         publicKey: publicKey,
         name: name,
         type: type,
@@ -3485,8 +3485,8 @@ class MeshCoreConnector extends ChangeNotifier {
         longitude: longitude,
         lastSeen: DateTime.fromMillisecondsSinceEpoch(timestamp * 1000),
       );
-      _handleContactAdvert(newContect);
-      _updateDirectRepeater(newContect, snr, path);
+      _handleContactAdvert(newContact);
+      _updateDirectRepeater(newContact, snr, path);
       return;
     }
 
@@ -3546,7 +3546,7 @@ class MeshCoreConnector extends ChangeNotifier {
     if (isTracked.isNotEmpty) {
       final repeater = isTracked.first;
       repeater.update(snr);
-    } else if (isTracked.isEmpty && _directRepeaters.length < 5) {
+    } else if (_directRepeaters.length < 5) {
       _directRepeaters.add(
         DirectRepeater(pubkeyFirstByte: pubkeyFirstByte, snr: snr),
       );

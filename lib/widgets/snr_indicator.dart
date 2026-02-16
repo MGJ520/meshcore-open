@@ -29,7 +29,10 @@ List<double> getSNRfromSF(int spreadingFactor) {
 }
 
 SNRUi snrUiFromSNR(double? snr, int? spreadingFactor) {
-  if (snr == null || spreadingFactor == null) {
+  if (snr == null ||
+      spreadingFactor == null ||
+      spreadingFactor < 7 ||
+      spreadingFactor > 12) {
     return const SNRUi(Icons.signal_cellular_off, Colors.grey, '—');
   }
 
@@ -125,8 +128,10 @@ class _SNRIndicatorState extends State<SNRIndicator> {
   String _formatLastUpdated(DateTime lastSeen) {
     final now = DateTime.now();
     final diff = now.difference(lastSeen);
-
-    if (diff.isNegative || diff.inMinutes < 1) {
+    if (diff.isNegative) {
+      return "0s";
+    }
+    if (diff.inMinutes < 1) {
       return "${diff.inSeconds}s";
     }
     if (diff.inMinutes < 60) {

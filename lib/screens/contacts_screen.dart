@@ -241,8 +241,7 @@ class _ContactsScreenState extends State<ContactsScreen>
       canPop: allowBack,
       child: Scaffold(
         appBar: AppBar(
-          //leading: ,
-          title: AppBarTitle(context.l10n.contacts_title, null),
+          title: AppBarTitle(context.l10n.contacts_title),
           automaticallyImplyLeading: false,
           actions: [
             PopupMenuButton(

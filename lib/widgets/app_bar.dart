@@ -7,16 +7,9 @@ import 'snr_indicator.dart';
 
 class AppBarTitle extends StatelessWidget {
   final String title;
-  final TextStyle? style;
   final Widget? leading;
   final Widget? trailing;
-  const AppBarTitle(
-    this.title,
-    this.style, {
-    this.leading,
-    this.trailing,
-    super.key,
-  });
+  const AppBarTitle(this.title, {this.leading, this.trailing, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +18,7 @@ class AppBarTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        leading ?? const SizedBox.shrink(),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

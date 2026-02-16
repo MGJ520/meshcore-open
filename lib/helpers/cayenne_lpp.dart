@@ -258,9 +258,8 @@ class CayenneLpp {
             break;
           // Add more types as needed...
           default:
-            throw Exception(
-              'Unsupported LPP type: ${type.toRadixString(16).padLeft(2, '0')}',
-            );
+            //Stopped parsing to avoid misalignment
+            return channels.values.toList();
         }
       }
 
