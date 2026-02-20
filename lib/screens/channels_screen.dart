@@ -478,9 +478,10 @@ class _ChannelsScreenState extends State<ChannelsScreen>
     MeshCoreConnector connector,
     Channel channel,
   ) {
+    final parentContext = context;
     showModalBottomSheet(
-      context: context,
-      builder: (context) => SafeArea(
+      context: parentContext,
+      builder: (sheetContext) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -488,10 +489,10 @@ class _ChannelsScreenState extends State<ChannelsScreen>
               leading: const Icon(Icons.edit_outlined),
               title: Text(context.l10n.channels_editChannel),
               onTap: () async {
-                Navigator.pop(context);
+                Navigator.pop(sheetContext);
                 await Future.delayed(const Duration(milliseconds: 100));
-                if (context.mounted) {
-                  _showEditChannelDialog(context, connector, channel);
+                if (parentContext.mounted) {
+                  _showEditChannelDialog(parentContext, connector, channel);
                 }
               },
             ),
@@ -502,10 +503,10 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                 style: const TextStyle(color: Colors.red),
               ),
               onTap: () async {
-                Navigator.pop(context);
+                Navigator.pop(sheetContext);
                 await Future.delayed(const Duration(milliseconds: 100));
-                if (context.mounted) {
-                  _confirmDeleteChannel(context, connector, channel);
+                if (parentContext.mounted) {
+                  _confirmDeleteChannel(parentContext, connector, channel);
                 }
               },
             ),
@@ -1415,7 +1416,7 @@ class _ChannelsScreenState extends State<ChannelsScreen>
               child: Text(dialogContext.l10n.common_cancel),
             ),
             FilledButton(
-              onPressed: () {
+              onPressed: () async {
                 final name = nameController.text.trim();
                 final pskHex = pskController.text.trim();
 
@@ -1432,13 +1433,25 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                 }
 
                 Navigator.pop(dialogContext);
-                connector.setChannel(channel.index, name, psk);
-                connector.setChannelSmazEnabled(channel.index, smazEnabled);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(context.l10n.channels_channelUpdated(name)),
-                  ),
-                );
+                try {
+                  await connector.setChannel(channel.index, name, psk);
+                  await connector.setChannelSmazEnabled(
+                    channel.index,
+                    smazEnabled,
+                  );
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(context.l10n.channels_channelUpdated(name)),
+                    ),
+                  );
+                } catch (e, st) {
+                  debugPrint(st.toString());
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to update channel: $e')),
+                  );
+                }
               },
               child: Text(dialogContext.l10n.common_save),
             ),
@@ -1466,16 +1479,25 @@ class _ChannelsScreenState extends State<ChannelsScreen>
             child: Text(dialogContext.l10n.common_cancel),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(dialogContext);
-              connector.deleteChannel(channel.index);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    context.l10n.channels_channelDeleted(channel.name),
+              try {
+                await connector.deleteChannel(channel.index);
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      context.l10n.channels_channelDeleted(channel.name),
+                    ),
                   ),
-                ),
-              );
+                );
+              } catch (e, st) {
+                debugPrint(st.toString());
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Failed to delete channel: $e')),
+                );
+              }
             },
             child: Text(
               dialogContext.l10n.common_delete,
