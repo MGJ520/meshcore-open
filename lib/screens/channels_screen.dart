@@ -4,18 +4,19 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:meshcore_open/storage/channel_message_store.dart';
+import 'package:meshcore_open/widgets/app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 import '../connector/meshcore_connector.dart';
 import '../l10n/l10n.dart';
+import '../services/app_settings_service.dart';
 import '../models/channel.dart';
 import '../models/community.dart';
 import '../storage/community_store.dart';
 import '../utils/dialog_utils.dart';
 import '../utils/disconnect_navigation_mixin.dart';
 import '../utils/route_transitions.dart';
-import '../widgets/battery_indicator.dart';
 import '../widgets/list_filter_widget.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/qr_code_display.dart';
@@ -118,8 +119,7 @@ class _ChannelsScreenState extends State<ChannelsScreen>
       canPop: allowBack,
       child: Scaffold(
         appBar: AppBar(
-          leading: BatteryIndicator(connector: connector),
-          title: Text(context.l10n.channels_title),
+          title: AppBarTitle(context.l10n.channels_title),
           centerTitle: true,
           automaticallyImplyLeading: false,
           actions: [
@@ -489,6 +489,9 @@ class _ChannelsScreenState extends State<ChannelsScreen>
     ChannelMessageStore channelMessageStore,
     Channel channel,
   ) {
+    final settingsService = context.read<AppSettingsService>();
+    final isMuted = settingsService.isChannelMuted(channel.name);
+
     showModalBottomSheet(
       context: context,
       builder: (context) => SafeArea(
@@ -503,6 +506,26 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                 await Future.delayed(const Duration(milliseconds: 100));
                 if (context.mounted) {
                   _showEditChannelDialog(context, connector, channel);
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                isMuted
+                    ? Icons.notifications_outlined
+                    : Icons.notifications_off_outlined,
+              ),
+              title: Text(
+                isMuted
+                    ? context.l10n.channels_unmuteChannel
+                    : context.l10n.channels_muteChannel,
+              ),
+              onTap: () async {
+                Navigator.pop(context);
+                if (isMuted) {
+                  await settingsService.unmuteChannel(channel.name);
+                } else {
+                  await settingsService.muteChannel(channel.name);
                 }
               },
             ),
