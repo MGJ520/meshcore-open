@@ -345,7 +345,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       onKeyEvent: (node, event) {
                         if (event is KeyDownEvent &&
                             (event.logicalKey == LogicalKeyboardKey.enter ||
-                                event.logicalKey == LogicalKeyboardKey.numpadEnter)) {
+                                event.logicalKey ==
+                                    LogicalKeyboardKey.numpadEnter)) {
                           _sendMessage(connector);
                           return KeyEventResult.handled;
                         }

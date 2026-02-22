@@ -854,7 +854,8 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                         onKeyEvent: (node, event) {
                           if (event is KeyDownEvent &&
                               (event.logicalKey == LogicalKeyboardKey.enter ||
-                                  event.logicalKey == LogicalKeyboardKey.numpadEnter)) {
+                                  event.logicalKey ==
+                                      LogicalKeyboardKey.numpadEnter)) {
                             _sendMessage();
                             return KeyEventResult.handled;
                           }
@@ -871,9 +872,10 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                                   backgroundColor: Theme.of(
                                     context,
                                   ).colorScheme.surfaceContainerHighest,
-                                  fallbackTextColor: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface.withValues(alpha: 0.6),
+                                  fallbackTextColor: Theme.of(context)
+                                      .colorScheme
+                                      .onSurface
+                                      .withValues(alpha: 0.6),
                                   maxSize: 160,
                                 ),
                               ),
