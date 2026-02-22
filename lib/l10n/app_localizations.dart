@@ -1570,6 +1570,12 @@ abstract class AppLocalizations {
   /// **'Delete \"{name}\"? This cannot be undone.'**
   String channels_deleteChannelConfirm(String name);
 
+  /// No description provided for @channels_channelDeleteFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete channel \"{name}\"'**
+  String channels_channelDeleteFailed(String name);
+
   /// No description provided for @channels_channelDeleted.
   ///
   /// In en, this message translates to:

@@ -1524,18 +1524,14 @@ class _ChannelsScreenState extends State<ChannelsScreen>
               try {
                 await connector.deleteChannel(channel.index);
 
-                channelMessageStore.clearChannelMessages(
-                  channel.index,
-                );
+                channelMessageStore.clearChannelMessages(channel.index);
 
                 if (!context.mounted) return;
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      context.l10n.channels_channelDeleted(
-                        channel.name,
-                      ),
+                      context.l10n.channels_channelDeleted(channel.name),
                     ),
                   ),
                 );
@@ -1545,17 +1541,13 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      context.l10n.channels_channelDeleteFailed(
-                        channel.name,
-                      ),
+                      context.l10n.channels_channelDeleteFailed(channel.name),
                     ),
                   ),
                 );
 
                 // Preserve existing logging (if it was there)
-                debugPrint(
-                  'Failed to delete channel: $e\n$st',
-                );
+                debugPrint('Failed to delete channel: $e\n$st');
               }
             },
             child: Text(
