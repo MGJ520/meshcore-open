@@ -2855,22 +2855,22 @@ class AppLocalizationsSl extends AppLocalizations {
       'Podatki o višini: Open-Meteo (CC BY 4.0)';
 
   @override
-  String get losLegendRadioHorizon => 'Radio horizon';
+  String get losLegendRadioHorizon => 'Radijski horizont';
 
   @override
-  String get losLegendLosBeam => 'LOS beam';
+  String get losLegendLosBeam => 'Linija vidnosti';
 
   @override
-  String get losLegendTerrain => 'Terrain';
+  String get losLegendTerrain => 'Teren';
 
   @override
-  String get losFrequencyLabel => 'Frequency';
+  String get losFrequencyLabel => 'Frekvenca';
 
   @override
-  String get losFrequencyInfoTooltip => 'View calculation details';
+  String get losFrequencyInfoTooltip => 'Prikaži podrobnosti izračuna';
 
   @override
-  String get losFrequencyDialogTitle => 'Radio horizon calculation';
+  String get losFrequencyDialogTitle => 'Izračun radijskega horizonta';
 
   @override
   String losFrequencyDialogDescription(
@@ -2879,7 +2879,7 @@ class AppLocalizationsSl extends AppLocalizations {
     double frequencyMHz,
     double kFactor,
   ) {
-    return 'Starting from k=$baselineK at $baselineFreq MHz, the calculation multiplies 0.15 × (frequency − $baselineFreq) / $baselineFreq to reach k approx $kFactor for the current $frequencyMHz MHz band, which defines the curved radio horizon cap.';
+    return 'Začenši z k=$baselineK pri $baselineFreq MHz izračun množi 0.15 × (frequency − $baselineFreq) / $baselineFreq, da doseže k približno $kFactor za trenutni pas $frequencyMHz MHz, kar določa ukrivljeno mejo radijskega horizonta.';
   }
 
   @override

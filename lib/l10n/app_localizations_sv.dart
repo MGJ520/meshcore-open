@@ -2838,22 +2838,22 @@ class AppLocalizationsSv extends AppLocalizations {
   String get losElevationAttribution => 'Höjddata: Open-Meteo (CC BY 4.0)';
 
   @override
-  String get losLegendRadioHorizon => 'Radio horizon';
+  String get losLegendRadioHorizon => 'Radiohorisont';
 
   @override
-  String get losLegendLosBeam => 'LOS beam';
+  String get losLegendLosBeam => 'Siktlinje';
 
   @override
-  String get losLegendTerrain => 'Terrain';
+  String get losLegendTerrain => 'Terräng';
 
   @override
-  String get losFrequencyLabel => 'Frequency';
+  String get losFrequencyLabel => 'Frekvens';
 
   @override
-  String get losFrequencyInfoTooltip => 'View calculation details';
+  String get losFrequencyInfoTooltip => 'Visa detaljer om beräkningen';
 
   @override
-  String get losFrequencyDialogTitle => 'Radio horizon calculation';
+  String get losFrequencyDialogTitle => 'Beräkning av radiohorisonten';
 
   @override
   String losFrequencyDialogDescription(
@@ -2862,7 +2862,7 @@ class AppLocalizationsSv extends AppLocalizations {
     double frequencyMHz,
     double kFactor,
   ) {
-    return 'Starting from k=$baselineK at $baselineFreq MHz, the calculation multiplies 0.15 × (frequency − $baselineFreq) / $baselineFreq to reach k approx $kFactor for the current $frequencyMHz MHz band, which defines the curved radio horizon cap.';
+    return 'Med utgångspunkt från k=$baselineK vid $baselineFreq MHz multiplicerar beräkningen 0.15 × (frequency − $baselineFreq) / $baselineFreq för att nå k cirka $kFactor för det aktuella bandet $frequencyMHz MHz, vilket definierar den krökta radiohorisontgränsen.';
   }
 
   @override

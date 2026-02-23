@@ -2858,22 +2858,22 @@ class AppLocalizationsNl extends AppLocalizations {
       'Hoogtegegevens: Open-Meteo (CC BY 4.0)';
 
   @override
-  String get losLegendRadioHorizon => 'Radio horizon';
+  String get losLegendRadioHorizon => 'Radiohorizon';
 
   @override
-  String get losLegendLosBeam => 'LOS beam';
+  String get losLegendLosBeam => 'Zichtlijn';
 
   @override
-  String get losLegendTerrain => 'Terrain';
+  String get losLegendTerrain => 'Terrein';
 
   @override
-  String get losFrequencyLabel => 'Frequency';
+  String get losFrequencyLabel => 'Frequentie';
 
   @override
-  String get losFrequencyInfoTooltip => 'View calculation details';
+  String get losFrequencyInfoTooltip => 'Bekijk details van de berekening';
 
   @override
-  String get losFrequencyDialogTitle => 'Radio horizon calculation';
+  String get losFrequencyDialogTitle => 'Berekening van de radiohorizon';
 
   @override
   String losFrequencyDialogDescription(
@@ -2882,7 +2882,7 @@ class AppLocalizationsNl extends AppLocalizations {
     double frequencyMHz,
     double kFactor,
   ) {
-    return 'Starting from k=$baselineK at $baselineFreq MHz, the calculation multiplies 0.15 × (frequency − $baselineFreq) / $baselineFreq to reach k approx $kFactor for the current $frequencyMHz MHz band, which defines the curved radio horizon cap.';
+    return 'Uitgaande van k=$baselineK bij $baselineFreq MHz vermenigvuldigt de berekening 0.15 × (frequency − $baselineFreq) / $baselineFreq om k ongeveer $kFactor te bereiken voor de huidige band $frequencyMHz MHz, wat de gebogen radiohorizon-grens definieert.';
   }
 
   @override

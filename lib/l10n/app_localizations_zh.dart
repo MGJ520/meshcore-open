@@ -2716,22 +2716,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get losElevationAttribution => '高程数据：Open-Meteo (CC BY 4.0)';
 
   @override
-  String get losLegendRadioHorizon => 'Radio horizon';
+  String get losLegendRadioHorizon => '无线电地平线';
 
   @override
-  String get losLegendLosBeam => 'LOS beam';
+  String get losLegendLosBeam => '视距波束';
 
   @override
-  String get losLegendTerrain => 'Terrain';
+  String get losLegendTerrain => '地形';
 
   @override
-  String get losFrequencyLabel => 'Frequency';
+  String get losFrequencyLabel => '频率';
 
   @override
-  String get losFrequencyInfoTooltip => 'View calculation details';
+  String get losFrequencyInfoTooltip => '查看计算详情';
 
   @override
-  String get losFrequencyDialogTitle => 'Radio horizon calculation';
+  String get losFrequencyDialogTitle => '无线电地平线计算';
 
   @override
   String losFrequencyDialogDescription(
@@ -2740,7 +2740,7 @@ class AppLocalizationsZh extends AppLocalizations {
     double frequencyMHz,
     double kFactor,
   ) {
-    return 'Starting from k=$baselineK at $baselineFreq MHz, the calculation multiplies 0.15 × (frequency − $baselineFreq) / $baselineFreq to reach k approx $kFactor for the current $frequencyMHz MHz band, which defines the curved radio horizon cap.';
+    return '从 $baselineFreq MHz 的 k=$baselineK 开始，计算将 0.15 × (frequency − $baselineFreq) / $baselineFreq 相乘，以在当前频段 $frequencyMHz MHz 下得到约 k=$kFactor，从而定义弯曲的无线电地平线边界。';
   }
 
   @override

@@ -2852,22 +2852,22 @@ class AppLocalizationsSk extends AppLocalizations {
       'Údaje o nadmorskej výške: Open-Meteo (CC BY 4.0)';
 
   @override
-  String get losLegendRadioHorizon => 'Radio horizon';
+  String get losLegendRadioHorizon => 'Rádiový horizont';
 
   @override
-  String get losLegendLosBeam => 'LOS beam';
+  String get losLegendLosBeam => 'Priama viditeľnosť';
 
   @override
-  String get losLegendTerrain => 'Terrain';
+  String get losLegendTerrain => 'Terén';
 
   @override
-  String get losFrequencyLabel => 'Frequency';
+  String get losFrequencyLabel => 'Frekvencia';
 
   @override
-  String get losFrequencyInfoTooltip => 'View calculation details';
+  String get losFrequencyInfoTooltip => 'Zobraziť podrobnosti výpočtu';
 
   @override
-  String get losFrequencyDialogTitle => 'Radio horizon calculation';
+  String get losFrequencyDialogTitle => 'Výpočet rádiového horizontu';
 
   @override
   String losFrequencyDialogDescription(
@@ -2876,7 +2876,7 @@ class AppLocalizationsSk extends AppLocalizations {
     double frequencyMHz,
     double kFactor,
   ) {
-    return 'Starting from k=$baselineK at $baselineFreq MHz, the calculation multiplies 0.15 × (frequency − $baselineFreq) / $baselineFreq to reach k approx $kFactor for the current $frequencyMHz MHz band, which defines the curved radio horizon cap.';
+    return 'Vychádzajúc z k=$baselineK pri $baselineFreq MHz výpočet násobí 0.15 × (frequency − $baselineFreq) / $baselineFreq, aby dosiahol k približne $kFactor pre aktuálne pásmo $frequencyMHz MHz, čo definuje zakrivenú hranicu rádiového horizontu.';
   }
 
   @override

@@ -1718,5 +1718,21 @@
   "losPointName": "Punktnamn",
   "losShowPanelTooltip": "Visa LOS-panelen",
   "losHidePanelTooltip": "Dölj LOS-panelen",
-  "losElevationAttribution": "Höjddata: Open-Meteo (CC BY 4.0)"
+  "losElevationAttribution": "Höjddata: Open-Meteo (CC BY 4.0)",
+  "losLegendRadioHorizon": "Radiohorisont",
+  "losLegendLosBeam": "Siktlinje",
+  "losLegendTerrain": "Terräng",
+  "losFrequencyLabel": "Frekvens",
+  "losFrequencyInfoTooltip": "Visa detaljer om beräkningen",
+  "losFrequencyDialogTitle": "Beräkning av radiohorisonten",
+  "losFrequencyDialogDescription": "Med utgångspunkt från k={baselineK} vid {baselineFreq} MHz multiplicerar beräkningen 0.15 × (frequency − {baselineFreq}) / {baselineFreq} för att nå k cirka {kFactor} för det aktuella bandet {frequencyMHz} MHz, vilket definierar den krökta radiohorisontgränsen.",
+  "@losFrequencyDialogDescription": {
+    "description": "Explain how the calculation uses the baseline frequency and derived k-factor.",
+    "placeholders": {
+      "baselineK": { "type": "double" },
+      "baselineFreq": { "type": "double" },
+      "frequencyMHz": { "type": "double" },
+      "kFactor": { "type": "double" }
+    }
+  }
 }
