@@ -14,6 +14,7 @@ import '../services/app_settings_service.dart';
 import '../services/line_of_sight_service.dart';
 import '../services/map_tile_cache_service.dart';
 import '../utils/route_transitions.dart';
+import '../connector/meshcore_connector.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/quick_switch_bar.dart';
 
@@ -110,10 +111,13 @@ class _LineOfSightMapScreenState extends State<LineOfSightMapScreen> {
     });
 
     try {
+      final connector = context.read<MeshCoreConnector>();
+      final frequencyMHz = _normalizeFrequencyMHz(connector.currentFreqHz);
       final result = await _lineOfSightService.analyzePath(
         [start.point, end.point],
         startAntennaHeightMeters: startAntenna,
         endAntennaHeightMeters: endAntenna,
+        frequencyMHz: frequencyMHz,
       );
       if (!mounted) return;
       if (!_isRunRequestCurrent(
@@ -424,6 +428,12 @@ class _LineOfSightMapScreenState extends State<LineOfSightMapScreen> {
   Widget _buildControlPanel(bool isImperial) {
     _sanitizeSelection();
     final segment = _primarySegmentResult();
+    final connector = context.watch<MeshCoreConnector>();
+    final reportedFrequencyMHz = _normalizeFrequencyMHz(
+      connector.currentFreqHz,
+    );
+    final displayFrequencyMHz = segment?.frequencyMHz ?? reportedFrequencyMHz;
+    final kFactorUsed = segment?.usedKFactor;
     final endpoints = _visibleEndpoints();
     final distanceUnit = isImperial ? 'mi' : 'km';
     final heightUnit = isImperial ? 'ft' : 'm';
@@ -488,6 +498,52 @@ class _LineOfSightMapScreenState extends State<LineOfSightMapScreen> {
                 ),
               ),
               const SizedBox(height: 4),
+              if (displayFrequencyMHz != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 2, bottom: 4),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Frequency',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${displayFrequencyMHz.toStringAsFixed(3)} MHz',
+                        style: TextStyle(fontSize: 11, color: Colors.grey[700]),
+                      ),
+                      if (kFactorUsed != null) ...[
+                        const SizedBox(width: 8),
+                        Text(
+                          'k=${kFactorUsed.toStringAsFixed(3)}',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        IconButton(
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          icon: const Icon(Icons.info_outline, size: 16),
+                          color: Colors.grey[600],
+                          tooltip: 'View calculation details',
+                          onPressed: () {
+                            _showFrequencyInfoDialog(
+                              context,
+                              displayFrequencyMHz,
+                              kFactorUsed,
+                            );
+                          },
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
               Text(
                 context.l10n.losElevationAttribution,
                 style: TextStyle(fontSize: 10, color: Colors.grey[700]),
@@ -896,6 +952,56 @@ class _LineOfSightMapScreenState extends State<LineOfSightMapScreen> {
         break;
     }
   }
+
+  void _showFrequencyInfoDialog(
+    BuildContext context,
+    double frequencyMHz,
+    double kFactor,
+  ) {
+    final baselineFreq = LineOfSightService.baselineFrequencyMHz;
+    final baselineK = LineOfSightService.baselineKFactor;
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Radio horizon calculation'),
+        content: Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text:
+                    'Starting from k=$baselineK at ${baselineFreq.toStringAsFixed(3)} MHz, ',
+              ),
+              const TextSpan(text: 'the calculation multiplies the offset by '),
+              TextSpan(
+                text:
+                    '0.15 × (frequency − ${baselineFreq.toStringAsFixed(3)}) / ${baselineFreq.toStringAsFixed(3)} ',
+              ),
+              TextSpan(
+                text:
+                    'to get k ≈ ${kFactor.toStringAsFixed(3)} for the current ${frequencyMHz.toStringAsFixed(3)} MHz band, ',
+              ),
+              const TextSpan(
+                text: 'which defines the curved radio horizon cap.',
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(context.l10n.common_ok),
+          ),
+        ],
+      ),
+    );
+  }
+
+  double? _normalizeFrequencyMHz(int? frequencyHz) {
+    if (frequencyHz == null || frequencyHz <= 0) return null;
+    if (frequencyHz >= 1000000) return frequencyHz / 1e6;
+    if (frequencyHz >= 1000) return frequencyHz / 1e3;
+    return frequencyHz.toDouble();
+  }
 }
 
 class _LosProfilePainter extends CustomPainter {
@@ -985,30 +1091,32 @@ class _LosProfilePainter extends CustomPainter {
         ..strokeWidth = 2,
     );
 
-    final horizonLine = ui.Path();
+    const refractedLineColor = Color(0xFFFFD57F);
+    final refractedLine = ui.Path();
     for (int i = 0; i < samples.length; i++) {
       final p = mapPoint(
         samples[i].distanceMeters,
-        samples[i].radioHorizonMeters,
+        samples[i].refractedHeightMeters,
       );
       if (i == 0) {
-        horizonLine.moveTo(p.dx, p.dy);
+        refractedLine.moveTo(p.dx, p.dy);
       } else {
-        horizonLine.lineTo(p.dx, p.dy);
+        refractedLine.lineTo(p.dx, p.dy);
       }
     }
-    const horizonLineColor = Color(0xFF4BC0FF);
-    final horizonPaint = Paint()
-      ..color = horizonLineColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5;
-    canvas.drawPath(horizonLine, horizonPaint);
+    canvas.drawPath(
+      refractedLine,
+      Paint()
+        ..color = refractedLineColor
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5,
+    );
 
     final capPath = ui.Path();
     for (int i = 0; i < samples.length; i++) {
       final p = mapPoint(
         samples[i].distanceMeters,
-        samples[i].radioHorizonMeters,
+        samples[i].refractedHeightMeters,
       );
       if (i == 0) {
         capPath.moveTo(p.dx, p.dy);
@@ -1024,7 +1132,7 @@ class _LosProfilePainter extends CustomPainter {
       capPath.lineTo(p.dx, p.dy);
     }
     capPath.close();
-    const horizonFillColor = Color(0x404BC0FF);
+    const horizonFillColor = Color(0x40FFD57F);
     canvas.drawPath(
       capPath,
       Paint()
@@ -1032,12 +1140,7 @@ class _LosProfilePainter extends CustomPainter {
         ..style = PaintingStyle.fill,
     );
 
-    _drawLegend(
-      canvas,
-      horizonLineColor,
-      losLineColor,
-      terrainLineColor,
-    );
+    _drawLegend(canvas, refractedLineColor, losLineColor, terrainLineColor);
   }
 
   @override
@@ -1090,15 +1193,13 @@ class _LosProfilePainter extends CustomPainter {
       return painter;
     }).toList();
 
-    final maxTextWidth = painters.map((p) => p.width).fold<double>(
-      0,
-      math.max,
-    );
+    final maxTextWidth = painters.map((p) => p.width).fold<double>(0, math.max);
 
     final legendWidth =
         legendPadding * 2 + swatchSize + swatchTextGap + maxTextWidth;
 
-    final legendHeight = legendPadding * 2 +
+    final legendHeight =
+        legendPadding * 2 +
         entries.length * swatchSize +
         (entries.length - 1) * entrySpacing;
 
@@ -1125,10 +1226,7 @@ class _LosProfilePainter extends CustomPainter {
         swatchSize,
         swatchSize,
       );
-      canvas.drawRect(
-        swatchRect,
-        Paint()..color = entry.color,
-      );
+      canvas.drawRect(swatchRect, Paint()..color = entry.color);
 
       painter.paint(
         canvas,
