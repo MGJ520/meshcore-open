@@ -1555,6 +1555,7 @@
   "listFilter_az": "A-Z",
   "listFilter_filters": "Filters",
   "listFilter_all": "All",
+  "listFilter_favorites": "Favorites",
   "listFilter_users": "Users",
   "listFilter_repeaters": "Repeaters",
   "listFilter_roomServers": "Room servers",

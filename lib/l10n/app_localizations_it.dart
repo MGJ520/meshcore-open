@@ -2727,6 +2727,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get listFilter_all => 'Tutti';
 
   @override
+  String get listFilter_favorites => 'Favorites';
+
+  @override
   String get listFilter_users => 'Utenti';
 
   @override

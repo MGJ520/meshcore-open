@@ -2729,6 +2729,9 @@ class AppLocalizationsBg extends AppLocalizations {
   String get listFilter_all => 'Всички';
 
   @override
+  String get listFilter_favorites => 'Favorites';
+
+  @override
   String get listFilter_users => 'Потребители';
 
   @override

@@ -2701,6 +2701,9 @@ class AppLocalizationsSv extends AppLocalizations {
   String get listFilter_all => 'Alla';
 
   @override
+  String get listFilter_favorites => 'Favorites';
+
+  @override
   String get listFilter_users => 'Användare';
 
   @override

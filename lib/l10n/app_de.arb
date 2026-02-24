@@ -1343,6 +1343,7 @@
   "listFilter_az": "A-Z",
   "listFilter_filters": "Filtere",
   "listFilter_all": "Alle",
+  "listFilter_favorites": "Favoriten",
   "listFilter_users": "Benutzer",
   "listFilter_repeaters": "Repeater",
   "listFilter_roomServers": "Raumserver",
