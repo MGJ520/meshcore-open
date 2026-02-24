@@ -2907,7 +2907,7 @@ class AppLocalizationsFr extends AppLocalizations {
     double frequencyMHz,
     double kFactor,
   ) {
-    return 'À partir de k=$baselineK à $frequencyMHz MHz, le calcul ajuste le facteur k pour la bande actuelle de $frequencyMHz MHz, ce qui définit la limite incurvée de l\'horizon radio.';
+    return 'À partir de k=$baselineK à $baselineFreq MHz, le calcul ajuste le facteur k pour la bande actuelle de $frequencyMHz MHz, ce qui définit la limite incurvée de l\'horizon radio.';
   }
 
   @override

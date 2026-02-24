@@ -1725,7 +1725,7 @@
   "losFrequencyLabel": "Częstotliwość",
   "losFrequencyInfoTooltip": "Zobacz szczegóły obliczenia",
   "losFrequencyDialogTitle": "Obliczanie horyzontu radiowego",
-  "losFrequencyDialogDescription": "Zaczynając od k={baselineK} przy {frequencyMHz} MHz, obliczenia korygują współczynnik k dla bieżącego pasma {frequencyMHz} MHz, które definiuje zakrzywiony limit horyzontu radiowego.",
+  "losFrequencyDialogDescription": "Zaczynając od k={baselineK} przy {baselineFreq} MHz, obliczenia korygują współczynnik k dla bieżącego pasma {frequencyMHz} MHz, które definiuje zakrzywiony limit horyzontu radiowego.",
   "@losFrequencyDialogDescription": {
     "description": "Explain how the calculation uses the baseline frequency and derived k-factor.",
     "placeholders": {

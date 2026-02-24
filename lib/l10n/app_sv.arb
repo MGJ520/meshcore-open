@@ -1725,7 +1725,7 @@
   "losFrequencyLabel": "Frekvens",
   "losFrequencyInfoTooltip": "Visa detaljer om beräkningen",
   "losFrequencyDialogTitle": "Beräkning av radiohorisonten",
-  "losFrequencyDialogDescription": "Med start från k={baselineK} vid {frequencyMHz} MHz, justerar beräkningen k-faktorn för det aktuella {frequencyMHz} MHz-bandet, som definierar den böjda radiohorisonten.",
+  "losFrequencyDialogDescription": "Med start från k={baselineK} vid {baselineFreq} MHz, justerar beräkningen k-faktorn för det aktuella {frequencyMHz} MHz-bandet, som definierar den böjda radiohorisonten.",
   "@losFrequencyDialogDescription": {
     "description": "Explain how the calculation uses the baseline frequency and derived k-factor.",
     "placeholders": {

@@ -2898,7 +2898,7 @@ class AppLocalizationsDe extends AppLocalizations {
     double frequencyMHz,
     double kFactor,
   ) {
-    return 'Ausgehend von k=$baselineK bei $frequencyMHz MHz passt die Berechnung den k-Faktor für das aktuelle $frequencyMHz MHz-Band an, das die gekrümmte Funkhorizontobergrenze definiert.';
+    return 'Ausgehend von k=$baselineK bei $baselineFreq MHz passt die Berechnung den k-Faktor für das aktuelle $frequencyMHz MHz-Band an, das die gekrümmte Funkhorizontobergrenze definiert.';
   }
 
   @override

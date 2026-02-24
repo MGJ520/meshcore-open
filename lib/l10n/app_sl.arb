@@ -1725,7 +1725,7 @@
   "losFrequencyLabel": "Frekvenca",
   "losFrequencyInfoTooltip": "Prikaži podrobnosti izračuna",
   "losFrequencyDialogTitle": "Izračun radijskega horizonta",
-  "losFrequencyDialogDescription": "Začenši od k={baselineK} pri {frequencyMHz} MHz, izračun prilagodi k-faktor za trenutni pas {frequencyMHz} MHz, ki določa ukrivljeno zgornjo mejo radijskega horizonta.",
+  "losFrequencyDialogDescription": "Začenši od k={baselineK} pri {baselineFreq} MHz, izračun prilagodi k-faktor za trenutni pas {frequencyMHz} MHz, ki določa ukrivljeno zgornjo mejo radijskega horizonta.",
   "@losFrequencyDialogDescription": {
     "description": "Explain how the calculation uses the baseline frequency and derived k-factor.",
     "placeholders": {

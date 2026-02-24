@@ -1725,7 +1725,7 @@
   "losFrequencyLabel": "Frekvencia",
   "losFrequencyInfoTooltip": "Zobraziť podrobnosti výpočtu",
   "losFrequencyDialogTitle": "Výpočet rádiového horizontu",
-  "losFrequencyDialogDescription": "Počnúc od k={baselineK} pri {frequencyMHz} MHz výpočet upraví k-faktor pre aktuálne pásmo {frequencyMHz} MHz, ktorý definuje zakrivený strop rádiového horizontu.",
+  "losFrequencyDialogDescription": "Počnúc od k={baselineK} pri {baselineFreq} MHz výpočet upraví k-faktor pre aktuálne pásmo {frequencyMHz} MHz, ktorý definuje zakrivený strop rádiového horizontu.",
   "@losFrequencyDialogDescription": {
     "description": "Explain how the calculation uses the baseline frequency and derived k-factor.",
     "placeholders": {

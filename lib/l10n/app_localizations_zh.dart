@@ -2740,7 +2740,7 @@ class AppLocalizationsZh extends AppLocalizations {
     double frequencyMHz,
     double kFactor,
   ) {
-    return '从 $frequencyMHz MHz 处的 k=$baselineK 开始，计算调整当前 $frequencyMHz MHz 频段的 k 因子，该因子定义了弯曲的无线电范围上限。';
+    return '从 $baselineFreq MHz 处的 k=$baselineK 开始，计算调整当前 $frequencyMHz MHz 频段的 k 因子，该因子定义了弯曲的无线电范围上限。';
   }
 
   @override

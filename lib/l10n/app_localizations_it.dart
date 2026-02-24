@@ -2892,7 +2892,7 @@ class AppLocalizationsIt extends AppLocalizations {
     double frequencyMHz,
     double kFactor,
   ) {
-    return 'Partendo da k=$baselineK a $frequencyMHz MHz, il calcolo regola il fattore k per l\'attuale banda $frequencyMHz MHz, che definisce il limite curvo dell\'orizzonte radio.';
+    return 'Partendo da k=$baselineK a $baselineFreq MHz, il calcolo regola il fattore k per l\'attuale banda $frequencyMHz MHz, che definisce il limite curvo dell\'orizzonte radio.';
   }
 
   @override
