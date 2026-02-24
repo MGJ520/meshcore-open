@@ -122,7 +122,7 @@ class _LineOfSightMapScreenState extends State<LineOfSightMapScreen> {
     });
 
     try {
-      final connector = context.watch<MeshCoreConnector>();
+      final connector = context.read<MeshCoreConnector>();
       final frequencyMHz = _normalizeFrequencyMHz(connector.currentFreqHz);
       final result = await _lineOfSightService.analyzePath(
         [start.point, end.point],
