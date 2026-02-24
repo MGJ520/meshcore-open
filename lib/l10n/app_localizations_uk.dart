@@ -816,6 +816,11 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
+  String channels_channelDeleteFailed(String name) {
+    return 'Не вдалося видалити канал \"$name\"';
+  }
+
+  @override
   String channels_channelDeleted(String name) {
     return 'Канал «$name» видалено';
   }

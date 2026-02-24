@@ -814,6 +814,11 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
+  String channels_channelDeleteFailed(String name) {
+    return 'Kanál \"$name\" sa nepodarilo odstrániť';
+  }
+
+  @override
   String channels_channelDeleted(String name) {
     return 'Kanál \"$name\" bol odstránený';
   }

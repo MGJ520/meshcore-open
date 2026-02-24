@@ -821,6 +821,11 @@ class AppLocalizationsBg extends AppLocalizations {
   }
 
   @override
+  String channels_channelDeleteFailed(String name) {
+    return 'Неуспешно изтриване на канала \"$name\"';
+  }
+
+  @override
   String channels_channelDeleted(String name) {
     return 'Каналът \"$name\" е изтрит';
   }

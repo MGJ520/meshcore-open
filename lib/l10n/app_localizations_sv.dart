@@ -808,6 +808,11 @@ class AppLocalizationsSv extends AppLocalizations {
   }
 
   @override
+  String channels_channelDeleteFailed(String name) {
+    return 'Det gick inte att ta bort kanalen \"$name\"';
+  }
+
+  @override
   String channels_channelDeleted(String name) {
     return 'Kanalen \"$name\" raderad';
   }

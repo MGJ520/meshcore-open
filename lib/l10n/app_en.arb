@@ -365,6 +365,14 @@
       }
     }
   },
+  "channels_channelDeleteFailed": "Failed to delete channel \"{name}\"",
+  "@channels_channelDeleteFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "channels_channelDeleted": "Channel \"{name}\" deleted",
   "@channels_channelDeleted": {
     "placeholders": {

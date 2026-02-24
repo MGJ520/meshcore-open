@@ -776,6 +776,11 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String channels_channelDeleteFailed(String name) {
+    return '无法删除频道 \"$name\"';
+  }
+
+  @override
   String channels_channelDeleted(String name) {
     return '删除频道 \"$name\"';
   }
