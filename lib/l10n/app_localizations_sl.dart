@@ -320,6 +320,10 @@ class AppLocalizationsSl extends AppLocalizations {
       'Odprtokodni Flutter klient za naprave za LoRa omrežje MeshCore.';
 
   @override
+  String get settings_aboutOpenMeteoAttribution =>
+      'Podatki o višini LOS: Open-Meteo (CC BY 4.0)';
+
+  @override
   String get settings_infoName => 'Ime';
 
   @override
@@ -454,6 +458,13 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get appSettings_languageUk => 'Ukrajinsko';
+
+  @override
+  String get appSettings_enableMessageTracing => 'Omogoči sledenje sporočilom';
+
+  @override
+  String get appSettings_enableMessageTracingSubtitle =>
+      'Prikaži podrobne metapodatke o usmerjanju in časovnem usklajevanju sporočil';
 
   @override
   String get appSettings_notifications => 'Obvestila';
@@ -614,6 +625,15 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get appSettings_offlineMapCache => 'Shramba zemljevidov brez povezave';
+
+  @override
+  String get appSettings_unitsTitle => 'Enote';
+
+  @override
+  String get appSettings_unitsMetric => 'Metrična (m/km)';
+
+  @override
+  String get appSettings_unitsImperial => 'Imperialno (ft / mi)';
 
   @override
   String get appSettings_noAreaSelected => 'Območje ni izbrano';
@@ -778,11 +798,22 @@ class AppLocalizationsSl extends AppLocalizations {
   String get channels_editChannel => 'Uredi kanal';
 
   @override
+  String get channels_muteChannel => 'Utišaj kanal';
+
+  @override
+  String get channels_unmuteChannel => 'Vklopi obvestila kanala';
+
+  @override
   String get channels_deleteChannel => 'Pošlji kanal';
 
   @override
   String channels_deleteChannelConfirm(String name) {
     return 'Izbrišem \"$name\"? To se ne da povrniti.';
+  }
+
+  @override
+  String channels_channelDeleteFailed(String name) {
+    return 'Kanala $name ni bilo mogoče izbrisati';
   }
 
   @override
@@ -1073,6 +1104,9 @@ class AppLocalizationsSl extends AppLocalizations {
   String get chat_pathManagement => 'Upravljanje poti';
 
   @override
+  String get chat_ShowAllPaths => 'Prikaži vse poti';
+
+  @override
   String get chat_routingMode => 'Navodilo za usmerjevalni način';
 
   @override
@@ -1227,6 +1261,12 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get map_title => 'Mapa omrežja';
+
+  @override
+  String get map_lineOfSight => 'Linija vida';
+
+  @override
+  String get map_losScreenTitle => 'Linija vida';
 
   @override
   String get map_noNodesWithLocation =>
@@ -1668,10 +1708,10 @@ class AppLocalizationsSl extends AppLocalizations {
       'Pošlji ukazne povelje na ponovitveno enoto.';
 
   @override
-  String get repeater_neighbours => 'Sosedi';
+  String get repeater_neighbors => 'Sosedi';
 
   @override
-  String get repeater_neighboursSubtitle => 'Pogledati nič sosednjih hopjev.';
+  String get repeater_neighborsSubtitle => 'Pogledati nič sosednjih hopjev.';
 
   @override
   String get repeater_settings => 'Nastavitve';
@@ -2367,7 +2407,7 @@ class AppLocalizationsSl extends AppLocalizations {
   }
 
   @override
-  String get neighbors_repeatersNeighbours => 'Ponovitve Sosedi';
+  String get neighbors_repeatersNeighbors => 'Ponovitve Sosedi';
 
   @override
   String get neighbors_noData => 'Niso na voljo podatki o sosedih.';
@@ -2676,6 +2716,15 @@ class AppLocalizationsSl extends AppLocalizations {
   String get listFilter_all => 'Vse';
 
   @override
+  String get listFilter_favorites => 'Priljubljene';
+
+  @override
+  String get listFilter_addToFavorites => 'Dodaj v priljubljene';
+
+  @override
+  String get listFilter_removeFromFavorites => 'Odstrani iz priljubljenih';
+
+  @override
   String get listFilter_users => 'Uporabniki';
 
   @override
@@ -2708,6 +2757,144 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get pathTrace_clearTooltip => 'Počisti pot';
+
+  @override
+  String get losSelectStartEnd => 'Izberite začetno in končno vozlišče za LOS.';
+
+  @override
+  String losRunFailed(String error) {
+    return 'Preverjanje vidnega polja ni uspelo: $error';
+  }
+
+  @override
+  String get losClearAllPoints => 'Počisti vse točke';
+
+  @override
+  String get losRunToViewElevationProfile =>
+      'Zaženite LOS za ogled višinskega profila';
+
+  @override
+  String get losMenuTitle => 'LOS meni';
+
+  @override
+  String get losMenuSubtitle =>
+      'Tapnite vozlišča ali dolgo pritisnite na zemljevid za točke po meri';
+
+  @override
+  String get losShowDisplayNodes => 'Pokaži prikazna vozlišča';
+
+  @override
+  String get losCustomPoints => 'Točke po meri';
+
+  @override
+  String losCustomPointLabel(int index) {
+    return 'Po meri $index';
+  }
+
+  @override
+  String get losPointA => 'Točka A';
+
+  @override
+  String get losPointB => 'Točka B';
+
+  @override
+  String losAntennaA(String value, String unit) {
+    return 'Antena A: $value $unit';
+  }
+
+  @override
+  String losAntennaB(String value, String unit) {
+    return 'Antena B: $value $unit';
+  }
+
+  @override
+  String get losRun => 'Zaženi LOS';
+
+  @override
+  String get losNoElevationData => 'Ni podatkov o višini';
+
+  @override
+  String losProfileClear(
+    String distance,
+    String distanceUnit,
+    String clearance,
+    String heightUnit,
+  ) {
+    return '$distance $distanceUnit, čisti LOS, najmanjša razdalja $clearance $heightUnit';
+  }
+
+  @override
+  String losProfileBlocked(
+    String distance,
+    String distanceUnit,
+    String obstruction,
+    String heightUnit,
+  ) {
+    return '$distance $distanceUnit, blokiral $obstruction $heightUnit';
+  }
+
+  @override
+  String get losStatusChecking => 'LOS: preverjam ...';
+
+  @override
+  String get losStatusNoData => 'LOS: ni podatkov';
+
+  @override
+  String losStatusSummary(int clear, int total, int blocked, int unknown) {
+    return 'LOS: $clear/$total jasno, $blocked blokirano, $unknown neznano';
+  }
+
+  @override
+  String get losErrorElevationUnavailable =>
+      'Podatki o nadmorski višini niso na voljo za enega ali več vzorcev.';
+
+  @override
+  String get losErrorInvalidInput =>
+      'Neveljavni podatki o točkah/višini za izračun LOS.';
+
+  @override
+  String get losRenameCustomPoint => 'Preimenujte točko po meri';
+
+  @override
+  String get losPointName => 'Ime točke';
+
+  @override
+  String get losShowPanelTooltip => 'Pokaži ploščo LOS';
+
+  @override
+  String get losHidePanelTooltip => 'Skrij ploščo LOS';
+
+  @override
+  String get losElevationAttribution =>
+      'Podatki o višini: Open-Meteo (CC BY 4.0)';
+
+  @override
+  String get losLegendRadioHorizon => 'Radijski horizont';
+
+  @override
+  String get losLegendLosBeam => 'Linija vidnosti';
+
+  @override
+  String get losLegendTerrain => 'Teren';
+
+  @override
+  String get losFrequencyLabel => 'Frekvenca';
+
+  @override
+  String get losFrequencyInfoTooltip => 'Prikaži podrobnosti izračuna';
+
+  @override
+  String get losFrequencyDialogTitle => 'Izračun radijskega horizonta';
+
+  @override
+  String losFrequencyDialogDescription(
+    double baselineK,
+    double baselineFreq,
+    double frequencyMHz,
+    double kFactor,
+  ) {
+    return 'Začenši od k=$baselineK pri $baselineFreq MHz, izračun prilagodi k-faktor za trenutni pas $frequencyMHz MHz, ki določa ukrivljeno zgornjo mejo radijskega horizonta.';
+  }
 
   @override
   String get contacts_pathTrace => 'Sledenje poti';
@@ -2882,4 +3069,10 @@ class AppLocalizationsSl extends AppLocalizations {
   @override
   String get settings_gpxExportShareSubject =>
       'meshcore-open izvoz podatkov GPX karte';
+
+  @override
+  String get snrIndicator_nearByRepeaters => 'Bližnji ponovitelji';
+
+  @override
+  String get snrIndicator_lastSeen => 'Zadnjič videno';
 }

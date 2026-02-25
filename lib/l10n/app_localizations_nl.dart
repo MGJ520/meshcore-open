@@ -321,6 +321,10 @@ class AppLocalizationsNl extends AppLocalizations {
       'Een open-source Flutter client voor MeshCore LoRa mesh netwerkapparaten.';
 
   @override
+  String get settings_aboutOpenMeteoAttribution =>
+      'LOS-hoogtegegevens: Open-Meteo (CC BY 4.0)';
+
+  @override
   String get settings_infoName => 'Naam';
 
   @override
@@ -455,6 +459,13 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get appSettings_languageUk => 'Oekraïens';
+
+  @override
+  String get appSettings_enableMessageTracing => 'Berichttracking inschakelen';
+
+  @override
+  String get appSettings_enableMessageTracingSubtitle =>
+      'Gedetailleerde routerings- en timing-metadata voor berichten weergeven';
 
   @override
   String get appSettings_notifications => 'Notificaties';
@@ -616,6 +627,15 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get appSettings_offlineMapCache => 'Offline Kaarten Cache';
+
+  @override
+  String get appSettings_unitsTitle => 'Eenheden';
+
+  @override
+  String get appSettings_unitsMetric => 'Metrisch (m / km)';
+
+  @override
+  String get appSettings_unitsImperial => 'Imperiaal (ft / mi)';
 
   @override
   String get appSettings_noAreaSelected => 'Geen gebied geselecteerd';
@@ -780,11 +800,22 @@ class AppLocalizationsNl extends AppLocalizations {
   String get channels_editChannel => 'Kanaal bewerken';
 
   @override
+  String get channels_muteChannel => 'Kanaal dempen';
+
+  @override
+  String get channels_unmuteChannel => 'Kanaal dempen opheffen';
+
+  @override
   String get channels_deleteChannel => 'Kanaal verwijderen';
 
   @override
   String channels_deleteChannelConfirm(String name) {
     return 'Verwijderen \"$name\"? Dit kan niet worden teruggedraaid.';
+  }
+
+  @override
+  String channels_channelDeleteFailed(String name) {
+    return 'Kan kanaal $name niet verwijderen';
   }
 
   @override
@@ -1075,6 +1106,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get chat_pathManagement => 'Beheer van Paden';
 
   @override
+  String get chat_ShowAllPaths => 'Toon alle paden';
+
+  @override
   String get chat_routingMode => 'Routeerwijze';
 
   @override
@@ -1231,6 +1265,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get map_title => 'Node Map';
+
+  @override
+  String get map_lineOfSight => 'Zichtlijn';
+
+  @override
+  String get map_losScreenTitle => 'Zichtlijn';
 
   @override
   String get map_noNodesWithLocation => 'Geen nodes met locatiegegevens';
@@ -1668,10 +1708,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get repeater_cliSubtitle => 'Verzend commando\'s naar de repeater';
 
   @override
-  String get repeater_neighbours => 'Buren';
+  String get repeater_neighbors => 'Buren';
 
   @override
-  String get repeater_neighboursSubtitle => 'Bekijk nul hops buren.';
+  String get repeater_neighborsSubtitle => 'Bekijk nul hops buren.';
 
   @override
   String get repeater_settings => 'Instellingen';
@@ -2367,7 +2407,7 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get neighbors_repeatersNeighbours => 'Herhalingen Buren';
+  String get neighbors_repeatersNeighbors => 'Herhalingen Buren';
 
   @override
   String get neighbors_noData => 'Geen gegevens van buren beschikbaar.';
@@ -2678,6 +2718,15 @@ class AppLocalizationsNl extends AppLocalizations {
   String get listFilter_all => 'Alles';
 
   @override
+  String get listFilter_favorites => 'Favorieten';
+
+  @override
+  String get listFilter_addToFavorites => 'Toevoegen aan favorieten';
+
+  @override
+  String get listFilter_removeFromFavorites => 'Verwijderen uit favorieten';
+
+  @override
   String get listFilter_users => 'Gebruikers';
 
   @override
@@ -2710,6 +2759,145 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get pathTrace_clearTooltip => 'Weg wissen';
+
+  @override
+  String get losSelectStartEnd =>
+      'Selecteer begin- en eindknooppunten voor LOS.';
+
+  @override
+  String losRunFailed(String error) {
+    return 'Zichtlijncontrole mislukt: $error';
+  }
+
+  @override
+  String get losClearAllPoints => 'Wis alle punten';
+
+  @override
+  String get losRunToViewElevationProfile =>
+      'Voer LOS uit om het hoogteprofiel te bekijken';
+
+  @override
+  String get losMenuTitle => 'LOS-menu';
+
+  @override
+  String get losMenuSubtitle =>
+      'Tik op knooppunten of druk lang op de kaart voor aangepaste punten';
+
+  @override
+  String get losShowDisplayNodes => 'Toon weergaveknooppunten';
+
+  @override
+  String get losCustomPoints => 'Aangepaste punten';
+
+  @override
+  String losCustomPointLabel(int index) {
+    return 'Aangepast $index';
+  }
+
+  @override
+  String get losPointA => 'Punt A';
+
+  @override
+  String get losPointB => 'Punt B';
+
+  @override
+  String losAntennaA(String value, String unit) {
+    return 'Antenne A: $value $unit';
+  }
+
+  @override
+  String losAntennaB(String value, String unit) {
+    return 'Antenne B: $value $unit';
+  }
+
+  @override
+  String get losRun => 'Voer LOS uit';
+
+  @override
+  String get losNoElevationData => 'Geen hoogtegegevens';
+
+  @override
+  String losProfileClear(
+    String distance,
+    String distanceUnit,
+    String clearance,
+    String heightUnit,
+  ) {
+    return '$distance $distanceUnit, vrije LOS, min. vrije ruimte $clearance $heightUnit';
+  }
+
+  @override
+  String losProfileBlocked(
+    String distance,
+    String distanceUnit,
+    String obstruction,
+    String heightUnit,
+  ) {
+    return '$distance $distanceUnit, geblokkeerd door $obstruction $heightUnit';
+  }
+
+  @override
+  String get losStatusChecking => 'LOS: controleren...';
+
+  @override
+  String get losStatusNoData => 'LOS: geen gegevens';
+
+  @override
+  String losStatusSummary(int clear, int total, int blocked, int unknown) {
+    return 'LOS: $clear/$total gewist, $blocked geblokkeerd, $unknown onbekend';
+  }
+
+  @override
+  String get losErrorElevationUnavailable =>
+      'Hoogtegegevens niet beschikbaar voor een of meer monsters.';
+
+  @override
+  String get losErrorInvalidInput =>
+      'Ongeldige punten/hoogtegegevens voor LOS-berekening.';
+
+  @override
+  String get losRenameCustomPoint => 'Hernoem aangepast punt';
+
+  @override
+  String get losPointName => 'Puntnaam';
+
+  @override
+  String get losShowPanelTooltip => 'Toon LOS-paneel';
+
+  @override
+  String get losHidePanelTooltip => 'LOS-paneel verbergen';
+
+  @override
+  String get losElevationAttribution =>
+      'Hoogtegegevens: Open-Meteo (CC BY 4.0)';
+
+  @override
+  String get losLegendRadioHorizon => 'Radiohorizon';
+
+  @override
+  String get losLegendLosBeam => 'Zichtlijn';
+
+  @override
+  String get losLegendTerrain => 'Terrein';
+
+  @override
+  String get losFrequencyLabel => 'Frequentie';
+
+  @override
+  String get losFrequencyInfoTooltip => 'Bekijk details van de berekening';
+
+  @override
+  String get losFrequencyDialogTitle => 'Berekening van de radiohorizon';
+
+  @override
+  String losFrequencyDialogDescription(
+    double baselineK,
+    double baselineFreq,
+    double frequencyMHz,
+    double kFactor,
+  ) {
+    return 'Beginnend met k=$baselineK bij $baselineFreq MHz, wordt bij de berekening de k-factor aangepast voor de huidige $frequencyMHz MHz-band, die de gebogen radiohorizonkap definieert.';
+  }
 
   @override
   String get contacts_pathTrace => 'Pad Traceren';
@@ -2881,4 +3069,10 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get settings_gpxExportShareSubject =>
       'meshcore-open GPX kaartgegevens exporteren';
+
+  @override
+  String get snrIndicator_nearByRepeaters => 'Nabije herhalingseenheden';
+
+  @override
+  String get snrIndicator_lastSeen => 'Laatst gezien';
 }

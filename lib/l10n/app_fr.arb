@@ -1,4 +1,12 @@
 {
+  "channels_channelDeleteFailed": "Échec de la suppression de la chaîne \"{name}\"",
+  "@channels_channelDeleteFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "@@locale": "fr",
   "appTitle": "MeshCore Open",
   "nav_contacts": "Contacts",
@@ -262,7 +270,7 @@
     }
   },
   "contacts_manageRepeater": "Gérer le répéteur",
-  "contacts_roomLogin": "Connexion Salle",
+  "contacts_roomLogin": "Connexion Room Server",
   "contacts_openChat": "Ouverture du Chat",
   "contacts_editGroup": "Modifier le groupe",
   "contacts_deleteGroup": "Supprimer le groupe",
@@ -334,6 +342,8 @@
   "channels_publicChannel": "Canal public",
   "channels_privateChannel": "Canal privé",
   "channels_editChannel": "Modifier le canal",
+  "channels_muteChannel": "Désactiver les notifications du canal",
+  "channels_unmuteChannel": "Réactiver les notifications du canal",
   "channels_deleteChannel": "Supprimer le canal",
   "channels_deleteChannelConfirm": "Supprimer {name}? Cela ne peut pas être annulé.",
   "@channels_deleteChannelConfirm": {
@@ -796,7 +806,7 @@
   "dialog_disconnect": "Déconnecter",
   "dialog_disconnectConfirm": "Êtes-vous sûr de vouloir vous déconnecter de cet appareil ?",
   "login_repeaterLogin": "Connexion au répéteur",
-  "login_roomLogin": "Connexion Salle",
+  "login_roomLogin": "Connexion Room Server",
   "login_password": "Mot de passe",
   "login_enterPassword": "Entrez votre mot de passe",
   "login_savePassword": "Sauvegarder le mot de passe",
@@ -1351,12 +1361,12 @@
       }
     }
   },
-  "repeater_neighbours": "Voisins",
-  "repeater_neighboursSubtitle": "Afficher les voisins de saut nuls.",
+  "repeater_neighbors": "Voisins",
+  "repeater_neighborsSubtitle": "Afficher les voisins de saut nuls.",
   "neighbors_receivedData": "Données des voisins reçues",
   "neighbors_requestTimedOut": "Les voisins demandent un délai.",
   "neighbors_errorLoading": "Erreur lors du chargement des voisins : {error}",
-  "neighbors_repeatersNeighbours": "Répéteurs Voisins",
+  "neighbors_repeatersNeighbors": "Répéteurs Voisins",
   "neighbors_noData": "Aucune donnée concernant les voisins disponible.",
   "channels_createPrivateChannelDesc": "Sécurisé avec une clé secrète.",
   "channels_joinPrivateChannel": "Rejoindre un Canal Privé",
@@ -1391,7 +1401,7 @@
   "settings_locationIntervalSec": "Intervalle de mise-à-jour du GPS (Secondes)",
   "settings_locationIntervalInvalid": "L'intervalle doit être compris entre 60 et 86400 secondes.",
   "contacts_manageRoom": "Gérer le Room Server",
-  "room_management": "Administración del Servidor de Habitación",
+  "room_management": "Administrattion Room Server",
   "@community_joinConfirmation": {
     "placeholders": {
       "name": {
@@ -1551,6 +1561,8 @@
   "contacts_invalidAdvertFormat": "Données de contact non valides",
   "appSettings_languageUk": "Ukrainien",
   "appSettings_languageRu": "Russe",
+  "appSettings_enableMessageTracing": "Activer le traçage des messages",
+  "appSettings_enableMessageTracingSubtitle": "Afficher les métadonnées détaillées de routage et de synchronisation des messages",
   "contacts_clipboardEmpty": "Le presse-papiers est vide.",
   "contacts_contactImported": "Le contact a été importé.",
   "contacts_floodAdvert": "Annonce à tout le réseau",
@@ -1594,7 +1606,152 @@
   "scanner_bluetoothOffMessage": "Veuillez activer le Bluetooth pour rechercher des appareils.",
   "scanner_bluetoothOff": "Le Bluetooth est désactivé.",
   "scanner_enableBluetooth": "Activer le Bluetooth",
+  "snrIndicator_lastSeen": "Dernière fois vu",
+  "snrIndicator_nearByRepeaters": "Répéteurs à proximité",
+  "chat_ShowAllPaths": "Afficher tous les chemins",
   "settings_clientRepeatFreqWarning": "Pour les transmissions hors réseau, il est nécessaire d'utiliser les fréquences de 433, 869 ou 918 MHz.",
   "settings_clientRepeatSubtitle": "Permettez à cet appareil de répéter les paquets de données pour les autres.",
-  "settings_clientRepeat": "Répétition hors réseau"
+  "settings_clientRepeat": "Répétition hors réseau",
+  "settings_aboutOpenMeteoAttribution": "Données d'élévation LOS : Open-Meteo (CC BY 4.0)",
+  "appSettings_unitsTitle": "Unités",
+  "appSettings_unitsMetric": "Métrique (m/km)",
+  "appSettings_unitsImperial": "Impérial (ft / mi)",
+  "map_lineOfSight": "Ligne de vue",
+  "map_losScreenTitle": "Ligne de vue",
+  "losSelectStartEnd": "Sélectionnez les nœuds de début et de fin pour LOS.",
+  "losRunFailed": "Échec de la vérification de la ligne de vue : {error}",
+  "@losRunFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "losClearAllPoints": "Effacer tous les points",
+  "losRunToViewElevationProfile": "Exécutez LOS pour afficher le profil d'altitude",
+  "losMenuTitle": "Menu LOS",
+  "losMenuSubtitle": "Appuyez sur les nœuds ou appuyez longuement sur la carte pour des points personnalisés",
+  "losShowDisplayNodes": "Afficher les nœuds d'affichage",
+  "losCustomPoints": "Points personnalisés",
+  "losCustomPointLabel": "Personnalisé {index}",
+  "@losCustomPointLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "losPointA": "Point A",
+  "losPointB": "Point B",
+  "losAntennaA": "Antenne A : {value} {unit}",
+  "@losAntennaA": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "losAntennaB": "Antenne B : {value} {unit}",
+  "@losAntennaB": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "losRun": "Exécuter la LOS",
+  "losNoElevationData": "Aucune donnée d'altitude",
+  "losProfileClear": "{distance} {distanceUnit}, LOS clair, clairance minimale {clearance} {heightUnit}",
+  "@losProfileClear": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "distanceUnit": {
+        "type": "String"
+      },
+      "clearance": {
+        "type": "String"
+      },
+      "heightUnit": {
+        "type": "String"
+      }
+    }
+  },
+  "losProfileBlocked": "{distance} {distanceUnit}, bloqué par {obstruction} {heightUnit}",
+  "@losProfileBlocked": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "distanceUnit": {
+        "type": "String"
+      },
+      "obstruction": {
+        "type": "String"
+      },
+      "heightUnit": {
+        "type": "String"
+      }
+    }
+  },
+  "losStatusChecking": "LOS : vérification...",
+  "losStatusNoData": "LOS : aucune donnée",
+  "losStatusSummary": "LOS : {clear}/{total} clair, {blocked} bloqué, {unknown} inconnu",
+  "@losStatusSummary": {
+    "placeholders": {
+      "clear": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "blocked": {
+        "type": "int"
+      },
+      "unknown": {
+        "type": "int"
+      }
+    }
+  },
+  "losErrorElevationUnavailable": "Données d'altitude indisponibles pour un ou plusieurs échantillons.",
+  "losErrorInvalidInput": "Données de points/d'altitude non valides pour le calcul de la LOS.",
+  "losRenameCustomPoint": "Renommer le point personnalisé",
+  "losPointName": "Nom du point",
+  "losShowPanelTooltip": "Afficher le panneau LOS",
+  "losHidePanelTooltip": "Masquer le panneau LOS",
+  "losElevationAttribution": "Données d’altitude : Open-Meteo (CC BY 4.0)",
+  "losLegendRadioHorizon": "Horizon radio",
+  "losLegendLosBeam": "Ligne de visée",
+  "losLegendTerrain": "Terrain",
+  "losFrequencyLabel": "Fréquence",
+  "losFrequencyInfoTooltip": "Voir les détails du calcul",
+  "losFrequencyDialogTitle": "Calcul de l’horizon radio",
+  "losFrequencyDialogDescription": "À partir de k={baselineK} à {baselineFreq} MHz, le calcul ajuste le facteur k pour la bande actuelle de {frequencyMHz} MHz, ce qui définit la limite incurvée de l'horizon radio.",
+  "@losFrequencyDialogDescription": {
+    "description": "Explain how the calculation uses the baseline frequency and derived k-factor.",
+    "placeholders": {
+      "baselineK": {
+        "type": "double"
+      },
+      "baselineFreq": {
+        "type": "double"
+      },
+      "frequencyMHz": {
+        "type": "double"
+      },
+      "kFactor": {
+        "type": "double"
+      }
+    }
+  },
+  "listFilter_addToFavorites": "Ajouter à mes favoris",
+  "listFilter_removeFromFavorites": "Supprimer des favoris",
+  "listFilter_favorites": "Préférences"
 }

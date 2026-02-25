@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meshcore_open/screens/path_trace_map.dart';
+import 'package:meshcore_open/utils/app_logger.dart';
+import 'package:meshcore_open/widgets/app_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../connector/meshcore_connector.dart';
@@ -16,7 +18,6 @@ import '../utils/dialog_utils.dart';
 import '../utils/disconnect_navigation_mixin.dart';
 import '../utils/emoji_utils.dart';
 import '../utils/route_transitions.dart';
-import '../widgets/battery_indicator.dart';
 import '../widgets/list_filter_widget.dart';
 import '../widgets/empty_state.dart';
 import '../widgets/quick_switch_bar.dart';
@@ -90,79 +91,90 @@ class _ContactsScreenState extends State<ContactsScreen>
     _frameSubscription = connector.receivedFrames.listen((frame) {
       if (frame.isEmpty) return;
       final frameBuffer = BufferReader(frame);
-      final code = frameBuffer.readUInt8();
+      try {
+        final code = frameBuffer.readUInt8();
 
-      if (code == respCodeExportContact) {
-        final advertPacket = frameBuffer.readRemainingBytes();
-        // Validate packet has expected minimum size (98+ bytes per protocol)
-        if (advertPacket.length < 98) {
-          if (mounted) {
+        if (code == respCodeExportContact) {
+          final advertPacket = frameBuffer.readRemainingBytes();
+          // Validate packet has expected minimum size (98+ bytes per protocol)
+          if (advertPacket.length < 98) {
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(context.l10n.contacts_invalidAdvertFormat),
+                ),
+              );
+            }
+            _pendingOperations.remove(ContactOperationType.export);
+            return;
+          }
+          final hexString = pubKeyToHex(advertPacket);
+          Clipboard.setData(ClipboardData(text: "meshcore://$hexString"));
+        }
+
+        if (code == respCodeOk) {
+          // Show a snackbar indicating success
+          if (!mounted) return;
+
+          if (_pendingOperations.contains(ContactOperationType.import)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(context.l10n.contacts_contactImported)),
+            );
+          }
+
+          if (_pendingOperations.contains(ContactOperationType.zeroHopShare)) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(context.l10n.contacts_invalidAdvertFormat),
+                content: Text(context.l10n.contacts_zeroHopContactAdvertSent),
               ),
             );
           }
-          _pendingOperations.remove(ContactOperationType.export);
-          return;
-        }
-        final hexString = pubKeyToHex(advertPacket);
-        Clipboard.setData(ClipboardData(text: "meshcore://$hexString"));
-      }
 
-      if (code == respCodeOk) {
-        // Show a snackbar indicating success
-        if (!mounted) return;
+          if (_pendingOperations.contains(ContactOperationType.export)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(context.l10n.contacts_contactAdvertCopied),
+              ),
+            );
+          }
 
-        if (_pendingOperations.contains(ContactOperationType.import)) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.l10n.contacts_contactImported)),
-          );
+          _pendingOperations.clear();
         }
 
-        if (_pendingOperations.contains(ContactOperationType.zeroHopShare)) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(context.l10n.contacts_zeroHopContactAdvertSent),
-            ),
-          );
+        if (code == respCodeErr) {
+          // Show a snackbar indicating failure
+          if (!mounted) return;
+
+          if (_pendingOperations.contains(ContactOperationType.import)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(context.l10n.contacts_contactImportFailed),
+              ),
+            );
+          }
+
+          if (_pendingOperations.contains(ContactOperationType.zeroHopShare)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(context.l10n.contacts_zeroHopContactAdvertFailed),
+              ),
+            );
+          }
+          if (_pendingOperations.contains(ContactOperationType.export)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(context.l10n.contacts_contactAdvertCopyFailed),
+              ),
+            );
+          }
+
+          _pendingOperations.clear();
         }
-
-        if (_pendingOperations.contains(ContactOperationType.export)) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.l10n.contacts_contactAdvertCopied)),
-          );
-        }
-
-        _pendingOperations.clear();
-      }
-
-      if (code == respCodeErr) {
-        // Show a snackbar indicating failure
-        if (!mounted) return;
-
-        if (_pendingOperations.contains(ContactOperationType.import)) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.l10n.contacts_contactImportFailed)),
-          );
-        }
-
-        if (_pendingOperations.contains(ContactOperationType.zeroHopShare)) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(context.l10n.contacts_zeroHopContactAdvertFailed),
-            ),
-          );
-        }
-        if (_pendingOperations.contains(ContactOperationType.export)) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(context.l10n.contacts_contactAdvertCopyFailed),
-            ),
-          );
-        }
-
-        _pendingOperations.clear();
+      } catch (e) {
+        appLogger.error(
+          'Error processing received frame: $e',
+          tag: 'ContactsScreen',
+        );
       }
     });
   }
@@ -171,14 +183,17 @@ class _ContactsScreenState extends State<ContactsScreen>
     final connector = Provider.of<MeshCoreConnector>(context, listen: false);
     final exportContactFrame = buildExportContactFrame(pubKey);
     _pendingOperations.add(ContactOperationType.export);
-    await connector.sendFrame(exportContactFrame);
+    await connector.sendFrame(exportContactFrame, expectsGenericAck: true);
   }
 
   Future<void> _contactZeroHop(Uint8List pubKey) async {
     final connector = Provider.of<MeshCoreConnector>(context, listen: false);
     final exportContactZeroHopFrame = buildZeroHopContact(pubKey);
     _pendingOperations.add(ContactOperationType.zeroHopShare);
-    await connector.sendFrame(exportContactZeroHopFrame);
+    await connector.sendFrame(
+      exportContactZeroHopFrame,
+      expectsGenericAck: true,
+    );
   }
 
   Future<void> _contactImport() async {
@@ -205,7 +220,7 @@ class _ContactsScreenState extends State<ContactsScreen>
     try {
       final importContactFrame = buildImportContactFrame(hexString);
       _pendingOperations.add(ContactOperationType.import);
-      await connector.sendFrame(importContactFrame);
+      await connector.sendFrame(importContactFrame, expectsGenericAck: true);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -229,9 +244,7 @@ class _ContactsScreenState extends State<ContactsScreen>
       canPop: allowBack,
       child: Scaffold(
         appBar: AppBar(
-          leading: BatteryIndicator(connector: connector),
-          title: Text(context.l10n.contacts_title),
-          centerTitle: true,
+          title: AppBarTitle(context.l10n.contacts_title),
           automaticallyImplyLeading: false,
           actions: [
             PopupMenuButton(
@@ -468,6 +481,7 @@ class _ContactsScreenState extends State<ContactsScreen>
                         contact: contact,
                         lastSeen: _resolveLastSeen(contact),
                         unreadCount: unreadCount,
+                        isFavorite: contact.isFavorite,
                         onTap: () => _openChat(context, contact),
                         onLongPress: () =>
                             _showContactOptions(context, connector, contact),
@@ -504,6 +518,8 @@ class _ContactsScreenState extends State<ContactsScreen>
         })
         .where((group) {
           if (_typeFilter == ContactTypeFilter.all) return true;
+          // Groups don't have a favorite flag, so hide them under favorites filter
+          if (_typeFilter == ContactTypeFilter.favorites) return false;
           for (final key in group.memberKeys) {
             final contact = contactsByKey[key];
             if (contact != null && _matchesTypeFilter(contact)) return true;
@@ -578,6 +594,8 @@ class _ContactsScreenState extends State<ContactsScreen>
     switch (_typeFilter) {
       case ContactTypeFilter.all:
         return true;
+      case ContactTypeFilter.favorites:
+        return contact.isFavorite;
       case ContactTypeFilter.users:
         return contact.type == advTypeChat;
       case ContactTypeFilter.repeaters:
@@ -968,6 +986,7 @@ class _ContactsScreenState extends State<ContactsScreen>
   ) {
     final isRepeater = contact.type == advTypeRepeater;
     final isRoom = contact.type == advTypeRoom;
+    final isFavorite = contact.isFavorite;
 
     showModalBottomSheet(
       context: context,
@@ -1075,6 +1094,21 @@ class _ContactsScreenState extends State<ContactsScreen>
               ),
             ],
             ListTile(
+              leading: Icon(
+                isFavorite ? Icons.star : Icons.star_border,
+                color: Colors.amber[700],
+              ),
+              title: Text(
+                isFavorite
+                    ? context.l10n.listFilter_removeFromFavorites
+                    : context.l10n.listFilter_addToFavorites,
+              ),
+              onTap: () async {
+                Navigator.pop(sheetContext);
+                await connector.setContactFavorite(contact, !isFavorite);
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.copy),
               title: Text(context.l10n.contacts_ShareContact),
               onTap: () {
@@ -1142,6 +1176,7 @@ class _ContactTile extends StatelessWidget {
   final Contact contact;
   final DateTime lastSeen;
   final int unreadCount;
+  final bool isFavorite;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
 
@@ -1149,6 +1184,7 @@ class _ContactTile extends StatelessWidget {
     required this.contact,
     required this.lastSeen,
     required this.unreadCount,
+    required this.isFavorite,
     required this.onTap,
     required this.onLongPress,
   });
@@ -1160,12 +1196,17 @@ class _ContactTile extends StatelessWidget {
         backgroundColor: _getTypeColor(contact.type),
         child: _buildContactAvatar(contact),
       ),
-      title: Text(contact.name),
+      title: Text(contact.name, maxLines: 1, overflow: TextOverflow.ellipsis),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(contact.pathLabel),
-          Text(contact.shortPubKeyHex, style: TextStyle(fontSize: 12)),
+          Text(contact.pathLabel, maxLines: 1, overflow: TextOverflow.ellipsis),
+          Text(
+            contact.shortPubKeyHex,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 12),
+          ),
         ],
       ),
       // Clamp text scaling in trailing section to prevent overflow while
@@ -1176,26 +1217,36 @@ class _ContactTile extends StatelessWidget {
             MediaQuery.textScalerOf(context).scale(1.0).clamp(1.0, 1.3),
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            if (unreadCount > 0) ...[
-              UnreadBadge(count: unreadCount),
-              const SizedBox(height: 4),
-            ],
-            Text(
-              _formatLastSeen(context, lastSeen),
-              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (contact.hasLocation)
-                  Icon(Icons.location_on, size: 14, color: Colors.grey[400]),
+        child: SizedBox(
+          width: 120,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              if (unreadCount > 0) ...[
+                UnreadBadge(count: unreadCount),
+                const SizedBox(height: 4),
               ],
-            ),
-          ],
+              Text(
+                _formatLastSeen(context, lastSeen),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.right,
+                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (isFavorite)
+                    Icon(Icons.star, size: 14, color: Colors.amber[700]),
+                  if (isFavorite && contact.hasLocation)
+                    const SizedBox(width: 2),
+                  if (contact.hasLocation)
+                    Icon(Icons.location_on, size: 14, color: Colors.grey[400]),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       onTap: onTap,

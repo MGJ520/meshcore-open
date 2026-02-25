@@ -1,4 +1,12 @@
 {
+  "channels_channelDeleteFailed": "无法删除频道 \"{name}\"",
+  "@channels_channelDeleteFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "@@locale": "zh",
   "appTitle": "MeshCore Open",
   "nav_contacts": "联系人",
@@ -72,7 +80,7 @@
   "scanner_scan": "扫描",
   "device_quickSwitch": "快速切换",
   "device_meshcore": "MeshCore",
-  "settings_title": "  ",
+  "settings_title": "设置",
   "settings_deviceInfo": "设备信息",
   "settings_appSettings": "应用设置",
   "settings_appSettingsSubtitle": "通知、消息和地图偏好",
@@ -181,6 +189,8 @@
   "appSettings_languageBg": "保加利亚语",
   "appSettings_languageRu": "俄语",
   "appSettings_languageUk": "乌克兰语",
+  "appSettings_enableMessageTracing": "启用消息追踪",
+  "appSettings_enableMessageTracingSubtitle": "显示消息的详细路由和时间元数据",
   "appSettings_notifications": "通知",
   "appSettings_enableNotifications": "启用通知",
   "appSettings_enableNotificationsSubtitle": "接收消息和广播的通知",
@@ -258,7 +268,7 @@
   "appSettings_appDebugLoggingSubtitle": "记录应用调试消息以进行故障排除。",
   "appSettings_appDebugLoggingEnabled": "调试日志已启用",
   "appSettings_appDebugLoggingDisabled": "应用调试日志已禁用",
-  "contacts_title": "   ",
+  "contacts_title": "联系人",
   "contacts_noContacts": "暂无联系人",
   "contacts_contactsWillAppear": "当设备发送广播时，联系人将显示。",
   "contacts_searchContacts": "搜索联系人...",
@@ -328,7 +338,7 @@
       }
     }
   },
-  "channels_title": "  ",
+  "channels_title": "频道",
   "channels_noChannelsConfigured": "未配置任何频道",
   "channels_addPublicChannel": "添加公共频道",
   "channels_searchChannels": "搜索频道...",
@@ -347,6 +357,8 @@
   "channels_publicChannel": "公共频道",
   "channels_privateChannel": "私有频道",
   "channels_editChannel": "编辑频道",
+  "channels_muteChannel": "静音频道",
+  "channels_unmuteChannel": "取消静音频道",
   "channels_deleteChannel": "删除频道",
   "channels_deleteChannelConfirm": "删除频道 \"{name}\"？此操作不可撤销。",
   "@channels_deleteChannelConfirm": {
@@ -636,7 +648,7 @@
     }
   },
   "chat_invalidLink": "无效的链接格式",
-  "map_title": "  ",
+  "map_title": "节点地图",
   "map_noNodesWithLocation": "没有包含位置信息的节点",
   "map_nodesNeedGps": "节点需要共享 GPS 坐标才能在地图上显示",
   "map_nodesCount": "节点：{count}",
@@ -900,8 +912,8 @@
   "repeater_telemetrySubtitle": "查看传感器和系统状态数据",
   "repeater_cli": "命令行",
   "repeater_cliSubtitle": "向转发节点发送命令",
-  "repeater_neighbours": "邻居",
-  "repeater_neighboursSubtitle": "查看邻居节点（零跳）",
+  "repeater_neighbors": "邻居",
+  "repeater_neighborsSubtitle": "查看邻居节点（零跳）",
   "repeater_settings": "设置",
   "repeater_settingsSubtitle": "配置转发节点参数",
   "repeater_statusTitle": "转发节点状态",
@@ -1271,7 +1283,7 @@
       }
     }
   },
-  "neighbors_repeatersNeighbours": "转发节点的邻居",
+  "neighbors_repeatersNeighbors": "转发节点的邻居",
   "neighbors_noData": "暂无邻居信息",
   "neighbors_unknownContact": "未知 {pubkey}",
   "@neighbors_unknownContact": {
@@ -1599,7 +1611,152 @@
   "scanner_bluetoothOffMessage": "请开启蓝牙以搜索设备",
   "scanner_bluetoothOff": "蓝牙已关闭",
   "scanner_enableBluetooth": "启用蓝牙",
+  "snrIndicator_lastSeen": "最近访问",
+  "snrIndicator_nearByRepeaters": "附近的重复器",
+  "chat_ShowAllPaths": "显示所有路径",
   "settings_clientRepeat": "离网重复",
   "settings_clientRepeatSubtitle": "允许此设备重复发送网状数据包给其他设备",
-  "settings_clientRepeatFreqWarning": "离网重复通信需要使用 433、869 或 918 兆赫兹的频率。"
+  "settings_clientRepeatFreqWarning": "离网重复通信需要使用 433、869 或 918 兆赫兹的频率。",
+  "settings_aboutOpenMeteoAttribution": "LOS 高程数据:Open-Meteo (CC BY 4.0)",
+  "appSettings_unitsTitle": "单位",
+  "appSettings_unitsMetric": "公制（米/公里）",
+  "appSettings_unitsImperial": "英制 (ft / mi)",
+  "map_lineOfSight": "视线",
+  "map_losScreenTitle": "视线",
+  "losSelectStartEnd": "选择 LOS 的起始节点和结束节点。",
+  "losRunFailed": "视线检查失败：{error}",
+  "@losRunFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "losClearAllPoints": "清除所有点",
+  "losRunToViewElevationProfile": "运行 LOS 查看高程剖面",
+  "losMenuTitle": "服务水平菜单",
+  "losMenuSubtitle": "点击节点或长按地图以获取自定义点",
+  "losShowDisplayNodes": "显示显示节点",
+  "losCustomPoints": "自定义积分",
+  "losCustomPointLabel": "自定义 {index}",
+  "@losCustomPointLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "losPointA": "A点",
+  "losPointB": "B点",
+  "losAntennaA": "天线 A： {value} {unit}",
+  "@losAntennaA": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "losAntennaB": "天线 B：{value} {unit}",
+  "@losAntennaB": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "losRun": "运行视距",
+  "losNoElevationData": "无海拔数据",
+  "losProfileClear": "{distance} {distanceUnit}，清除 LOS，最小间隙 {clearance} {heightUnit}",
+  "@losProfileClear": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "distanceUnit": {
+        "type": "String"
+      },
+      "clearance": {
+        "type": "String"
+      },
+      "heightUnit": {
+        "type": "String"
+      }
+    }
+  },
+  "losProfileBlocked": "{distance} {distanceUnit}，被 {obstruction} {heightUnit} 阻止",
+  "@losProfileBlocked": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "distanceUnit": {
+        "type": "String"
+      },
+      "obstruction": {
+        "type": "String"
+      },
+      "heightUnit": {
+        "type": "String"
+      }
+    }
+  },
+  "losStatusChecking": "洛斯：正在检查...",
+  "losStatusNoData": "LOS：无数据",
+  "losStatusSummary": "LOS：{clear}/{total} 清除，{blocked} 阻塞，{unknown} 未知",
+  "@losStatusSummary": {
+    "placeholders": {
+      "clear": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "blocked": {
+        "type": "int"
+      },
+      "unknown": {
+        "type": "int"
+      }
+    }
+  },
+  "losErrorElevationUnavailable": "一个或多个样本的海拔数据不可用。",
+  "losErrorInvalidInput": "用于 LOS 计算的点/高程数据无效。",
+  "losRenameCustomPoint": "重命名自定义点",
+  "losPointName": "点名称",
+  "losShowPanelTooltip": "显示 LOS 面板",
+  "losHidePanelTooltip": "隐藏 LOS 面板",
+  "losElevationAttribution": "高程数据：Open-Meteo (CC BY 4.0)",
+  "losLegendRadioHorizon": "无线电地平线",
+  "losLegendLosBeam": "视距波束",
+  "losLegendTerrain": "地形",
+  "losFrequencyLabel": "频率",
+  "losFrequencyInfoTooltip": "查看计算详情",
+  "losFrequencyDialogTitle": "无线电地平线计算",
+  "losFrequencyDialogDescription": "从 {baselineFreq} MHz 处的 k={baselineK} 开始，计算调整当前 {frequencyMHz} MHz 频段的 k 因子，该因子定义了弯曲的无线电范围上限。",
+  "@losFrequencyDialogDescription": {
+    "description": "Explain how the calculation uses the baseline frequency and derived k-factor.",
+    "placeholders": {
+      "baselineK": {
+        "type": "double"
+      },
+      "baselineFreq": {
+        "type": "double"
+      },
+      "frequencyMHz": {
+        "type": "double"
+      },
+      "kFactor": {
+        "type": "double"
+      }
+    }
+  },
+  "listFilter_favorites": "收藏",
+  "listFilter_addToFavorites": "添加到收藏",
+  "listFilter_removeFromFavorites": "从收藏中移除"
 }
