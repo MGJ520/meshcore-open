@@ -2583,6 +2583,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get listFilter_all => '全部';
 
   @override
+  String get listFilter_favorites => '收藏';
+
+  @override
+  String get listFilter_addToFavorites => '添加到收藏';
+
+  @override
+  String get listFilter_removeFromFavorites => '从收藏中移除';
+
+  @override
   String get listFilter_users => '用户';
 
   @override
