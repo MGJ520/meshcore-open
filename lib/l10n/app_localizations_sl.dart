@@ -2716,7 +2716,13 @@ class AppLocalizationsSl extends AppLocalizations {
   String get listFilter_all => 'Vse';
 
   @override
-  String get listFilter_favorites => 'Favorites';
+  String get listFilter_favorites => 'Priljubljene';
+
+  @override
+  String get listFilter_addToFavorites => 'Dodaj v priljubljene';
+
+  @override
+  String get listFilter_removeFromFavorites => 'Odstrani iz priljubljenih';
 
   @override
   String get listFilter_users => 'Uporabniki';

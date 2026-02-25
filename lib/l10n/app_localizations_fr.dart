@@ -2743,7 +2743,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get listFilter_all => 'Tout';
 
   @override
-  String get listFilter_favorites => 'Favorites';
+  String get listFilter_favorites => 'Préférences';
+
+  @override
+  String get listFilter_addToFavorites => 'Ajouter à mes favoris';
+
+  @override
+  String get listFilter_removeFromFavorites => 'Supprimer des favoris';
 
   @override
   String get listFilter_users => 'Utilisateurs';

@@ -1,6 +1,12 @@
 {
   "channels_channelDeleteFailed": "无法删除频道 \"{name}\"",
-  "@channels_channelDeleteFailed": { "placeholders": { "name": { "type": "String" } } },
+  "@channels_channelDeleteFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "@@locale": "zh",
   "appTitle": "MeshCore Open",
   "nav_contacts": "联系方式",
@@ -1744,5 +1750,8 @@
         "type": "double"
       }
     }
-  }
+  },
+  "listFilter_favorites": "收藏",
+  "listFilter_addToFavorites": "添加到收藏",
+  "listFilter_removeFromFavorites": "从收藏中移除"
 }

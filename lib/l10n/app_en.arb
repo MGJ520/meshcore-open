@@ -1556,6 +1556,8 @@
   "listFilter_filters": "Filters",
   "listFilter_all": "All",
   "listFilter_favorites": "Favorites",
+  "listFilter_addToFavorites": "Add to favorites",
+  "listFilter_removeFromFavorites": "Remove from favorites",
   "listFilter_users": "Users",
   "listFilter_repeaters": "Repeaters",
   "listFilter_roomServers": "Room servers",

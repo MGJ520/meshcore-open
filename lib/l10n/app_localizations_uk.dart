@@ -2738,7 +2738,13 @@ class AppLocalizationsUk extends AppLocalizations {
   String get listFilter_all => 'Все';
 
   @override
-  String get listFilter_favorites => 'Favorites';
+  String get listFilter_favorites => 'Улюблені';
+
+  @override
+  String get listFilter_addToFavorites => 'Додати до улюблених';
+
+  @override
+  String get listFilter_removeFromFavorites => 'Видалити зі списку улюблених';
 
   @override
   String get listFilter_users => 'Користувачі';

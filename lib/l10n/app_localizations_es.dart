@@ -2727,7 +2727,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get listFilter_all => 'Todas';
 
   @override
-  String get listFilter_favorites => 'Favorites';
+  String get listFilter_favorites => 'Favoritos';
+
+  @override
+  String get listFilter_addToFavorites => 'Añadir a favoritos';
+
+  @override
+  String get listFilter_removeFromFavorites => 'Eliminar de las favoritas';
 
   @override
   String get listFilter_users => 'Usuarios';

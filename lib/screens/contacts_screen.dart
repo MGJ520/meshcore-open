@@ -518,6 +518,7 @@ class _ContactsScreenState extends State<ContactsScreen>
         })
         .where((group) {
           if (_typeFilter == ContactTypeFilter.all) return true;
+          // Groups don't have a favorite flag, so hide them under favorites filter
           if (_typeFilter == ContactTypeFilter.favorites) return false;
           for (final key in group.memberKeys) {
             final contact = contactsByKey[key];
@@ -1099,8 +1100,8 @@ class _ContactsScreenState extends State<ContactsScreen>
               ),
               title: Text(
                 isFavorite
-                    ? '${context.l10n.common_remove} ${context.l10n.listFilter_favorites}'
-                    : '${context.l10n.common_add} ${context.l10n.listFilter_favorites}',
+                    ? context.l10n.listFilter_removeFromFavorites
+                    : context.l10n.listFilter_addToFavorites,
               ),
               onTap: () async {
                 Navigator.pop(sheetContext);
