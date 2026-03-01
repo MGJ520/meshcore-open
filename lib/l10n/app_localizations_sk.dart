@@ -234,11 +234,11 @@ class AppLocalizationsSk extends AppLocalizations {
   String get settings_longitude => 'Dĺžka';
 
   @override
-  String get settings_contactSettings => 'Contact Settings';
+  String get settings_contactSettings => 'Nastavenia kontaktov';
 
   @override
   String get settings_contactSettingsSubtitle =>
-      'Settings for how contacts are added.';
+      'Nastavenia pre pridávanie kontaktov.';
 
   @override
   String get settings_privacyMode => 'Režim ochrany súkromia';
@@ -3107,56 +3107,72 @@ class AppLocalizationsSk extends AppLocalizations {
   String get snrIndicator_lastSeen => 'Naposledy videný';
 
   @override
-  String get contactsSettings_title => 'Contacts settings';
+  String get contactsSettings_title => 'Nastavenia kontaktov';
 
   @override
-  String get contactsSettings_autoAddTitle => 'Automatic Discovery';
+  String get contactsSettings_autoAddTitle => 'Automatické zisťovanie';
 
   @override
-  String get contactsSettings_otherTitle => 'Other contact related settings';
+  String get contactsSettings_otherTitle =>
+      'Ďalšie nastavenia súvisiace s kontaktami';
 
   @override
-  String get contactsSettings_autoAddUsersTitle => 'Auto-add users';
+  String get contactsSettings_autoAddUsersTitle =>
+      'Automaticky pridávať užívateľov';
 
   @override
   String get contactsSettings_autoAddUsersSubtitle =>
-      'Allow the companion to automatically add discovered users.';
+      'Povoliť spoločníkovi automaticky pridávať objavených užívateľov.';
 
   @override
-  String get contactsSettings_autoAddRepeatersTitle => 'Auto-add repeaters';
+  String get contactsSettings_autoAddRepeatersTitle =>
+      'Automaticky pridávať opakovače';
 
   @override
   String get contactsSettings_autoAddRepeatersSubtitle =>
-      'Allow the companion to automatically add discovered repeaters.';
+      'Povoliť spoločníkovi automaticky pridávať objavené repeater.';
 
   @override
   String get contactsSettings_autoAddRoomServersTitle =>
-      'Auto-add room servers';
+      'Automaticky pridávať server miestnosti';
 
   @override
   String get contactsSettings_autoAddRoomServersSubtitle =>
-      'Allow the companion to automatically add discovered room servers.';
+      'Povoliť spoločníkovi automaticky pridať objavené serverové miestnosti.';
 
   @override
-  String get contactsSettings_autoAddSensorsTitle => 'Auto-add sensors';
+  String get contactsSettings_autoAddSensorsTitle =>
+      'Automaticky pridávať senzory';
 
   @override
   String get contactsSettings_autoAddSensorsSubtitle =>
-      'Allow the companion to automatically add discovered sensors.';
+      'Povoliť spoločníkovi automaticky pridávať objavené senzory.';
 
   @override
-  String get contactsSettings_overwriteOldestTitle => 'Overwrite Oldest';
+  String get contactsSettings_overwriteOldestTitle => 'Prepísať najstaršie';
 
   @override
   String get contactsSettings_overwriteOldestSubtitle =>
-      'When enabled, the companion will overwrite the oldest contact not favoriteited when the contact list is full.';
+      'Keď je povolené, spoločník prepíše najstarší kontakt, ktorý nie je označený ako obľúbený, keď je zoznam kontaktov plný.';
 
   @override
-  String get discoveredContacts_Title => 'Discovered Contacts';
+  String get discoveredContacts_Title => 'Objavené kontakty';
 
   @override
-  String get discoveredContacts_noMatching => 'No matching contacts';
+  String get discoveredContacts_noMatching => 'Žiadne zhodné kontakty';
 
   @override
-  String get discoveredContacts_searchHint => 'Search discovered contacts';
+  String get discoveredContacts_searchHint => 'Vyhľadať objavené kontakty';
+
+  @override
+  String get discoveredContacts_contactAdded => 'Kontakt bol pridaný';
+
+  @override
+  String get discoveredContacts_addContact => 'Pridať kontakt';
+
+  @override
+  String get discoveredContacts_copyContact => 'Kopírovať kontakt do schránky';
+
+  @override
+  String get discoveredContacts_deleteContact => 'Zmazať kontakt';
 }

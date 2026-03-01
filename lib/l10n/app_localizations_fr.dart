@@ -235,11 +235,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settings_longitude => 'Longitude';
 
   @override
-  String get settings_contactSettings => 'Contact Settings';
+  String get settings_contactSettings => 'Paramètres de contact';
 
   @override
   String get settings_contactSettingsSubtitle =>
-      'Settings for how contacts are added.';
+      'Paramètres pour l\'ajout de contacts';
 
   @override
   String get settings_privacyMode => 'Mode de confidentialité';
@@ -3144,56 +3144,74 @@ class AppLocalizationsFr extends AppLocalizations {
   String get snrIndicator_lastSeen => 'Dernière fois vu';
 
   @override
-  String get contactsSettings_title => 'Contacts settings';
+  String get contactsSettings_title => 'Paramètres des contacts';
 
   @override
-  String get contactsSettings_autoAddTitle => 'Automatic Discovery';
+  String get contactsSettings_autoAddTitle => 'Découverte automatique';
 
   @override
-  String get contactsSettings_otherTitle => 'Other contact related settings';
+  String get contactsSettings_otherTitle =>
+      'Autres paramètres liés aux contacts';
 
   @override
-  String get contactsSettings_autoAddUsersTitle => 'Auto-add users';
+  String get contactsSettings_autoAddUsersTitle =>
+      'Ajouter automatiquement les utilisateurs';
 
   @override
   String get contactsSettings_autoAddUsersSubtitle =>
-      'Allow the companion to automatically add discovered users.';
+      'Autoriser le compagnon à ajouter automatiquement les utilisateurs découverts';
 
   @override
-  String get contactsSettings_autoAddRepeatersTitle => 'Auto-add repeaters';
+  String get contactsSettings_autoAddRepeatersTitle =>
+      'Ajouter automatiquement les répéteurs';
 
   @override
   String get contactsSettings_autoAddRepeatersSubtitle =>
-      'Allow the companion to automatically add discovered repeaters.';
+      'Autoriser le compagnon à ajouter automatiquement les répéteurs découverts';
 
   @override
   String get contactsSettings_autoAddRoomServersTitle =>
-      'Auto-add room servers';
+      'Ajouter automatiquement les serveurs de salle';
 
   @override
   String get contactsSettings_autoAddRoomServersSubtitle =>
-      'Allow the companion to automatically add discovered room servers.';
+      'Autoriser le compagnon à ajouter automatiquement les serveurs de salles découverts';
 
   @override
-  String get contactsSettings_autoAddSensorsTitle => 'Auto-add sensors';
+  String get contactsSettings_autoAddSensorsTitle =>
+      'Ajouter automatiquement les capteurs';
 
   @override
   String get contactsSettings_autoAddSensorsSubtitle =>
-      'Allow the companion to automatically add discovered sensors.';
+      'Autoriser le compagnon à ajouter automatiquement les capteurs découverts.';
 
   @override
-  String get contactsSettings_overwriteOldestTitle => 'Overwrite Oldest';
+  String get contactsSettings_overwriteOldestTitle => 'Écraser le plus ancien';
 
   @override
   String get contactsSettings_overwriteOldestSubtitle =>
-      'When enabled, the companion will overwrite the oldest contact not favoriteited when the contact list is full.';
+      'Lorsqu\'il est activé, le compagnon écrasera l\'ancien contact non favori lorsque la liste de contacts est pleine.';
 
   @override
-  String get discoveredContacts_Title => 'Discovered Contacts';
+  String get discoveredContacts_Title => 'Contacts découverts';
 
   @override
-  String get discoveredContacts_noMatching => 'No matching contacts';
+  String get discoveredContacts_noMatching => 'Aucun contact correspondant';
 
   @override
-  String get discoveredContacts_searchHint => 'Search discovered contacts';
+  String get discoveredContacts_searchHint =>
+      'Rechercher des contacts découverts';
+
+  @override
+  String get discoveredContacts_contactAdded => 'Contact ajouté';
+
+  @override
+  String get discoveredContacts_addContact => 'Ajouter un contact';
+
+  @override
+  String get discoveredContacts_copyContact =>
+      'Copier le contact dans le presse-papiers';
+
+  @override
+  String get discoveredContacts_deleteContact => 'Supprimer le contact';
 }

@@ -5488,6 +5488,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search discovered contacts'**
   String get discoveredContacts_searchHint;
+
+  /// No description provided for @discoveredContacts_contactAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact added'**
+  String get discoveredContacts_contactAdded;
+
+  /// No description provided for @discoveredContacts_addContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Contact'**
+  String get discoveredContacts_addContact;
+
+  /// No description provided for @discoveredContacts_copyContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Contact to clipboard'**
+  String get discoveredContacts_copyContact;
+
+  /// No description provided for @discoveredContacts_deleteContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Contact'**
+  String get discoveredContacts_deleteContact;
 }
 
 class _AppLocalizationsDelegate

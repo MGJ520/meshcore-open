@@ -234,11 +234,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settings_longitude => 'Längengrad';
 
   @override
-  String get settings_contactSettings => 'Contact Settings';
+  String get settings_contactSettings => 'Kontakteinstellungen';
 
   @override
   String get settings_contactSettingsSubtitle =>
-      'Settings for how contacts are added.';
+      'Einstellungen für das Hinzufügen von Kontakten';
 
   @override
   String get settings_privacyMode => 'Privatsphäreeinstellung';
@@ -3130,56 +3130,74 @@ class AppLocalizationsDe extends AppLocalizations {
   String get snrIndicator_lastSeen => 'Zuletzt gesehen';
 
   @override
-  String get contactsSettings_title => 'Contacts settings';
+  String get contactsSettings_title => 'Kontakteinstellungen';
 
   @override
-  String get contactsSettings_autoAddTitle => 'Automatic Discovery';
+  String get contactsSettings_autoAddTitle => 'Automatische Erkennung';
 
   @override
-  String get contactsSettings_otherTitle => 'Other contact related settings';
+  String get contactsSettings_otherTitle =>
+      'Weitere Einstellungen zu Kontakten';
 
   @override
-  String get contactsSettings_autoAddUsersTitle => 'Auto-add users';
+  String get contactsSettings_autoAddUsersTitle =>
+      'Automatische Hinzufügung von Benutzern';
 
   @override
   String get contactsSettings_autoAddUsersSubtitle =>
-      'Allow the companion to automatically add discovered users.';
+      'Ermöglichen Sie dem Begleiter, automatisch entdeckte Benutzer hinzuzufügen';
 
   @override
-  String get contactsSettings_autoAddRepeatersTitle => 'Auto-add repeaters';
+  String get contactsSettings_autoAddRepeatersTitle =>
+      'Automatisch Repeater hinzufügen';
 
   @override
   String get contactsSettings_autoAddRepeatersSubtitle =>
-      'Allow the companion to automatically add discovered repeaters.';
+      'Ermöglichen Sie dem Begleiter, automatisch entdeckte Repeater hinzuzufügen.';
 
   @override
   String get contactsSettings_autoAddRoomServersTitle =>
-      'Auto-add room servers';
+      'Automatisch Raumservers hinzufügen';
 
   @override
   String get contactsSettings_autoAddRoomServersSubtitle =>
-      'Allow the companion to automatically add discovered room servers.';
+      'Ermöglichen Sie dem Begleiter, entdeckte Raumserver automatisch hinzuzufügen';
 
   @override
-  String get contactsSettings_autoAddSensorsTitle => 'Auto-add sensors';
+  String get contactsSettings_autoAddSensorsTitle =>
+      'Automatisch Sensoren hinzufügen';
 
   @override
   String get contactsSettings_autoAddSensorsSubtitle =>
-      'Allow the companion to automatically add discovered sensors.';
+      'Ermöglichen Sie dem Begleiter, automatisch entdeckte Sensoren hinzuzufügen';
 
   @override
-  String get contactsSettings_overwriteOldestTitle => 'Overwrite Oldest';
+  String get contactsSettings_overwriteOldestTitle =>
+      'Überschreiben des Ältesten';
 
   @override
   String get contactsSettings_overwriteOldestSubtitle =>
-      'When enabled, the companion will overwrite the oldest contact not favoriteited when the contact list is full.';
+      'Wenn aktiviert, überschreibt der Begleiter den ältesten nicht favorisierten Kontakt, wenn die Kontaktliste voll ist.';
 
   @override
-  String get discoveredContacts_Title => 'Discovered Contacts';
+  String get discoveredContacts_Title => 'Entdeckte Kontakte';
 
   @override
-  String get discoveredContacts_noMatching => 'No matching contacts';
+  String get discoveredContacts_noMatching => 'Keine passenden Kontakte';
 
   @override
-  String get discoveredContacts_searchHint => 'Search discovered contacts';
+  String get discoveredContacts_searchHint => 'Entdeckte Kontakte suchen';
+
+  @override
+  String get discoveredContacts_contactAdded => 'Kontakt hinzugefügt';
+
+  @override
+  String get discoveredContacts_addContact => 'Kontakt hinzufügen';
+
+  @override
+  String get discoveredContacts_copyContact =>
+      'Kontakt in die Zwischenablage kopieren';
+
+  @override
+  String get discoveredContacts_deleteContact => 'Kontakt löschen';
 }

@@ -283,6 +283,7 @@ class MeshCoreConnector extends ChangeNotifier {
   int? get batteryMillivolts => _batteryMillivolts;
   int get maxContacts => _maxContacts;
   int get maxChannels => _maxChannels;
+  Set<String> get knownContactKeys => Set.unmodifiable(_knownContactKeys);
   bool get isSyncingQueuedMessages => _isSyncingQueuedMessages;
   bool get isSyncingChannels => _isSyncingChannels;
   int get channelSyncProgress =>
@@ -1531,6 +1532,50 @@ class MeshCoreConnector extends ChangeNotifier {
       Map<String, int>.from(_contactUnreadCount),
     );
     _messageStore.clearMessages(contact.publicKeyHex);
+    notifyListeners();
+  }
+
+  Future<void> removeDiscoveredContact(DiscoveryContact contact) async {
+    if (!isConnected) return;
+    _discoveredContacts.removeWhere(
+      (c) => c.publicKeyHex == contact.publicKeyHex,
+    );
+    unawaited(_persistDiscoveredContacts());
+    notifyListeners();
+  }
+
+  Future<void> importDiscoveredContact(DiscoveryContact contact) async {
+    if (!isConnected) return;
+    await sendFrame(
+      buildSetAutoAddConfigFrame(
+        autoAddChat: true,
+        autoAddRepeater: true,
+        autoAddRoomServer: true,
+        autoAddSensor: true,
+        overwriteOldest: _overwriteOldest,
+      ),
+    );
+    await sendFrame(buildImportContactFrame(contact.rawPacket));
+    await sendFrame(
+      buildSetAutoAddConfigFrame(
+        autoAddChat: _autoAddUsers,
+        autoAddRepeater: _autoAddRepeaters,
+        autoAddRoomServer: _autoAddRoomServers,
+        autoAddSensor: _autoAddSensors,
+        overwriteOldest: _overwriteOldest,
+      ),
+    );
+
+    _handleContactAdvert(
+      Contact(
+        publicKey: contact.publicKey,
+        name: contact.name,
+        type: contact.type,
+        pathLength: contact.pathLength,
+        path: contact.path,
+        lastSeen: DateTime.now(),
+      ),
+    );
     notifyListeners();
   }
 
@@ -3705,22 +3750,29 @@ class MeshCoreConnector extends ChangeNotifier {
       appLogger.warn('Malformed RX frame: $e', tag: 'Connector');
       return;
     }
-
+    final rawPacket = frame.sublist(3);
     switch (payloadType) {
       case payloadTypeADVERT:
-        _handlePayloadAdvertReceived(payload, pathBytes, routeType, snr);
+        _handlePayloadAdvertReceived(
+          rawPacket,
+          payload,
+          pathBytes,
+          routeType,
+          snr,
+        );
         break;
       default:
     }
   }
 
   void _handlePayloadAdvertReceived(
-    Uint8List frame,
+    Uint8List rawPacket,
+    Uint8List payload,
     Uint8List path,
     int routeType,
     double snr,
   ) {
-    final advert = BufferReader(frame);
+    final advert = BufferReader(payload);
     double latitude = 0.0;
     double longitude = 0.0;
     String name = '';
@@ -3785,7 +3837,7 @@ class MeshCoreConnector extends ChangeNotifier {
           (_autoAddSensors && type == advTypeSensor)) {
         _handleContactAdvert(newContact);
       } else {
-        _handleDiscovery(newContact);
+        _handleDiscovery(newContact, rawPacket);
       }
       _updateDirectRepeater(newContact, snr, path);
       return;
@@ -3890,9 +3942,42 @@ class MeshCoreConnector extends ChangeNotifier {
     }
   }
 
-  void _handleDiscovery(Contact contact) {
+  void _handleDiscovery(Contact contact, Uint8List rawPacket) {
     debugPrint('Discovered new contact: ${contact.name}');
+
+    final existingIndex = _discoveredContacts.indexWhere(
+      (c) => c.publicKeyHex == contact.publicKeyHex,
+    );
+    final existingContactsIndex = _contacts.indexWhere(
+      (c) => c.publicKeyHex == contact.publicKeyHex,
+    );
+
+    if (existingContactsIndex >= 0) {
+      if (existingIndex >= 0) {
+        removeDiscoveredContact(_discoveredContacts[existingIndex]);
+        unawaited(_persistDiscoveredContacts());
+      }
+      return;
+    }
+
+    // Update existing contact
+    if (existingIndex >= 0) {
+      _discoveredContacts[existingIndex] = _discoveredContacts[existingIndex]
+          .copyWith(
+            rawPacket: rawPacket,
+            name: contact.name,
+            type: contact.type,
+            pathLength: contact.pathLength,
+            path: contact.path,
+            latitude: contact.latitude,
+            longitude: contact.longitude,
+            lastSeen: contact.lastSeen,
+          );
+      return;
+    }
+
     final disContact = DiscoveryContact(
+      rawPacket: rawPacket,
       publicKey: contact.publicKey,
       name: contact.name,
       type: contact.type,

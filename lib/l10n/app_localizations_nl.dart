@@ -234,11 +234,11 @@ class AppLocalizationsNl extends AppLocalizations {
   String get settings_longitude => 'Lengtegraad';
 
   @override
-  String get settings_contactSettings => 'Contact Settings';
+  String get settings_contactSettings => 'Contactinstellingen';
 
   @override
   String get settings_contactSettingsSubtitle =>
-      'Settings for how contacts are added.';
+      'Instellingen voor het toevoegen van contacten';
 
   @override
   String get settings_privacyMode => 'Privacy Mode';
@@ -3112,56 +3112,72 @@ class AppLocalizationsNl extends AppLocalizations {
   String get snrIndicator_lastSeen => 'Laatst gezien';
 
   @override
-  String get contactsSettings_title => 'Contacts settings';
+  String get contactsSettings_title => 'Instellingen voor contacten';
 
   @override
-  String get contactsSettings_autoAddTitle => 'Automatic Discovery';
+  String get contactsSettings_autoAddTitle => 'Automatische detectie';
 
   @override
-  String get contactsSettings_otherTitle => 'Other contact related settings';
+  String get contactsSettings_otherTitle =>
+      'Andere instellingen voor contactgerelateerde zaken';
 
   @override
-  String get contactsSettings_autoAddUsersTitle => 'Auto-add users';
+  String get contactsSettings_autoAddUsersTitle =>
+      'Gebruikers automatisch toevoegen';
 
   @override
   String get contactsSettings_autoAddUsersSubtitle =>
-      'Allow the companion to automatically add discovered users.';
+      'Sta toe dat de companion automatisch ontdekte gebruikers toevoegt';
 
   @override
-  String get contactsSettings_autoAddRepeatersTitle => 'Auto-add repeaters';
+  String get contactsSettings_autoAddRepeatersTitle =>
+      'Automatisch herhalingstoestellen toevoegen';
 
   @override
   String get contactsSettings_autoAddRepeatersSubtitle =>
-      'Allow the companion to automatically add discovered repeaters.';
+      'Sta toe dat de companion automatisch ontdekte repeaters toevoegt';
 
   @override
   String get contactsSettings_autoAddRoomServersTitle =>
-      'Auto-add room servers';
+      'Automatisch kamerservers toevoegen';
 
   @override
   String get contactsSettings_autoAddRoomServersSubtitle =>
-      'Allow the companion to automatically add discovered room servers.';
+      'Sta toe dat de companion automatisch ontdekte kamer servers toevoegt.';
 
   @override
-  String get contactsSettings_autoAddSensorsTitle => 'Auto-add sensors';
+  String get contactsSettings_autoAddSensorsTitle =>
+      'Automatisch sensoren toevoegen';
 
   @override
   String get contactsSettings_autoAddSensorsSubtitle =>
-      'Allow the companion to automatically add discovered sensors.';
+      'Sta toe dat de companion automatisch ontdekte sensoren toevoegt';
 
   @override
-  String get contactsSettings_overwriteOldestTitle => 'Overwrite Oldest';
+  String get contactsSettings_overwriteOldestTitle => 'Overschrijf Oudste';
 
   @override
   String get contactsSettings_overwriteOldestSubtitle =>
-      'When enabled, the companion will overwrite the oldest contact not favoriteited when the contact list is full.';
+      'Wanneer ingeschakeld, overschrijft de companion het oudste contact dat niet is gemarkeerd als favoriet wanneer de contactenlijst vol is.';
 
   @override
-  String get discoveredContacts_Title => 'Discovered Contacts';
+  String get discoveredContacts_Title => 'Ontdekte contacten';
 
   @override
-  String get discoveredContacts_noMatching => 'No matching contacts';
+  String get discoveredContacts_noMatching => 'Geen overeenkomende contacten';
 
   @override
-  String get discoveredContacts_searchHint => 'Search discovered contacts';
+  String get discoveredContacts_searchHint => 'Ontdekte contacten zoeken';
+
+  @override
+  String get discoveredContacts_contactAdded => 'Contact toegevoegd';
+
+  @override
+  String get discoveredContacts_addContact => 'Contact toevoegen';
+
+  @override
+  String get discoveredContacts_copyContact => 'Kopieer contact naar klembord';
+
+  @override
+  String get discoveredContacts_deleteContact => 'Contact verwijderen';
 }

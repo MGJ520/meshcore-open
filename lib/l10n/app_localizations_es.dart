@@ -234,11 +234,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settings_longitude => 'Longitud';
 
   @override
-  String get settings_contactSettings => 'Contact Settings';
+  String get settings_contactSettings => 'Configuración de contacto';
 
   @override
   String get settings_contactSettingsSubtitle =>
-      'Settings for how contacts are added.';
+      'Configuración de cómo se agregan los contactos.';
 
   @override
   String get settings_privacyMode => 'Modo Privacidad';
@@ -3122,56 +3122,75 @@ class AppLocalizationsEs extends AppLocalizations {
   String get snrIndicator_lastSeen => 'Visto por última vez';
 
   @override
-  String get contactsSettings_title => 'Contacts settings';
+  String get contactsSettings_title => 'Configuración de contactos';
 
   @override
-  String get contactsSettings_autoAddTitle => 'Automatic Discovery';
+  String get contactsSettings_autoAddTitle => 'Detección automática';
 
   @override
-  String get contactsSettings_otherTitle => 'Other contact related settings';
+  String get contactsSettings_otherTitle =>
+      'Otras configuraciones relacionadas con el contacto';
 
   @override
-  String get contactsSettings_autoAddUsersTitle => 'Auto-add users';
+  String get contactsSettings_autoAddUsersTitle =>
+      'Agregar usuarios automáticamente';
 
   @override
   String get contactsSettings_autoAddUsersSubtitle =>
-      'Allow the companion to automatically add discovered users.';
+      'Permitir que el compañero agregue automáticamente a los usuarios descubiertos.';
 
   @override
-  String get contactsSettings_autoAddRepeatersTitle => 'Auto-add repeaters';
+  String get contactsSettings_autoAddRepeatersTitle =>
+      'Agregar repetidores automáticamente';
 
   @override
   String get contactsSettings_autoAddRepeatersSubtitle =>
-      'Allow the companion to automatically add discovered repeaters.';
+      'Permitir que el compañero agregue automáticamente los repetidores descubiertos.';
 
   @override
   String get contactsSettings_autoAddRoomServersTitle =>
-      'Auto-add room servers';
+      'Agregar automáticamente servidores de sala';
 
   @override
   String get contactsSettings_autoAddRoomServersSubtitle =>
-      'Allow the companion to automatically add discovered room servers.';
+      'Permitir que el compañero agregue automáticamente los servidores de salas descubiertos.';
 
   @override
-  String get contactsSettings_autoAddSensorsTitle => 'Auto-add sensors';
+  String get contactsSettings_autoAddSensorsTitle =>
+      'Agregar sensores automáticamente';
 
   @override
   String get contactsSettings_autoAddSensorsSubtitle =>
-      'Allow the companion to automatically add discovered sensors.';
+      'Permitir que el compañero agregue automáticamente los sensores descubiertos.';
 
   @override
-  String get contactsSettings_overwriteOldestTitle => 'Overwrite Oldest';
+  String get contactsSettings_overwriteOldestTitle =>
+      'Sobreescribir el más antiguo';
 
   @override
   String get contactsSettings_overwriteOldestSubtitle =>
-      'When enabled, the companion will overwrite the oldest contact not favoriteited when the contact list is full.';
+      'Cuando se habilita, el compañero sobrescribirá el contacto más antiguo no favorito cuando la lista de contactos esté llena.';
 
   @override
-  String get discoveredContacts_Title => 'Discovered Contacts';
+  String get discoveredContacts_Title => 'Contactos descubiertos';
 
   @override
-  String get discoveredContacts_noMatching => 'No matching contacts';
+  String get discoveredContacts_noMatching =>
+      'No se encontraron contactos coincidentes';
 
   @override
-  String get discoveredContacts_searchHint => 'Search discovered contacts';
+  String get discoveredContacts_searchHint => 'Buscar contactos descubiertos';
+
+  @override
+  String get discoveredContacts_contactAdded => 'Contacto agregado';
+
+  @override
+  String get discoveredContacts_addContact => 'Agregar contacto';
+
+  @override
+  String get discoveredContacts_copyContact =>
+      'Copiar contacto al portapapeles';
+
+  @override
+  String get discoveredContacts_deleteContact => 'Eliminar contacto';
 }

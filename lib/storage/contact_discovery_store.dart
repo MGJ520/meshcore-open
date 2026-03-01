@@ -30,6 +30,7 @@ class ContactDiscoveryStore {
 
   Map<String, dynamic> _toJson(DiscoveryContact contact) {
     return {
+      'rawPacket': base64Encode(contact.rawPacket),
       'publicKey': base64Encode(contact.publicKey),
       'name': contact.name,
       'type': contact.type,
@@ -44,6 +45,7 @@ class ContactDiscoveryStore {
   DiscoveryContact _fromJson(Map<String, dynamic> json) {
     final lastSeenMs = json['lastSeen'] as int? ?? 0;
     return DiscoveryContact(
+      rawPacket: Uint8List.fromList(base64Decode(json['rawPacket'] as String)),
       publicKey: Uint8List.fromList(base64Decode(json['publicKey'] as String)),
       name: json['name'] as String? ?? 'Unknown',
       type: json['type'] as int? ?? 0,

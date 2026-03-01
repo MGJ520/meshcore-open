@@ -1855,5 +1855,9 @@
   "contactsSettings_overwriteOldestSubtitle": "When enabled, the companion will overwrite the oldest contact not favoriteited when the contact list is full.",
   "discoveredContacts_Title": "Discovered Contacts",
   "discoveredContacts_noMatching": "No matching contacts",
-  "discoveredContacts_searchHint": "Search discovered contacts"
+  "discoveredContacts_searchHint": "Search discovered contacts",
+  "discoveredContacts_contactAdded": "Contact added",
+  "discoveredContacts_addContact": "Add Contact",
+  "discoveredContacts_copyContact": "Copy Contact to clipboard",
+  "discoveredContacts_deleteContact": "Delete Contact"
 }

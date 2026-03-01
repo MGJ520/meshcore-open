@@ -219,7 +219,8 @@ class _ContactsScreenState extends State<ContactsScreen>
     }
     final hexString = text.substring('meshcore://'.length);
     try {
-      final importContactFrame = buildImportContactFrame(hexString);
+      final bytes = hex2Uint8List(hexString);
+      final importContactFrame = buildImportContactFrame(bytes);
       _pendingOperations.add(ContactOperationType.import);
       await connector.sendFrame(importContactFrame, expectsGenericAck: true);
     } catch (e) {

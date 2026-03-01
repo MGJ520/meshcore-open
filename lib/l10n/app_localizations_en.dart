@@ -3126,4 +3126,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get discoveredContacts_searchHint => 'Search discovered contacts';
+
+  @override
+  String get discoveredContacts_contactAdded => 'Contact added';
+
+  @override
+  String get discoveredContacts_addContact => 'Add Contact';
+
+  @override
+  String get discoveredContacts_copyContact => 'Copy Contact to clipboard';
+
+  @override
+  String get discoveredContacts_deleteContact => 'Delete Contact';
 }

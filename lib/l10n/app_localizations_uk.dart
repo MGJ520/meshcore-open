@@ -233,11 +233,11 @@ class AppLocalizationsUk extends AppLocalizations {
   String get settings_longitude => 'Довгота';
 
   @override
-  String get settings_contactSettings => 'Contact Settings';
+  String get settings_contactSettings => 'Налаштування контактів';
 
   @override
   String get settings_contactSettingsSubtitle =>
-      'Settings for how contacts are added.';
+      'Налаштування для додавання контактів';
 
   @override
   String get settings_privacyMode => 'Режим приватності';
@@ -3139,56 +3139,74 @@ class AppLocalizationsUk extends AppLocalizations {
   String get snrIndicator_lastSeen => 'Останній раз бачили';
 
   @override
-  String get contactsSettings_title => 'Contacts settings';
+  String get contactsSettings_title => 'Налаштування контактів';
 
   @override
-  String get contactsSettings_autoAddTitle => 'Automatic Discovery';
+  String get contactsSettings_autoAddTitle => 'Автоматичне виявлення';
 
   @override
-  String get contactsSettings_otherTitle => 'Other contact related settings';
+  String get contactsSettings_otherTitle =>
+      'Інші налаштування, пов\'язані з контактами';
 
   @override
-  String get contactsSettings_autoAddUsersTitle => 'Auto-add users';
+  String get contactsSettings_autoAddUsersTitle =>
+      'Автоматично додавати користувачів';
 
   @override
   String get contactsSettings_autoAddUsersSubtitle =>
-      'Allow the companion to automatically add discovered users.';
+      'Дозволити супутникові автоматично додавати виявлених користувачів';
 
   @override
-  String get contactsSettings_autoAddRepeatersTitle => 'Auto-add repeaters';
+  String get contactsSettings_autoAddRepeatersTitle =>
+      'Автоматично додавати повторювачі';
 
   @override
   String get contactsSettings_autoAddRepeatersSubtitle =>
-      'Allow the companion to automatically add discovered repeaters.';
+      'Дозволити супутнику автоматично додавати виявлені ретранслятори';
 
   @override
   String get contactsSettings_autoAddRoomServersTitle =>
-      'Auto-add room servers';
+      'Автоматично додавати сервери кімнат';
 
   @override
   String get contactsSettings_autoAddRoomServersSubtitle =>
-      'Allow the companion to automatically add discovered room servers.';
+      'Дозволити супровіднику автоматично додавати виявлені сервери кімнат.';
 
   @override
-  String get contactsSettings_autoAddSensorsTitle => 'Auto-add sensors';
+  String get contactsSettings_autoAddSensorsTitle =>
+      'Автоматично додавати датчики';
 
   @override
   String get contactsSettings_autoAddSensorsSubtitle =>
-      'Allow the companion to automatically add discovered sensors.';
+      'Дозволити супровіднику автоматично додавати виявлені сенсори';
 
   @override
-  String get contactsSettings_overwriteOldestTitle => 'Overwrite Oldest';
+  String get contactsSettings_overwriteOldestTitle => 'Перезаписати найстаріше';
 
   @override
   String get contactsSettings_overwriteOldestSubtitle =>
-      'When enabled, the companion will overwrite the oldest contact not favoriteited when the contact list is full.';
+      'Коли увімкнено, супровід переганяє найстарший контакт, який не доданий до улюблених, коли список контактів повний.';
 
   @override
-  String get discoveredContacts_Title => 'Discovered Contacts';
+  String get discoveredContacts_Title => 'Виявлені контакти';
 
   @override
-  String get discoveredContacts_noMatching => 'No matching contacts';
+  String get discoveredContacts_noMatching =>
+      'Відповідних контактів не знайдено';
 
   @override
-  String get discoveredContacts_searchHint => 'Search discovered contacts';
+  String get discoveredContacts_searchHint => 'Знайти виявлені контакти';
+
+  @override
+  String get discoveredContacts_contactAdded => 'Контакт додано';
+
+  @override
+  String get discoveredContacts_addContact => 'Додати контакт';
+
+  @override
+  String get discoveredContacts_copyContact =>
+      'Копіювати контакт у буфер обміну';
+
+  @override
+  String get discoveredContacts_deleteContact => 'Видалити контакт';
 }

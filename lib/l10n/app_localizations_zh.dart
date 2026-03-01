@@ -227,11 +227,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settings_longitude => '经度';
 
   @override
-  String get settings_contactSettings => 'Contact Settings';
+  String get settings_contactSettings => '联系人设置';
 
   @override
-  String get settings_contactSettingsSubtitle =>
-      'Settings for how contacts are added.';
+  String get settings_contactSettingsSubtitle => '添加联系人的设置';
 
   @override
   String get settings_privacyMode => '隐私模式';
@@ -2899,56 +2898,63 @@ class AppLocalizationsZh extends AppLocalizations {
   String get snrIndicator_lastSeen => '最近访问';
 
   @override
-  String get contactsSettings_title => 'Contacts settings';
+  String get contactsSettings_title => '联系人设置';
 
   @override
-  String get contactsSettings_autoAddTitle => 'Automatic Discovery';
+  String get contactsSettings_autoAddTitle => '自动发现';
 
   @override
-  String get contactsSettings_otherTitle => 'Other contact related settings';
+  String get contactsSettings_otherTitle => '其他联系人相关设置';
 
   @override
-  String get contactsSettings_autoAddUsersTitle => 'Auto-add users';
+  String get contactsSettings_autoAddUsersTitle => '自动添加用户';
 
   @override
-  String get contactsSettings_autoAddUsersSubtitle =>
-      'Allow the companion to automatically add discovered users.';
+  String get contactsSettings_autoAddUsersSubtitle => '允许伴侣自动添加发现的用户';
 
   @override
-  String get contactsSettings_autoAddRepeatersTitle => 'Auto-add repeaters';
+  String get contactsSettings_autoAddRepeatersTitle => '自动添加重复器';
 
   @override
-  String get contactsSettings_autoAddRepeatersSubtitle =>
-      'Allow the companion to automatically add discovered repeaters.';
+  String get contactsSettings_autoAddRepeatersSubtitle => '允许伴侣自动添加发现的重复器';
 
   @override
-  String get contactsSettings_autoAddRoomServersTitle =>
-      'Auto-add room servers';
+  String get contactsSettings_autoAddRoomServersTitle => '自动添加房间服务器';
 
   @override
-  String get contactsSettings_autoAddRoomServersSubtitle =>
-      'Allow the companion to automatically add discovered room servers.';
+  String get contactsSettings_autoAddRoomServersSubtitle => '允许伴侣自动添加发现的房间服务器';
 
   @override
-  String get contactsSettings_autoAddSensorsTitle => 'Auto-add sensors';
+  String get contactsSettings_autoAddSensorsTitle => '自动添加传感器';
 
   @override
-  String get contactsSettings_autoAddSensorsSubtitle =>
-      'Allow the companion to automatically add discovered sensors.';
+  String get contactsSettings_autoAddSensorsSubtitle => '允许伴侣自动添加发现的传感器';
 
   @override
-  String get contactsSettings_overwriteOldestTitle => 'Overwrite Oldest';
+  String get contactsSettings_overwriteOldestTitle => '覆盖最旧的';
 
   @override
   String get contactsSettings_overwriteOldestSubtitle =>
-      'When enabled, the companion will overwrite the oldest contact not favoriteited when the contact list is full.';
+      '启用时，伴侣将在联系人列表满时覆盖最老的未收藏的联系人。';
 
   @override
-  String get discoveredContacts_Title => 'Discovered Contacts';
+  String get discoveredContacts_Title => '已发现的联系人';
 
   @override
-  String get discoveredContacts_noMatching => 'No matching contacts';
+  String get discoveredContacts_noMatching => '没有匹配的联系人';
 
   @override
-  String get discoveredContacts_searchHint => 'Search discovered contacts';
+  String get discoveredContacts_searchHint => '搜索已发现的联系人';
+
+  @override
+  String get discoveredContacts_contactAdded => '联系人已添加';
+
+  @override
+  String get discoveredContacts_addContact => '添加联系人';
+
+  @override
+  String get discoveredContacts_copyContact => '复制联系人到剪贴板';
+
+  @override
+  String get discoveredContacts_deleteContact => '删除联系人';
 }

@@ -234,11 +234,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settings_longitude => 'Longitudine';
 
   @override
-  String get settings_contactSettings => 'Contact Settings';
+  String get settings_contactSettings => 'Impostazioni di contatto';
 
   @override
   String get settings_contactSettingsSubtitle =>
-      'Settings for how contacts are added.';
+      'Impostazioni per l\'aggiunta dei contatti';
 
   @override
   String get settings_privacyMode => 'Modalità Privacy';
@@ -3125,56 +3125,73 @@ class AppLocalizationsIt extends AppLocalizations {
   String get snrIndicator_lastSeen => 'Ultimo accesso';
 
   @override
-  String get contactsSettings_title => 'Contacts settings';
+  String get contactsSettings_title => 'Impostazioni dei contatti';
 
   @override
-  String get contactsSettings_autoAddTitle => 'Automatic Discovery';
+  String get contactsSettings_autoAddTitle => 'Scoperta automatica';
 
   @override
-  String get contactsSettings_otherTitle => 'Other contact related settings';
+  String get contactsSettings_otherTitle =>
+      'Altre impostazioni relative ai contatti';
 
   @override
-  String get contactsSettings_autoAddUsersTitle => 'Auto-add users';
+  String get contactsSettings_autoAddUsersTitle =>
+      'Aggiungere utenti automaticamente';
 
   @override
   String get contactsSettings_autoAddUsersSubtitle =>
-      'Allow the companion to automatically add discovered users.';
+      'Consenti al compagno di aggiungere automaticamente gli utenti scoperti.';
 
   @override
-  String get contactsSettings_autoAddRepeatersTitle => 'Auto-add repeaters';
+  String get contactsSettings_autoAddRepeatersTitle =>
+      'Aggiungere ripetitori automaticamente';
 
   @override
   String get contactsSettings_autoAddRepeatersSubtitle =>
-      'Allow the companion to automatically add discovered repeaters.';
+      'Consenti al compagno di aggiungere automaticamente i ripetitori scoperti.';
 
   @override
   String get contactsSettings_autoAddRoomServersTitle =>
-      'Auto-add room servers';
+      'Aggiungere automaticamente i server delle stanze';
 
   @override
   String get contactsSettings_autoAddRoomServersSubtitle =>
-      'Allow the companion to automatically add discovered room servers.';
+      'Consenti al compagno di aggiungere automaticamente i server delle stanze scoperte.';
 
   @override
-  String get contactsSettings_autoAddSensorsTitle => 'Auto-add sensors';
+  String get contactsSettings_autoAddSensorsTitle =>
+      'Aggiungere automaticamente i sensori';
 
   @override
   String get contactsSettings_autoAddSensorsSubtitle =>
-      'Allow the companion to automatically add discovered sensors.';
+      'Consenti al compagno di aggiungere automaticamente i sensori scoperti';
 
   @override
-  String get contactsSettings_overwriteOldestTitle => 'Overwrite Oldest';
+  String get contactsSettings_overwriteOldestTitle =>
+      'Sostituisci il più vecchio';
 
   @override
   String get contactsSettings_overwriteOldestSubtitle =>
-      'When enabled, the companion will overwrite the oldest contact not favoriteited when the contact list is full.';
+      'Quando abilitato, il companion sovrascriverà il contatto più vecchio non preferito quando l\'elenco dei contatti è pieno.';
 
   @override
-  String get discoveredContacts_Title => 'Discovered Contacts';
+  String get discoveredContacts_Title => 'Contatti scoperti';
 
   @override
-  String get discoveredContacts_noMatching => 'No matching contacts';
+  String get discoveredContacts_noMatching => 'Nessun contatto corrispondente';
 
   @override
-  String get discoveredContacts_searchHint => 'Search discovered contacts';
+  String get discoveredContacts_searchHint => 'Cerca contatti scoperti';
+
+  @override
+  String get discoveredContacts_contactAdded => 'Contatto aggiunto';
+
+  @override
+  String get discoveredContacts_addContact => 'Aggiungi contatto';
+
+  @override
+  String get discoveredContacts_copyContact => 'Copia contatto negli appunti';
+
+  @override
+  String get discoveredContacts_deleteContact => 'Elimina Contatto';
 }

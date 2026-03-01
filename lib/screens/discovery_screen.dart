@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:meshcore_open/models/contact.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../connector/meshcore_connector.dart';
@@ -96,6 +95,11 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                             color: Colors.grey[600],
                           ),
                         ),
+                        onTap: () {
+                          connector.importDiscoveredContact(contact);
+                        },
+                        onLongPress: () =>
+                            _showContactContextMenu(contact, connector),
                       );
                     },
                   ),
@@ -105,9 +109,64 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
     );
   }
 
-  Widget _buildFilters(filteredAndSorted, connector) {
-    final l10n = context.l10n;
+  Future<void> _showContactContextMenu(
+    DiscoveryContact contact,
+    MeshCoreConnector connector,
+  ) async {
+    final action = await showModalBottomSheet<String>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetContext) {
+        final l10n = context.l10n;
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.add_reaction_sharp),
+                title: Text(l10n.discoveredContacts_addContact),
+                onTap: () => Navigator.of(sheetContext).pop('import_contact'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.copy),
+                title: Text(l10n.discoveredContacts_copyContact),
+                onTap: () => Navigator.of(sheetContext).pop('copy_contact'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete),
+                title: Text(l10n.discoveredContacts_deleteContact),
+                onTap: () => Navigator.of(sheetContext).pop('delete_contact'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
 
+    if (!mounted || action == null) return;
+
+    switch (action) {
+      case 'import_contact':
+        connector.importDiscoveredContact(contact);
+        break;
+      case 'copy_contact':
+        final hexString = pubKeyToHex(contact.rawPacket);
+        Clipboard.setData(ClipboardData(text: "meshcore://$hexString"));
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.contacts_contactAdvertCopied)),
+        );
+        break;
+      case 'delete_contact':
+        connector.removeDiscoveredContact(contact);
+        break;
+    }
+  }
+
+  Widget _buildFilters(
+    List<DiscoveryContact> filteredAndSorted,
+    MeshCoreConnector connector,
+  ) {
     String hintText = "";
     switch (typeFilter) {
       case ContactTypeFilter.all:
@@ -214,6 +273,10 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
     var filtered = contacts.where((contact) {
       if (searchQuery.isEmpty) return true;
       return matchesDiscoveryContactQuery(contact, searchQuery);
+    }).toList();
+
+    filtered = filtered.where((contact) {
+      return !connector.knownContactKeys.contains(contact.publicKeyHex);
     }).toList();
 
     // Filter out own node from the list
