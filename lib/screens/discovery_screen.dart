@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:meshcore_open/models/contact.dart';
@@ -212,17 +213,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
   ) {
     var filtered = contacts.where((contact) {
       if (searchQuery.isEmpty) return true;
-      return matchesContactQuery(
-        Contact(
-          publicKey: contact.publicKey,
-          name: contact.name,
-          type: contact.type,
-          pathLength: contact.pathLength,
-          path: contact.path,
-          lastSeen: contact.lastSeen,
-        ),
-        searchQuery,
-      );
+      return matchesDiscoveryContactQuery(contact, searchQuery);
     }).toList();
 
     // Filter out own node from the list
@@ -235,22 +226,6 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
 
     if (typeFilter != ContactTypeFilter.all) {
       filtered = filtered.where(_matchesTypeFilter).toList();
-    }
-
-    if (showUnreadOnly) {
-      filtered = filtered.where((contact) {
-        return connector.getUnreadCountForContact(
-              Contact(
-                publicKey: contact.publicKey,
-                name: contact.name,
-                type: contact.type,
-                pathLength: contact.pathLength,
-                path: contact.path,
-                lastSeen: contact.lastSeen,
-              ),
-            ) >
-            0;
-      }).toList();
     }
 
     switch (sortOption) {
