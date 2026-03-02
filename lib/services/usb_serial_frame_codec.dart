@@ -3,6 +3,7 @@ import 'dart:typed_data';
 const int usbSerialTxFrameStart = 0x3c;
 const int usbSerialRxFrameStart = 0x3e;
 const int usbSerialHeaderLength = 3;
+const int usbSerialMaxPayloadLength = 172;
 
 Uint8List wrapUsbSerialTxFrame(Uint8List payload) {
   final packet = Uint8List(usbSerialHeaderLength + payload.length);
@@ -59,6 +60,11 @@ class UsbSerialFrameDecoder {
 
       final payloadLength =
           _rxBuffer[_startIndex + 1] | (_rxBuffer[_startIndex + 2] << 8);
+      if (payloadLength > usbSerialMaxPayloadLength) {
+        _startIndex++;
+        _compactBufferIfNeeded();
+        continue;
+      }
       final packetLength = usbSerialHeaderLength + payloadLength;
       if (availableLength < packetLength) {
         _compactBufferIfNeeded(force: true);
