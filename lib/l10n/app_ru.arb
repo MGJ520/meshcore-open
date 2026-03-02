@@ -1046,9 +1046,9 @@
   "connectionChoiceTitle": "Выберите способ подключения",
   "connectionChoiceUsbLabel": "USB",
   "connectionChoiceBluetoothLabel": "Bluetooth",
-  "usbScreenTitle": "Подключение через USB будет доступно в ближайшее время.",
-  "usbScreenSubtitle": "Мы создаем последовательную схему подключения для устройств на базе Android и настольных компьютеров.",
-  "usbScreenStatus": "Скоро",
-  "usbScreenNote": "Как только появится поддержка USB, вы сможете выбрать последовательный порт и напрямую подключиться к вашему устройству MeshCore.",
-  "usbScreenEmptyState": "Не обнаружено никаких устройств USB. Подключите одно из них и обновите список."
+  "usbScreenSubtitle": "Выберите обнаруженное устройство с последовательным интерфейсом и подключите его напрямую к вашему узлу MeshCore.",
+  "usbScreenNote": "USB-серийный порт активен на поддерживаемых устройствах Android и на настольных платформах.",
+  "usbScreenStatus": "Выберите USB-устройство",
+  "usbScreenTitle": "Подключение через USB",
+  "usbScreenEmptyState": "Не обнаружено устройств USB. Подключите одно из них и обновите список."
 }

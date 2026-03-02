@@ -122,18 +122,18 @@ class AppLocalizationsBg extends AppLocalizations {
   String get connectionChoiceBluetoothLabel => 'Bluetooth';
 
   @override
-  String get usbScreenTitle => 'Връзката чрез USB ще бъде налична скоро.';
+  String get usbScreenTitle => 'Свързване чрез USB';
 
   @override
   String get usbScreenSubtitle =>
-      'Създаваме път за комуникация, базиран на последователно предаване на данни, за Android и настолни компютри.';
+      'Изберете открития сериен уред и свържете директно към вашия MeshCore възел.';
 
   @override
-  String get usbScreenStatus => 'Ще бъде достъпно скоро';
+  String get usbScreenStatus => 'Изберете USB устройство';
 
   @override
   String get usbScreenNote =>
-      'След като бъде внедрена поддръжката за USB, ще изберете сериен порт и ще се свържете директно към вашето устройство MeshCore.';
+      'USB серийната връзка е активна на поддържаните Android устройства и настолни платформи.';
 
   @override
   String get usbScreenEmptyState =>

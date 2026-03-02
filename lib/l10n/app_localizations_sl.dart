@@ -122,22 +122,22 @@ class AppLocalizationsSl extends AppLocalizations {
   String get connectionChoiceBluetoothLabel => 'Bluetooth';
 
   @override
-  String get usbScreenTitle => 'Vnos preko USB-ja bo v kratkem na voljo.';
+  String get usbScreenTitle => 'Povežite preko USB';
 
   @override
   String get usbScreenSubtitle =>
-      'Gradimo pot za serijsko povezavo za Android in računalnike.';
+      'Izberite zaznano serijsko napravo in se neposredno povežite z vašim MeshCore-om.';
 
   @override
-  String get usbScreenStatus => 'Čez kratko časa';
+  String get usbScreenStatus => 'Izberite USB naprave.';
 
   @override
   String get usbScreenNote =>
-      'Ko bo podpora za USB na voljo, boste izbrali serijsko vrata in se neposredno povezali z vašim napravem MeshCore.';
+      'USB serijska povezava je aktivna na podprtih napravah Android in na desktop platformah.';
 
   @override
   String get usbScreenEmptyState =>
-      'Niti en USB naprave niso bilo najdeno. Povežite eno in posodobite.';
+      'Niti en USB naprave niso najdeni. Povežite eno in posodobite.';
 
   @override
   String get scanner_scanning => 'Skeniram za naprave...';

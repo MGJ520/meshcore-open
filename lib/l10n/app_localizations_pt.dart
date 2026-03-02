@@ -122,18 +122,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get connectionChoiceBluetoothLabel => 'Bluetooth';
 
   @override
-  String get usbScreenTitle => 'A conexão USB estará disponível em breve.';
+  String get usbScreenTitle => 'Conecte via USB';
 
   @override
   String get usbScreenSubtitle =>
-      'Estamos criando um caminho de conexão baseado em série para dispositivos Android e de desktop.';
+      'Selecione o dispositivo serial detectado e conecte-o diretamente ao seu nó MeshCore.';
 
   @override
-  String get usbScreenStatus => 'Em breve';
+  String get usbScreenStatus => 'Selecione um dispositivo USB';
 
   @override
   String get usbScreenNote =>
-      'Assim que o suporte USB for implementado, você poderá selecionar uma porta serial e conectar-se diretamente ao seu dispositivo MeshCore.';
+      'A comunicação serial USB está ativa em dispositivos Android e plataformas de desktop compatíveis.';
 
   @override
   String get usbScreenEmptyState =>

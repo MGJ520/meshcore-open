@@ -1806,9 +1806,9 @@
   "connectionChoiceBluetoothLabel": "Bluetooth",
   "connectionChoiceSubtitle": "Välj hur du vill komma åt din MeshCore-enhet.",
   "connectionChoiceTitle": "Välj din anslutningsmetod",
-  "usbScreenTitle": "USB-anslutning kommer snart",
-  "usbScreenSubtitle": "Vi skapar en seriebaserad anslutningsväg för både Android- och skrivbordsenheter.",
-  "usbScreenStatus": "Kommer snart",
-  "usbScreenNote": "När USB-stöd är implementerat, kommer du att välja en seriell port och ansluta direkt till din MeshCore-enhet.",
+  "usbScreenTitle": "Anslut via USB",
+  "usbScreenNote": "USB-seriell kommunikation är aktiv på stöderliga Android-enheter och skrivbordsplattformar.",
+  "usbScreenSubtitle": "Välj en detekterad seriell enhet och anslut direkt till din MeshCore-nod.",
+  "usbScreenStatus": "Välj en USB-enhet",
   "usbScreenEmptyState": "Inga USB-enheter hittades. Anslut en och uppdatera."
 }

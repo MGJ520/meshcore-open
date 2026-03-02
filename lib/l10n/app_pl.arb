@@ -1806,9 +1806,9 @@
   "connectionChoiceSubtitle": "Wybierz, w jaki sposób chcesz uzyskać dostęp do swojego urządzenia MeshCore.",
   "connectionChoiceTitle": "Wybierz metodę połączenia.",
   "connectionChoiceUsbLabel": "USB",
-  "usbScreenTitle": "Połączenie USB będzie dostępne wkrótce.",
-  "usbScreenSubtitle": "Tworzymy ścieżkę połączenia opartą na protokole szeregowym, przeznaczoną zarówno dla urządzeń z systemem Android, jak i dla komputerów stacjonarnych.",
-  "usbScreenStatus": "Wkrótce",
-  "usbScreenNote": "Po wdrożeniu wsparcia dla USB, wybierzesz port szeregowy i połączysz się bezpośrednio z urządzeniem MeshCore.",
+  "usbScreenTitle": "Połącz przez USB",
+  "usbScreenNote": "Port szeregowy USB jest aktywny na urządzeniach z Androidem i platformach stacjonarnych, które obsługują tę funkcję.",
+  "usbScreenSubtitle": "Wybierz wykryty urządzenie szeregowe i podłącz je bezpośrednio do swojego węzła MeshCore.",
+  "usbScreenStatus": "Wybierz urządzenie USB",
   "usbScreenEmptyState": "Nie znaleziono żadnych urządzeń USB. Podłącz jedno i zaktualizuj."
 }

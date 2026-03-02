@@ -122,18 +122,18 @@ class AppLocalizationsSv extends AppLocalizations {
   String get connectionChoiceBluetoothLabel => 'Bluetooth';
 
   @override
-  String get usbScreenTitle => 'USB-anslutning kommer snart';
+  String get usbScreenTitle => 'Anslut via USB';
 
   @override
   String get usbScreenSubtitle =>
-      'Vi skapar en seriebaserad anslutningsväg för både Android- och skrivbordsenheter.';
+      'Välj en detekterad seriell enhet och anslut direkt till din MeshCore-nod.';
 
   @override
-  String get usbScreenStatus => 'Kommer snart';
+  String get usbScreenStatus => 'Välj en USB-enhet';
 
   @override
   String get usbScreenNote =>
-      'När USB-stöd är implementerat, kommer du att välja en seriell port och ansluta direkt till din MeshCore-enhet.';
+      'USB-seriell kommunikation är aktiv på stöderliga Android-enheter och skrivbordsplattformar.';
 
   @override
   String get usbScreenEmptyState =>

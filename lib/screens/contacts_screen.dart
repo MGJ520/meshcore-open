@@ -384,8 +384,15 @@ class _ContactsScreenState extends State<ContactsScreen>
 
   Widget _buildContactsBody(BuildContext context, MeshCoreConnector connector) {
     final contacts = connector.contacts;
+    final shouldShowStartupSpinner =
+        contacts.isEmpty &&
+        _groups.isEmpty &&
+        connector.isConnected &&
+        (connector.isLoadingContacts ||
+            connector.isLoadingChannels ||
+            connector.selfPublicKey == null);
 
-    if (contacts.isEmpty && connector.isLoadingContacts && _groups.isEmpty) {
+    if (shouldShowStartupSpinner) {
       return const Center(child: CircularProgressIndicator());
     }
 

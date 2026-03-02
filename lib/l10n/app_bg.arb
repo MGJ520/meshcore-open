@@ -1806,9 +1806,9 @@
   "connectionChoiceBluetoothLabel": "Bluetooth",
   "connectionChoiceTitle": "Изберете метода на връзка.",
   "connectionChoiceSubtitle": "Изберете как искате да получите вашия устройство MeshCore.",
-  "usbScreenTitle": "Връзката чрез USB ще бъде налична скоро.",
-  "usbScreenSubtitle": "Създаваме път за комуникация, базиран на последователно предаване на данни, за Android и настолни компютри.",
-  "usbScreenStatus": "Ще бъде достъпно скоро",
-  "usbScreenNote": "След като бъде внедрена поддръжката за USB, ще изберете сериен порт и ще се свържете директно към вашето устройство MeshCore.",
+  "usbScreenNote": "USB серийната връзка е активна на поддържаните Android устройства и настолни платформи.",
+  "usbScreenStatus": "Изберете USB устройство",
+  "usbScreenTitle": "Свързване чрез USB",
+  "usbScreenSubtitle": "Изберете открития сериен уред и свържете директно към вашия MeshCore възел.",
   "usbScreenEmptyState": "Няма открити USB устройства. Включете едно и опитайте отново."
 }

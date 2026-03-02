@@ -37,6 +37,7 @@ class MainActivity : FlutterActivity() {
     private var usbConnection: UsbDeviceConnection? = null
     private var usbPort: UsbSerialPort? = null
     private var ioManager: SerialInputOutputManager? = null
+    private var connectedDeviceName: String? = null
 
     private var pendingConnectResult: MethodChannel.Result? = null
     private var pendingConnectPortName: String? = null
@@ -45,7 +46,19 @@ class MainActivity : FlutterActivity() {
     private val permissionReceiver =
         object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                if (intent?.action != usbPermissionAction) {
+                when (intent?.action) {
+                    UsbManager.ACTION_USB_DEVICE_DETACHED -> {
+                        handleUsbDetached(intent)
+                        return
+                    }
+                    usbPermissionAction -> {
+                    }
+                    else -> {
+                        return
+                    }
+                }
+
+                if (intent.action != usbPermissionAction) {
                     return
                 }
 
@@ -116,12 +129,19 @@ class MainActivity : FlutterActivity() {
     override fun onDestroy() {
         closeUsbConnection()
         usbIoExecutor.shutdownNow()
-        unregisterReceiver(permissionReceiver)
+        try {
+            unregisterReceiver(permissionReceiver)
+        } catch (_: IllegalArgumentException) {
+        }
         super.onDestroy()
     }
 
     private fun registerUsbPermissionReceiver() {
-        val filter = IntentFilter(usbPermissionAction)
+        val filter =
+            IntentFilter().apply {
+                addAction(usbPermissionAction)
+                addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
+            }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             registerReceiver(permissionReceiver, filter, RECEIVER_NOT_EXPORTED)
         } else {
@@ -256,6 +276,7 @@ class MainActivity : FlutterActivity() {
 
             usbConnection = connection
             usbPort = port
+            connectedDeviceName = device.deviceName
 
             ioManager =
                 SerialInputOutputManager(
@@ -311,6 +332,38 @@ class MainActivity : FlutterActivity() {
         } catch (_: Exception) {
         }
         usbConnection = null
+        connectedDeviceName = null
+    }
+
+    private fun handleUsbDetached(intent: Intent) {
+        val detachedDevice =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                intent.getParcelableExtra(UsbManager.EXTRA_DEVICE)
+            }
+
+        val detachedName = detachedDevice?.deviceName ?: return
+
+        if (pendingConnectPortName == detachedName) {
+            pendingConnectResult?.error(
+                "usb_device_detached",
+                "USB device was removed before the connection completed",
+                null,
+            )
+            pendingConnectResult = null
+            pendingConnectPortName = null
+        }
+
+        if (connectedDeviceName == detachedName) {
+            closeUsbConnection()
+            eventSink?.error(
+                "usb_device_detached",
+                "USB device was disconnected",
+                null,
+            )
+        }
     }
 
     private fun pendingIntentFlags(): Int {

@@ -1834,9 +1834,9 @@
   "connectionChoiceSubtitle": "Seleccione la forma en que desea acceder a su dispositivo MeshCore.",
   "connectionChoiceBluetoothLabel": "Bluetooth",
   "connectionChoiceUsbLabel": "USB",
-  "usbScreenTitle": "La conexión USB estará disponible próximamente.",
-  "usbScreenSubtitle": "Estamos creando una conexión en serie para dispositivos Android y de escritorio.",
-  "usbScreenStatus": "Próximamente",
-  "usbScreenNote": "Una vez que se implemente el soporte para USB, seleccionará un puerto serie y se conectará directamente a su dispositivo MeshCore.",
-  "usbScreenEmptyState": "No se detectaron dispositivos USB. Conecte uno y vuelva a intentar."
+  "usbScreenStatus": "Seleccione un dispositivo USB",
+  "usbScreenNote": "La comunicación serial a través de USB está activa en dispositivos Android compatibles y en plataformas de escritorio.",
+  "usbScreenTitle": "Conecte mediante USB",
+  "usbScreenSubtitle": "Seleccione un dispositivo de serie detectado y conéctelo directamente a su nodo MeshCore.",
+  "usbScreenEmptyState": "No se encontraron dispositivos USB. Conecte uno y vuelva a cargar."
 }

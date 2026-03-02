@@ -1806,9 +1806,9 @@
   "connectionChoiceUsbLabel": "USB",
   "connectionChoiceBluetoothLabel": "Bluetooth",
   "connectionChoiceTitle": "Escolha o método de conexão desejado.",
-  "usbScreenTitle": "A conexão USB estará disponível em breve.",
-  "usbScreenSubtitle": "Estamos criando um caminho de conexão baseado em série para dispositivos Android e de desktop.",
-  "usbScreenStatus": "Em breve",
-  "usbScreenNote": "Assim que o suporte USB for implementado, você poderá selecionar uma porta serial e conectar-se diretamente ao seu dispositivo MeshCore.",
+  "usbScreenNote": "A comunicação serial USB está ativa em dispositivos Android e plataformas de desktop compatíveis.",
+  "usbScreenSubtitle": "Selecione o dispositivo serial detectado e conecte-o diretamente ao seu nó MeshCore.",
+  "usbScreenStatus": "Selecione um dispositivo USB",
+  "usbScreenTitle": "Conecte via USB",
   "usbScreenEmptyState": "Nenhum dispositivo USB encontrado. Conecte um e atualize."
 }

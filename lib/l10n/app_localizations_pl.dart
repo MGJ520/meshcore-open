@@ -122,18 +122,18 @@ class AppLocalizationsPl extends AppLocalizations {
   String get connectionChoiceBluetoothLabel => 'Bluetooth';
 
   @override
-  String get usbScreenTitle => 'Połączenie USB będzie dostępne wkrótce.';
+  String get usbScreenTitle => 'Połącz przez USB';
 
   @override
   String get usbScreenSubtitle =>
-      'Tworzymy ścieżkę połączenia opartą na protokole szeregowym, przeznaczoną zarówno dla urządzeń z systemem Android, jak i dla komputerów stacjonarnych.';
+      'Wybierz wykryty urządzenie szeregowe i podłącz je bezpośrednio do swojego węzła MeshCore.';
 
   @override
-  String get usbScreenStatus => 'Wkrótce';
+  String get usbScreenStatus => 'Wybierz urządzenie USB';
 
   @override
   String get usbScreenNote =>
-      'Po wdrożeniu wsparcia dla USB, wybierzesz port szeregowy i połączysz się bezpośrednio z urządzeniem MeshCore.';
+      'Port szeregowy USB jest aktywny na urządzeniach z Androidem i platformach stacjonarnych, które obsługują tę funkcję.';
 
   @override
   String get usbScreenEmptyState =>

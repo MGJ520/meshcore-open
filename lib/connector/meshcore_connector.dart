@@ -738,12 +738,18 @@ class MeshCoreConnector extends ChangeNotifier {
       notifyListeners();
     });
 
-    await FlutterBluePlus.startScan(
-      withKeywords: ["MeshCore-", "Whisper-"],
-      webOptionalServices: [Guid(MeshCoreUuids.service)],
-      timeout: timeout,
-      androidScanMode: AndroidScanMode.lowLatency,
-    );
+    try {
+      await FlutterBluePlus.startScan(
+        withKeywords: ["MeshCore-", "Whisper-"],
+        webOptionalServices: [Guid(MeshCoreUuids.service)],
+        timeout: timeout,
+        androidScanMode: AndroidScanMode.lowLatency,
+      );
+    } catch (error) {
+      debugPrint('[BLE Scan] Scan/picker failure: $error');
+      _setState(MeshCoreConnectionState.disconnected);
+      rethrow;
+    }
 
     await Future.delayed(timeout);
     await stopScan();
@@ -791,17 +797,24 @@ class MeshCoreConnector extends ChangeNotifier {
     notifyListeners();
 
     try {
+      final connectLabel = _deviceDisplayName ?? _deviceId;
+      debugPrint('[BLE Connect] Starting connect to $connectLabel');
       _connectionSubscription = device.connectionState.listen((state) {
         if (state == BluetoothConnectionState.disconnected && isConnected) {
           _handleDisconnection();
         }
       });
 
-      await device.connect(
-        timeout: const Duration(seconds: 15),
-        mtu: null,
-        license: License.free,
-      );
+      try {
+        await device.connect(
+          timeout: const Duration(seconds: 15),
+          mtu: null,
+          license: License.free,
+        );
+      } catch (error) {
+        debugPrint('[BLE Connect] device.connect() failure: $error');
+        rethrow;
+      }
 
       // Request larger MTU only on native platforms; web does not support it.
       if (!PlatformInfo.isWeb) {
@@ -813,7 +826,27 @@ class MeshCoreConnector extends ChangeNotifier {
         }
       }
 
-      List<BluetoothService> services = await device.discoverServices();
+      late final List<BluetoothService> services;
+      try {
+        services = await device.discoverServices();
+      } catch (error) {
+        debugPrint('[BLE Connect] service discovery failure: $error');
+        if (PlatformInfo.isWeb &&
+            error.toString().contains('GATT Server is disconnected')) {
+          debugPrint(
+            '[BLE Connect] retrying service discovery after transient web disconnect',
+          );
+          await Future<void>.delayed(const Duration(milliseconds: 300));
+          await device.connect(
+            timeout: const Duration(seconds: 15),
+            mtu: null,
+            license: License.free,
+          );
+          services = await device.discoverServices();
+        } else {
+          rethrow;
+        }
+      }
 
       BluetoothService? uartService;
       for (var service in services) {
@@ -847,6 +880,7 @@ class MeshCoreConnector extends ChangeNotifier {
           try {
             await _txCharacteristic!.setNotifyValue(true);
           } catch (error) {
+            debugPrint('[BLE Connect] notify failure (web, ignored): $error');
             debugPrint('Web setNotifyValue error (ignoring): $error');
           }
         }());
@@ -861,6 +895,7 @@ class MeshCoreConnector extends ChangeNotifier {
             await _txCharacteristic!.setNotifyValue(true);
             notifySet = true;
           } catch (e) {
+            debugPrint('[BLE Connect] notify failure: $e');
             debugPrint('setNotifyValue attempt ${attempt + 1}/3 failed: $e');
             if (attempt == 2) rethrow;
           }
@@ -1231,6 +1266,15 @@ class MeshCoreConnector extends ChangeNotifier {
     _selfInfoRetryTimer?.cancel();
     if (PlatformInfo.isWeb &&
         _activeTransport == MeshCoreTransportType.bluetooth) {
+      _selfInfoRetryTimer = Timer(const Duration(seconds: 10), () {
+        if (!isConnected || !_awaitingSelfInfo) {
+          return;
+        }
+        if (_isLoadingContacts || _isSyncingChannels || _channelSyncInFlight) {
+          return;
+        }
+        unawaited(sendFrame(buildAppStartFrame()));
+      });
       return;
     }
     _selfInfoRetryTimer = Timer.periodic(const Duration(milliseconds: 3500), (

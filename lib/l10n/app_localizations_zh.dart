@@ -121,16 +121,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get connectionChoiceBluetoothLabel => '蓝牙';
 
   @override
-  String get usbScreenTitle => 'USB 连接即将推出';
+  String get usbScreenTitle => '通过USB连接';
 
   @override
-  String get usbScreenSubtitle => '我们正在构建一个基于串行的连接路径，用于Android和桌面设备。';
+  String get usbScreenSubtitle => '选择已检测到的串行设备，并直接连接到您的 MeshCore 节点。';
 
   @override
-  String get usbScreenStatus => '即将推出';
+  String get usbScreenStatus => '选择一个 USB 设备';
 
   @override
-  String get usbScreenNote => '一旦USB支持功能上线，您就可以选择一个串口，并直接连接到您的MeshCore设备。';
+  String get usbScreenNote => '在支持的 Android 设备和桌面平台上，USB 串行通信功能已启用。';
 
   @override
   String get usbScreenEmptyState => '未找到任何 USB 设备。请插入一个，然后刷新。';

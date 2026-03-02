@@ -1806,9 +1806,9 @@
   "connectionChoiceUsbLabel": "USB",
   "connectionChoiceTitle": "Vyberte si metódu prepojenia.",
   "connectionChoiceSubtitle": "Vyberte si, ako chcete dosiahnuť váš zariadenie MeshCore.",
-  "usbScreenTitle": "Pripojenie cez USB bude k dispozícii čoskoro.",
-  "usbScreenSubtitle": "Vytvárajeme komunikačný systém založený na sériovej komunikácii pre Android a stolné počítače.",
-  "usbScreenStatus": "Čoskoro",
-  "usbScreenNote": "Po implementácii podpory pre USB, budete môcť vybrať sériový port a priamo sa pripojiť k vašmu zariadeniu MeshCore.",
+  "usbScreenStatus": "Vyberte USB zariadenie",
+  "usbScreenSubtitle": "Vyberte detekovaný sériový zariadenie a pripojte ho priamo k vašej MeshCore uzlu.",
+  "usbScreenNote": "USB sériová komunikácia je aktívna na podporovaných zariadeniach s Androidom a na desktopových platformách.",
+  "usbScreenTitle": "Pripojte cez USB",
   "usbScreenEmptyState": "Nenašli sa žiadne USB zariadenia. Pripojte jedno a obnovte."
 }

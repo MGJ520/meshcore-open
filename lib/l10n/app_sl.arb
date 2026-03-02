@@ -1806,9 +1806,9 @@
   "connectionChoiceUsbLabel": "USB",
   "connectionChoiceTitle": "Izberite svoj način povezave.",
   "connectionChoiceSubtitle": "Izberite, kako želite dostopati do svojega naprave MeshCore.",
-  "usbScreenTitle": "Vnos preko USB-ja bo v kratkem na voljo.",
-  "usbScreenSubtitle": "Gradimo pot za serijsko povezavo za Android in računalnike.",
-  "usbScreenStatus": "Čez kratko časa",
-  "usbScreenNote": "Ko bo podpora za USB na voljo, boste izbrali serijsko vrata in se neposredno povezali z vašim napravem MeshCore.",
-  "usbScreenEmptyState": "Niti en USB naprave niso bilo najdeno. Povežite eno in posodobite."
+  "usbScreenSubtitle": "Izberite zaznano serijsko napravo in se neposredno povežite z vašim MeshCore-om.",
+  "usbScreenTitle": "Povežite preko USB",
+  "usbScreenStatus": "Izberite USB naprave.",
+  "usbScreenNote": "USB serijska povezava je aktivna na podprtih napravah Android in na desktop platformah.",
+  "usbScreenEmptyState": "Niti en USB naprave niso najdeni. Povežite eno in posodobite."
 }

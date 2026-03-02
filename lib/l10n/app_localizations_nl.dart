@@ -122,18 +122,18 @@ class AppLocalizationsNl extends AppLocalizations {
   String get connectionChoiceBluetoothLabel => 'Bluetooth';
 
   @override
-  String get usbScreenTitle => 'USB-verbinding is binnenkort beschikbaar.';
+  String get usbScreenTitle => 'Verbind via USB';
 
   @override
   String get usbScreenSubtitle =>
-      'We ontwikkelen een verbindingspad op basis van seriële communicatie, zowel voor Android als voor desktop-computers.';
+      'Kies een gedetecteerd seriële apparaat en verbind deze direct met uw MeshCore-node.';
 
   @override
-  String get usbScreenStatus => 'Komende week';
+  String get usbScreenStatus => 'Selecteer een USB-apparaat';
 
   @override
   String get usbScreenNote =>
-      'Zodra de USB-ondersteuning is geïnstalleerd, selecteert u een seriële poort en verbindt u direct met uw MeshCore-apparaat.';
+      'USB-serieel is actief op ondersteunde Android-apparaten en desktop-platforms.';
 
   @override
   String get usbScreenEmptyState =>

@@ -1806,9 +1806,9 @@
   "connectionChoiceUsbLabel": "USB",
   "connectionChoiceSubtitle": "Kies hoe u uw MeshCore-apparaat wilt bereiken.",
   "connectionChoiceBluetoothLabel": "Bluetooth",
-  "usbScreenTitle": "USB-verbinding is binnenkort beschikbaar.",
-  "usbScreenSubtitle": "We ontwikkelen een verbindingspad op basis van seriële communicatie, zowel voor Android als voor desktop-computers.",
-  "usbScreenStatus": "Komende week",
-  "usbScreenNote": "Zodra de USB-ondersteuning is geïnstalleerd, selecteert u een seriële poort en verbindt u direct met uw MeshCore-apparaat.",
+  "usbScreenSubtitle": "Kies een gedetecteerd seriële apparaat en verbind deze direct met uw MeshCore-node.",
+  "usbScreenStatus": "Selecteer een USB-apparaat",
+  "usbScreenNote": "USB-serieel is actief op ondersteunde Android-apparaten en desktop-platforms.",
+  "usbScreenTitle": "Verbind via USB",
   "usbScreenEmptyState": "Geen USB-apparaten gevonden. Sluit er een aan en herlaad."
 }

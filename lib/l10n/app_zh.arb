@@ -1811,9 +1811,9 @@
   "connectionChoiceBluetoothLabel": "蓝牙",
   "connectionChoiceTitle": "选择您的连接方式",
   "connectionChoiceUsbLabel": "USB",
-  "usbScreenTitle": "USB 连接即将推出",
-  "usbScreenSubtitle": "我们正在构建一个基于串行的连接路径，用于Android和桌面设备。",
-  "usbScreenStatus": "即将推出",
-  "usbScreenNote": "一旦USB支持功能上线，您就可以选择一个串口，并直接连接到您的MeshCore设备。",
+  "usbScreenTitle": "通过USB连接",
+  "usbScreenSubtitle": "选择已检测到的串行设备，并直接连接到您的 MeshCore 节点。",
+  "usbScreenStatus": "选择一个 USB 设备",
+  "usbScreenNote": "在支持的 Android 设备和桌面平台上，USB 串行通信功能已启用。",
   "usbScreenEmptyState": "未找到任何 USB 设备。请插入一个，然后刷新。"
 }

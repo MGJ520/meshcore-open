@@ -1806,9 +1806,9 @@
   "connectionChoiceBluetoothLabel": "Bluetooth",
   "connectionChoiceUsbLabel": "USB",
   "connectionChoiceSubtitle": "Choisissez la méthode de livraison que vous préférez pour votre appareil MeshCore.",
-  "usbScreenTitle": "La connexion USB sera disponible prochainement.",
-  "usbScreenSubtitle": "Nous mettons en place un chemin de connexion basé sur une série pour les appareils Android et les ordinateurs de bureau.",
-  "usbScreenStatus": "Bientôt",
-  "usbScreenNote": "Une fois que le support USB sera disponible, vous sélectionnerez un port série et vous connecterez directement à votre appareil MeshCore.",
-  "usbScreenEmptyState": "Aucun périphérique USB n'a été trouvé. Connectez-en un et rafraîchissez."
+  "usbScreenStatus": "Sélectionnez un périphérique USB",
+  "usbScreenSubtitle": "Sélectionnez un périphérique série détecté et connectez-vous directement à votre nœud MeshCore.",
+  "usbScreenNote": "La communication série USB est active sur les appareils Android et les plateformes de bureau pris en charge.",
+  "usbScreenTitle": "Connectez via USB",
+  "usbScreenEmptyState": "Aucun périphérique USB n'a été trouvé. Veuillez connecter un périphérique et rafraîchir la page."
 }
