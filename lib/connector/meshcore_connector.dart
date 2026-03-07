@@ -2250,6 +2250,14 @@ class MeshCoreConnector extends ChangeNotifier {
       _hasLoadedChannels = true;
       _previousChannelsCache.clear();
     }
+
+    // Fallback: if contact sync was deferred waiting for channel 0 but
+    // channel sync finished without triggering it, start contacts now.
+    if (_pendingInitialContactsSync && isConnected) {
+      _pendingInitialContactsSync = false;
+      unawaited(getContacts());
+    }
+
     // Keep cache on failure/disconnection for future attempts
   }
 
